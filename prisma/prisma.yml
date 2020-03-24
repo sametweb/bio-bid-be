@@ -1,2 +1,2 @@
-endpoint: ''
+endpoint: http://your-docker-ip-here:4466
 datamodel: datamodel.graphql
