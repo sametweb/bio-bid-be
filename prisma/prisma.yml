@@ -1,2 +1,5 @@
-endpoint: http://your-docker-ip-here:4466
+endpoint: http://your-docker-ip:4466
 datamodel: datamodel.graphql
+generate:
+    - generator: javascript-client
+      output: ./generated/prisma-client/
