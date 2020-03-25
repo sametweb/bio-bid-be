@@ -1,8 +1,8 @@
 type Company {
   id: ID! @id
   name: String! @unique
-  studies: [Study!]!
-  bids: [Bid!]!
+  studies: [Study!]
+  bids: [Bid!]
 }
 
 type Bid {

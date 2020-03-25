@@ -1,7 +1,7 @@
-endpoint: http://your-docker-ip:4466
+endpoint: ${env: PRISMA}
 datamodel: datamodel.graphql
-seed:
-  import: ./data/seeds.graphql
+seed: 
+  import: ./data/seed.graphql
 generate:
-    - generator: javascript-client
-      output: ./generated/prisma-client/
+  - generator: javascript-client
+    output: ./generated/prisma-client/
