@@ -5,6 +5,34 @@ const {prisma} = require('./prisma/generated/prisma-client');
 const typeDefs = gql`
    type Query {
         hello: String!
+    },
+    type studies {
+        id: ID!
+        name: String!
+        area: Int!
+        status: String!
+        company: Company!
+    },
+    type Company {
+        id: ID!
+        name: String!
+        studies: [Study!]
+        bids: [Bid!]
+    },
+    type Study {
+        id: ID!
+        name: String!
+        area: String!
+        phase: Int!
+        status: String!
+        company: Company!
+    },
+    type Bid {
+        id: ID!
+        company: Company!
+        bid_amount: Float!
+        is_approved: Boolean!
+        study: Study!
     }
 `;
 
