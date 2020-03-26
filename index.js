@@ -1,6 +1,6 @@
 const {ApolloServer, gql} = require('apollo-server');
 
-const {prisma} = require('./prisma/generated/prisma-client');
+const {Prisma} = require('./prisma/generated/prisma-client');
 
 const typeDefs = gql`
    type Query {
@@ -43,9 +43,15 @@ const resolvers = {
     }
 }
 
-const server = new ApolloServer({typeDefs, resolvers, context: ({req}) =>{
-    return {prisma}
-}});
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: ({req}) => ({
+      prisma: new Prisma({
+        endpoint: 'https://biobid-4efc34e917.herokuapp.com',
+      }),
+    }),
+  });
 
 server.listen({port: process.env.PORT || 5000}).then(({url}) =>{
     console.log(`Server is running at ${url}`);
