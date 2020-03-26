@@ -4,7 +4,8 @@ const {prisma} = require('./prisma/generated/prisma-client');
 
 const typeDefs = gql`
    type Query {
-        hello: String!
+        hello: String!,
+        studies: [Study!]!
     },
     type studies {
         id: ID!
@@ -38,7 +39,11 @@ const typeDefs = gql`
 
 const resolvers = {
     Query: {
-        hello: () => "Hello World"
+        hello: () => "Hello World",
+        studies: async (parent, args, {prisma}) => {
+            const studies = await prisma.studies({});
+            return studies;
+        }
     }
 }
 
