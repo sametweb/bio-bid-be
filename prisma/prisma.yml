@@ -1,0 +1,7 @@
+endpoint: ${env: PRISMA}
+datamodel: datamodel.graphql
+seed: 
+  import: ./data/seed.graphql
+generate:
+  - generator: javascript-client
+    output: ./generated/prisma-client/

@@ -1,0 +1,23 @@
+type Company {
+  id: ID! @id
+  name: String! @unique
+  studies: [Study!]
+  bids: [Bid!]
+}
+
+type Bid {
+  id: ID! @id
+  company: Company! @relation(link: INLINE)
+  bid_amount: Float!
+  is_approved: Boolean! @default(value: false)
+  study: Study! @relation(link: INLINE)
+}
+
+type Study {
+  id: ID! @id
+  name: String! @unique
+  area: String!
+  phase: Int!
+  status: String!
+  company: Company! @relation(link: INLINE)
+}
