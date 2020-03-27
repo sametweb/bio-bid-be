@@ -1,18 +1,11 @@
 const {ApolloServer, gql} = require('apollo-server');
 
-const {Prisma} = require('./prisma/generated/prisma-client');
+const {prisma} = require('./prisma/generated/prisma-client');
 
 const typeDefs = gql`
    type Query {
         hello: String!,
-        getAllStudies: [Study!]!
-    },
-
-    type Company {
-        id: ID! 
-        name: String!
         studies: [Study!]
-        bids: [Bid!]
     },
 
     type Bid {
@@ -29,28 +22,35 @@ const typeDefs = gql`
         area: String!
         phase: Int!
         status: String!
-        company: Company! 
-    }
+        company: Company
+    },
+
+    type Company {
+        id: ID 
+        name: String
+        studies: [Study!]
+        bids: [Bid!]
+    },
 `;
 
 const resolvers = {
     Query: {
         hello: () => "Hello World",
-       getAllStudies: async (parent, args, {prisma}, info) => {
-        const studies = await prisma.studies();
-        return studies;
+       studies: (parent, args, {prisma}, info) => {
+        return prisma.studies();
        }
+    },
+    Study: {
+        company: (parent, args, {prisma}, info) => {
+         return prisma.study({id: parent.id});
+        }
     }
 }
 
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({req}) => ({
-      prisma: new Prisma({
-        endpoint: 'https://biobid-4efc34e917.herokuapp.com',
-      }),
-    }),
+    context: {prisma} 
   });
 
 server.listen({port: process.env.PORT || 5000}).then(({url}) =>{
