@@ -1,51 +1,10 @@
-const {ApolloServer, gql} = require('apollo-server');
+const {ApolloServer} = require('apollo-server');
 
 const {prisma} = require('./prisma/generated/prisma-client');
 
-const typeDefs = gql`
-   type Query {
-        hello: String!,
-        studies: [Study!]
-    },
+const typeDefs = require('./graphql/schema.js');
 
-    type Bid {
-        id: ID! 
-        company: Company! 
-        bid_amount: Float!
-        is_approved: Boolean! 
-        study: Study!
-    },
-
-    type Study {
-        id: ID! 
-        name: String! 
-        area: String!
-        phase: Int!
-        status: String!
-        company: Company
-    },
-
-    type Company {
-        id: ID 
-        name: String
-        studies: [Study!]
-        bids: [Bid!]
-    },
-`;
-
-const resolvers = {
-    Query: {
-        hello: () => "Hello World",
-       studies: (parent, args, {prisma}, info) => {
-        return prisma.studies();
-       }
-    },
-    Study: {
-        company: (parent, args, {prisma}, info) => {
-         return prisma.study({id: parent.id});
-        }
-    }
-}
+const resolvers = require('./graphql/resolvers');
 
 const server = new ApolloServer({
     typeDefs,
