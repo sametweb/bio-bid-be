@@ -1,18 +1,16 @@
-const {ApolloServer, gql} = require('apollo-server');
+const {ApolloServer} = require('apollo-server');
 
-const typeDefs = gql`
-   type Query {
-        hello: String!
-    }
-`;
+const {prisma} = require('./prisma/generated/prisma-client');
 
-const resolvers = {
-    Query: {
-        hello: () => "Hello World"
-    }
-}
+const typeDefs = require('./graphql/schema.js');
 
-const server = new ApolloServer({typeDefs, resolvers});
+const resolvers = require('./graphql/resolvers');
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: {prisma} 
+  });
 
 server.listen({port: process.env.PORT || 5000}).then(({url}) =>{
     console.log(`Server is running at ${url}`);
