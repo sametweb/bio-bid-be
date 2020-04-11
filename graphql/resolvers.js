@@ -3,6 +3,9 @@ const resolvers = {
         hello: () => "Hello World",
        studies: (parent, args, {prisma}, info) => {
         return prisma.studies();
+       },
+       companies: (parent, args, {prisma}, info) => {
+           return prisma.companies();
        }
     },
     Study: {
