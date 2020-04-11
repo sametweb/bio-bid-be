@@ -13,7 +13,7 @@ const schema = gql`
         updateBid(bid_amount: Float, is_approved: Boolean, id: ID!): Bid!
         updateStudy(updatedStudy_name: String, area: String, phase: Int, status: String, study_name: String): Study!,
         deleteCompany(company_name: String!): Company!, #causes an error if tables are filled out
-        deleteStudy(study_name: String!): Study!, #causes an error if tables are filled out
+        deleteStudy(study_name: String!): Study!,
         deleteBid(id: ID!): Bid!
     }
 
