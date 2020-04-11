@@ -30,7 +30,8 @@ const resolvers = {
     },
     Mutation: {
         createCompany: (parent, args, {prisma}, info) => {
-            return prisma.createCompany({name: args.company_name});
+            const {company_name} = args;
+            return prisma.createCompany({name: company_name});
         },
         createStudy: (parent, args, {prisma}, info) => {
             const {name, area, phase, status, company_name} = args;
@@ -41,10 +42,16 @@ const resolvers = {
             return prisma.createBid({bid_amount, company: {connect: {name: company_name}}, study: {connect: {name: study_name}}});
         },
         updateCompany: (parent, args, {prisma}, info) => {
-            return prisma.updateCompany({data: {name: args.updated_name}, where: {name: args.company_name}});
+            const {updated_name, company_name} = args;
+            return prisma.updateCompany({data: {name: updated_name}, where: {name: company_name}});
         },
         updateBid: (parent, args, {prisma}, info) => {
-            return prisma.updateBid({data: {bid_amount: args.bid_amount, is_approved: args.is_approved}, where: {id: args.id}})
+            const {bid_amount, is_approved, id} = args;
+            return prisma.updateBid({data: {bid_amount, is_approved}, where: {id}});
+        },
+        updateStudy: (parent, args, {prisma}, info) => {
+            const {updatedStudy_name, area, phase, study_name} = args;
+            return prisma.updateStudy({data: {name: updatedStudy_name, area, phase}, where: {name: study_name}});
         }
     }
 }
