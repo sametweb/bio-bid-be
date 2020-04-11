@@ -58,6 +58,9 @@ const resolvers = {
         },
         deleteStudy: (parent, {study_name}, {prisma}, info) => {
             return prisma.deleteStudy({name: study_name});
+        },
+        deleteCompany: (parent, {company_name}, {prisma}, info) => {
+            return prisma.deleteCompany({name: company_name});
         }
     }
 }
