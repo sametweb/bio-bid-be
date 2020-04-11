@@ -39,6 +39,9 @@ const resolvers = {
         createBid: (parent, args, {prisma}, info) => {
             const {bid_amount, company_name, study_name} = args;
             return prisma.createBid({bid_amount, company: {connect: {name: company_name}}, study: {connect: {name: study_name}}});
+        },
+        updateCompany: (parent, args, {prisma}, info) => {
+            return prisma.updateCompany({data: {name: args.updated_name}, where: {name: args.company_name}});
         }
     }
 }
