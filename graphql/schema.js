@@ -7,7 +7,8 @@ const schema = gql`
     },
     type Mutation {
         createCompany(company_name: String!): Company!,
-        createStudy(name: String!, area: String!, phase: Int!, status: String!, company_name: String!): Study!
+        createStudy(name: String!, area: String!, phase: Int!, status: String!, company_name: String!): Study!,
+        createBid(bid_amount: Float!, company_name: String!, study_name: String!): Bid!
     }
 
     type Bid {

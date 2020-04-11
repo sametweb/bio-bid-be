@@ -35,6 +35,10 @@ const resolvers = {
         createStudy: (parent, args, {prisma}, info) => {
             const {name, area, phase, status, company_name} = args;
             return prisma.createStudy({name, area, phase, status, company: {connect: {name: company_name}}})
+        },
+        createBid: (parent, args, {prisma}, info) => {
+            const {bid_amount, company_name, study_name} = args;
+            return prisma.createBid({bid_amount, company: {connect: {name: company_name}}, study: {connect: {name: study_name}}});
         }
     }
 }
