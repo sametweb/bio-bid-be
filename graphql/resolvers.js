@@ -1,6 +1,5 @@
 const resolvers = {
     Query: {
-        hello: () => "Hello World",
        studies: (parent, args, {prisma}, info) => {
         return prisma.studies();
        },

@@ -1,7 +1,6 @@
 const {gql} = require('apollo-server');
 const schema = gql`
     type Query {
-        hello: String!,
         studies: [Study!]!,
         companies: [Company!]!,
         bids: [Bid!]!
