@@ -52,6 +52,10 @@ const resolvers = {
         updateStudy: (parent, args, {prisma}, info) => {
             const {updatedStudy_name, area, phase, study_name} = args;
             return prisma.updateStudy({data: {name: updatedStudy_name, area, phase}, where: {name: study_name}});
+        },
+        deleteBid: (parent, {id}, {prisma}, info) => {
+            // console.log(id);
+            return prisma.deleteBid({id});
         }
     }
 }
