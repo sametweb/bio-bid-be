@@ -4,6 +4,10 @@ const schema = gql`
         studies: [Study!]!,
         companies: [Company!]!,
         bids: [Bid!]!
+    },
+    type Mutation {
+        createCompany(company_name: String!): Company!,
+        createStudy(name: String!, area: String!, phase: Int!, status: String!, company_name: String!): Study!
     }
 
     type Bid {

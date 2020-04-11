@@ -27,6 +27,15 @@ const resolvers = {
         company: (parent, args, {prisma}, info) => {
             return prisma.bid({id: parent.id}).company();
         }
+    },
+    Mutation: {
+        createCompany: (parent, args, {prisma}, info) => {
+            return prisma.createCompany({name: args.company_name});
+        },
+        createStudy: (parent, args, {prisma}, info) => {
+            const {name, area, phase, status, company_name} = args;
+            return prisma.createStudy({name, area, phase, status, company: {connect: {name: company_name}}})
+        }
     }
 }
 
