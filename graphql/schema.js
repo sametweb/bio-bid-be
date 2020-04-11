@@ -3,7 +3,8 @@ const schema = gql`
     type Query {
         hello: String!,
         studies: [Study!]!,
-        companies: [Company!]!
+        companies: [Company!]!,
+        bids: [Bid!]!
     }
 
     type Bid {
