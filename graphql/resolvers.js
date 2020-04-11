@@ -42,6 +42,9 @@ const resolvers = {
         },
         updateCompany: (parent, args, {prisma}, info) => {
             return prisma.updateCompany({data: {name: args.updated_name}, where: {name: args.company_name}});
+        },
+        updateBid: (parent, args, {prisma}, info) => {
+            return prisma.updateBid({data: {bid_amount: args.bid_amount, is_approved: args.is_approved}, where: {id: args.id}})
         }
     }
 }

@@ -10,7 +10,7 @@ const schema = gql`
         createStudy(name: String!, area: String!, phase: Int!, status: String!, company_name: String!): Study!,
         createBid(bid_amount: Float!, company_name: String!, study_name: String!): Bid!,
         updateCompany(updated_name: String!, company_name: String!): Company!,
-        # updateBid()
+        updateBid(bid_amount: Float, is_approved: Boolean, id: ID!): Bid
         # updateStudy()
     }
 
