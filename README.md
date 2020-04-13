@@ -2,7 +2,7 @@
 
 # API Documentation
 
-#### Backend delpoyed at AWS (ec2-34-195-186-223.compute-1.amazonaws.com) <br>
+#### Backend deployed [here](ec2-34-195-186-223.compute-1.amazonaws.com) on AWS <br>
 
 ## Getting started
 
@@ -30,7 +30,7 @@ We chose Apollo GraphQL because:
 
 | Query Name  |    Access Control   |                        Description                            |
 |-------------|---------------------|---------------------------------------------------------------|
-| comampanies |   all users         |  Returns an array of companies                                |
+| companies   |   all users         |  Returns an array of companies                                |
 | bids        |   all users         |  Returns an array of bids                                     |
 | studies     |   all users         |  Returns a an array of studies                                |
 
