@@ -1,129 +1,98 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/819afd4c021b7e39f08c/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/bio-bid-be/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/819afd4c021b7e39f08c/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/bio-bid-be/test_coverage) 
+
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+#### Backend delpoyed at AWS (ec2-34-195-186-223.compute-1.amazonaws.com) <br>
 
-## 1️⃣ Getting started
+## Getting started
 
 To get the server running locally:
-
-🚫 adjust these scripts to match your project
 
 - Clone this repo
 - **npm install** to install all required dependencies
 - **npm run server** to start the local server
 - **npm test** to start server using testing environment
 
-### Backend framework goes here
-Apollo-Server/Prisma
-🚫 Why did you choose this framework?
+### Backend framework
+We chose Apollo GraphQL because:
+-    Allows Web clients to request the exact details that it will consume at a given time. This leads to an increase to performance as well and prevents overfetching data.
 
--    Point One
--    Point Two
--    Point Three
--    Point Four
+-    By using GraphQL it allows our API to be expanded on to include any number of features or to even make use to external APIs if needed in future releases.
 
-## 2️⃣ Endpoints
+## Client Repository
 
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
+[Web Front-End](https://github.com/Lambda-School-Labs/bio-bid-fe) for details on the frontend of our project.
 
-#### Organization Routes
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+## Endpoints
 
-#### User Routes
+#### Queries
 
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
+| Query Name  |    Access Control   |                        Description                            |
+|-------------|---------------------|---------------------------------------------------------------|
+| comampanies |   all users         |  Returns an array of companies                                |
+| bids        |   all users         |  Returns an array of bids                                     |
+| studies     |   all users         |  Returns a an array of studies                                |
 
-# Data Model
+#### Mutations
 
-🚫This is just an example. Replace this with your data model
+| Mutation Name |   Access Control   |                        Description                                 |
+|---------------|--------------------|--------------------------------------------------------------------|
+| createCompany |   all users        |  Creates a new company                                             |
+| updateCompany |   all users        |  Updates the company details                                       |
+| deleteCompany |   all users        |  Deletes a company from the database. Requires the company name    |
+| createBid     |   all users        |  Creates a new bid                                                 |
+| updateBid     |   all users        |  Updates the bid details                                           |
+| deleteBid     |   all users        |  Deletes a bid from the database. Requires the ID of the bid       |
+| createStudy   |   all users        |  Creates a new study                                               |
+| updateStudy   |   all users        |  Updates study details                                             |
+| deleteStudy   |   all users        |  Deletes a study from the database. Requires the name of the study |
 
-#### 2️⃣ ORGANIZATIONS
 
----
+## Data Model
+### Note: ! means the field is required or will return a value of not NULL 
 
-```
-{
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
-}
-```
-
-#### USERS
+#### Company
 
 ---
 
 ```
 {
-  id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
-  email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
+  id: ID!
+  name: String!
+  studies: [Study!]
+  bids: [Bid!]
 }
 ```
 
-## 2️⃣ Actions
+#### Bid
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+---
 
-`getOrgs()` -> Returns all organizations
+```
+{
+  id: ID!
+  company: Company!
+  bid_amount: Float!
+  is_approved: Boolean!
+  study: Study!
+}
+```
 
-`getOrg(orgId)` -> Returns a single organization by ID
+#### Study
 
-`addOrg(org)` -> Returns the created org
+---
 
-`updateOrg(orgId)` -> Update an organization by ID
-
-`deleteOrg(orgId)` -> Delete an organization by ID
-<br>
-<br>
-<br>
-`getUsers(orgId)` -> if no param all users
-
-`getUser(userId)` -> Returns a single user by user ID
-
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
-
-`updateUser(userId, changes object)` -> Updates a single user by ID.
-
-`deleteUser(userId)` -> deletes everything dependent on the user
-
-## 3️⃣ Environment Variables
-
-In order for the app to function correctly, the user must set up their own environment variables.
-
-create a .env file that includes the following:
-
-🚫 These are just examples, replace them with the specifics for your app
-    
-    *  STAGING_DB - optional development db for using functionality not available in SQLite
-    *  NODE_ENV - set to "development" until ready for "production"
-    *  JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-*=+)') for i in range(50)])
-    *  SENDGRID_API_KEY - this is generated in your Sendgrid account
-    *  stripe_secret - this is generated in the Stripe dashboard
+```
+{
+  id: ID!
+  name: String!
+  area: String!
+  phase: Int!
+  status: String!
+  company: Company!
+}
+```
     
 ## Contributing
 
@@ -160,8 +129,3 @@ Remember that this project is licensed under the MIT license, and by submitting 
 ### Attribution
 
 These contribution guidelines have been adapted from [this good-Contributing.md-template](https://gist.github.com/PurpleBooth/b24679402957c63ec426).
-
-## Documentation
-
-See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
-🚫 Add DS iOS and/or Andriod links here if applicable.
