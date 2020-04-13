@@ -13,6 +13,9 @@ To get the server running locally:
 - **npm run server** to start the local server
 - **npm test** to start server using testing environment
 
+### Contributors
+[Ben Rogers](https://www.github.com/thisbenrogers) | [Joshua Agins](https://www.github.com/jagins) | [Andrea Harris](https://www.github.com/aharris1012)   | [Alston Garrett](https://www.github.com/neytorokx)
+
 ### Backend framework
 We chose Apollo GraphQL because:
 -    Allows Web clients to request the exact details that it will consume at a given time. This leads to an increase to performance as well and prevents overfetching data.
