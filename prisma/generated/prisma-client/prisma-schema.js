@@ -374,6 +374,8 @@ input CompanyWhereUniqueInput {
   name: String
 }
 
+scalar DateTime
+
 scalar Long
 
 type Mutation {
@@ -431,7 +433,11 @@ type Study {
   id: ID!
   name: String!
   area: String!
+  protocol_number: String!
+  title: String!
   phase: Int!
+  services: Int!
+  modified_date: DateTime!
   status: String!
   company: Company!
 }
@@ -446,7 +452,11 @@ input StudyCreateInput {
   id: ID
   name: String!
   area: String!
+  protocol_number: String!
+  title: String!
   phase: Int!
+  services: Int!
+  modified_date: DateTime!
   status: String!
   company: CompanyCreateOneWithoutStudiesInput!
 }
@@ -465,7 +475,11 @@ input StudyCreateWithoutCompanyInput {
   id: ID
   name: String!
   area: String!
+  protocol_number: String!
+  title: String!
   phase: Int!
+  services: Int!
+  modified_date: DateTime!
   status: String!
 }
 
@@ -481,8 +495,16 @@ enum StudyOrderByInput {
   name_DESC
   area_ASC
   area_DESC
+  protocol_number_ASC
+  protocol_number_DESC
+  title_ASC
+  title_DESC
   phase_ASC
   phase_DESC
+  services_ASC
+  services_DESC
+  modified_date_ASC
+  modified_date_DESC
   status_ASC
   status_DESC
 }
@@ -491,7 +513,11 @@ type StudyPreviousValues {
   id: ID!
   name: String!
   area: String!
+  protocol_number: String!
+  title: String!
   phase: Int!
+  services: Int!
+  modified_date: DateTime!
   status: String!
 }
 
@@ -538,6 +564,34 @@ input StudyScalarWhereInput {
   area_not_starts_with: String
   area_ends_with: String
   area_not_ends_with: String
+  protocol_number: String
+  protocol_number_not: String
+  protocol_number_in: [String!]
+  protocol_number_not_in: [String!]
+  protocol_number_lt: String
+  protocol_number_lte: String
+  protocol_number_gt: String
+  protocol_number_gte: String
+  protocol_number_contains: String
+  protocol_number_not_contains: String
+  protocol_number_starts_with: String
+  protocol_number_not_starts_with: String
+  protocol_number_ends_with: String
+  protocol_number_not_ends_with: String
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
   phase: Int
   phase_not: Int
   phase_in: [Int!]
@@ -546,6 +600,22 @@ input StudyScalarWhereInput {
   phase_lte: Int
   phase_gt: Int
   phase_gte: Int
+  services: Int
+  services_not: Int
+  services_in: [Int!]
+  services_not_in: [Int!]
+  services_lt: Int
+  services_lte: Int
+  services_gt: Int
+  services_gte: Int
+  modified_date: DateTime
+  modified_date_not: DateTime
+  modified_date_in: [DateTime!]
+  modified_date_not_in: [DateTime!]
+  modified_date_lt: DateTime
+  modified_date_lte: DateTime
+  modified_date_gt: DateTime
+  modified_date_gte: DateTime
   status: String
   status_not: String
   status_in: [String!]
@@ -586,7 +656,11 @@ input StudySubscriptionWhereInput {
 input StudyUpdateDataInput {
   name: String
   area: String
+  protocol_number: String
+  title: String
   phase: Int
+  services: Int
+  modified_date: DateTime
   status: String
   company: CompanyUpdateOneRequiredWithoutStudiesInput
 }
@@ -594,7 +668,11 @@ input StudyUpdateDataInput {
 input StudyUpdateInput {
   name: String
   area: String
+  protocol_number: String
+  title: String
   phase: Int
+  services: Int
+  modified_date: DateTime
   status: String
   company: CompanyUpdateOneRequiredWithoutStudiesInput
 }
@@ -602,14 +680,22 @@ input StudyUpdateInput {
 input StudyUpdateManyDataInput {
   name: String
   area: String
+  protocol_number: String
+  title: String
   phase: Int
+  services: Int
+  modified_date: DateTime
   status: String
 }
 
 input StudyUpdateManyMutationInput {
   name: String
   area: String
+  protocol_number: String
+  title: String
   phase: Int
+  services: Int
+  modified_date: DateTime
   status: String
 }
 
@@ -640,7 +726,11 @@ input StudyUpdateOneRequiredInput {
 input StudyUpdateWithoutCompanyDataInput {
   name: String
   area: String
+  protocol_number: String
+  title: String
   phase: Int
+  services: Int
+  modified_date: DateTime
   status: String
 }
 
@@ -703,6 +793,34 @@ input StudyWhereInput {
   area_not_starts_with: String
   area_ends_with: String
   area_not_ends_with: String
+  protocol_number: String
+  protocol_number_not: String
+  protocol_number_in: [String!]
+  protocol_number_not_in: [String!]
+  protocol_number_lt: String
+  protocol_number_lte: String
+  protocol_number_gt: String
+  protocol_number_gte: String
+  protocol_number_contains: String
+  protocol_number_not_contains: String
+  protocol_number_starts_with: String
+  protocol_number_not_starts_with: String
+  protocol_number_ends_with: String
+  protocol_number_not_ends_with: String
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
   phase: Int
   phase_not: Int
   phase_in: [Int!]
@@ -711,6 +829,22 @@ input StudyWhereInput {
   phase_lte: Int
   phase_gt: Int
   phase_gte: Int
+  services: Int
+  services_not: Int
+  services_in: [Int!]
+  services_not_in: [Int!]
+  services_lt: Int
+  services_lte: Int
+  services_gt: Int
+  services_gte: Int
+  modified_date: DateTime
+  modified_date_not: DateTime
+  modified_date_in: [DateTime!]
+  modified_date_not_in: [DateTime!]
+  modified_date_lt: DateTime
+  modified_date_lte: DateTime
+  modified_date_gt: DateTime
+  modified_date_gte: DateTime
   status: String
   status_not: String
   status_in: [String!]

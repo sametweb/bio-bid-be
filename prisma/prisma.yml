@@ -1,4 +1,4 @@
-endpoint: https://biobid-4efc34e917.herokuapp.com
+endpoint: https://us1.prisma.sh/biobid-team/production/prod
 datamodel: datamodel.graphql
 
 generate:

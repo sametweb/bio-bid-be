@@ -186,8 +186,16 @@ export type StudyOrderByInput =
   | "name_DESC"
   | "area_ASC"
   | "area_DESC"
+  | "protocol_number_ASC"
+  | "protocol_number_DESC"
+  | "title_ASC"
+  | "title_DESC"
   | "phase_ASC"
   | "phase_DESC"
+  | "services_ASC"
+  | "services_DESC"
+  | "modified_date_ASC"
+  | "modified_date_DESC"
   | "status_ASC"
   | "status_DESC";
 
@@ -254,6 +262,34 @@ export interface StudyWhereInput {
   area_not_starts_with?: Maybe<String>;
   area_ends_with?: Maybe<String>;
   area_not_ends_with?: Maybe<String>;
+  protocol_number?: Maybe<String>;
+  protocol_number_not?: Maybe<String>;
+  protocol_number_in?: Maybe<String[] | String>;
+  protocol_number_not_in?: Maybe<String[] | String>;
+  protocol_number_lt?: Maybe<String>;
+  protocol_number_lte?: Maybe<String>;
+  protocol_number_gt?: Maybe<String>;
+  protocol_number_gte?: Maybe<String>;
+  protocol_number_contains?: Maybe<String>;
+  protocol_number_not_contains?: Maybe<String>;
+  protocol_number_starts_with?: Maybe<String>;
+  protocol_number_not_starts_with?: Maybe<String>;
+  protocol_number_ends_with?: Maybe<String>;
+  protocol_number_not_ends_with?: Maybe<String>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
   phase?: Maybe<Int>;
   phase_not?: Maybe<Int>;
   phase_in?: Maybe<Int[] | Int>;
@@ -262,6 +298,22 @@ export interface StudyWhereInput {
   phase_lte?: Maybe<Int>;
   phase_gt?: Maybe<Int>;
   phase_gte?: Maybe<Int>;
+  services?: Maybe<Int>;
+  services_not?: Maybe<Int>;
+  services_in?: Maybe<Int[] | Int>;
+  services_not_in?: Maybe<Int[] | Int>;
+  services_lt?: Maybe<Int>;
+  services_lte?: Maybe<Int>;
+  services_gt?: Maybe<Int>;
+  services_gte?: Maybe<Int>;
+  modified_date?: Maybe<DateTimeInput>;
+  modified_date_not?: Maybe<DateTimeInput>;
+  modified_date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  modified_date_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  modified_date_lt?: Maybe<DateTimeInput>;
+  modified_date_lte?: Maybe<DateTimeInput>;
+  modified_date_gt?: Maybe<DateTimeInput>;
+  modified_date_gte?: Maybe<DateTimeInput>;
   status?: Maybe<String>;
   status_not?: Maybe<String>;
   status_in?: Maybe<String[] | String>;
@@ -394,7 +446,11 @@ export interface StudyCreateWithoutCompanyInput {
   id?: Maybe<ID_Input>;
   name: String;
   area: String;
+  protocol_number: String;
+  title: String;
   phase: Int;
+  services: Int;
+  modified_date: DateTimeInput;
   status: String;
 }
 
@@ -407,7 +463,11 @@ export interface StudyCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   area: String;
+  protocol_number: String;
+  title: String;
   phase: Int;
+  services: Int;
+  modified_date: DateTimeInput;
   status: String;
   company: CompanyCreateOneWithoutStudiesInput;
 }
@@ -484,7 +544,11 @@ export interface StudyUpdateWithWhereUniqueWithoutCompanyInput {
 export interface StudyUpdateWithoutCompanyDataInput {
   name?: Maybe<String>;
   area?: Maybe<String>;
+  protocol_number?: Maybe<String>;
+  title?: Maybe<String>;
   phase?: Maybe<Int>;
+  services?: Maybe<Int>;
+  modified_date?: Maybe<DateTimeInput>;
   status?: Maybe<String>;
 }
 
@@ -537,6 +601,34 @@ export interface StudyScalarWhereInput {
   area_not_starts_with?: Maybe<String>;
   area_ends_with?: Maybe<String>;
   area_not_ends_with?: Maybe<String>;
+  protocol_number?: Maybe<String>;
+  protocol_number_not?: Maybe<String>;
+  protocol_number_in?: Maybe<String[] | String>;
+  protocol_number_not_in?: Maybe<String[] | String>;
+  protocol_number_lt?: Maybe<String>;
+  protocol_number_lte?: Maybe<String>;
+  protocol_number_gt?: Maybe<String>;
+  protocol_number_gte?: Maybe<String>;
+  protocol_number_contains?: Maybe<String>;
+  protocol_number_not_contains?: Maybe<String>;
+  protocol_number_starts_with?: Maybe<String>;
+  protocol_number_not_starts_with?: Maybe<String>;
+  protocol_number_ends_with?: Maybe<String>;
+  protocol_number_not_ends_with?: Maybe<String>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
   phase?: Maybe<Int>;
   phase_not?: Maybe<Int>;
   phase_in?: Maybe<Int[] | Int>;
@@ -545,6 +637,22 @@ export interface StudyScalarWhereInput {
   phase_lte?: Maybe<Int>;
   phase_gt?: Maybe<Int>;
   phase_gte?: Maybe<Int>;
+  services?: Maybe<Int>;
+  services_not?: Maybe<Int>;
+  services_in?: Maybe<Int[] | Int>;
+  services_not_in?: Maybe<Int[] | Int>;
+  services_lt?: Maybe<Int>;
+  services_lte?: Maybe<Int>;
+  services_gt?: Maybe<Int>;
+  services_gte?: Maybe<Int>;
+  modified_date?: Maybe<DateTimeInput>;
+  modified_date_not?: Maybe<DateTimeInput>;
+  modified_date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  modified_date_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  modified_date_lt?: Maybe<DateTimeInput>;
+  modified_date_lte?: Maybe<DateTimeInput>;
+  modified_date_gt?: Maybe<DateTimeInput>;
+  modified_date_gte?: Maybe<DateTimeInput>;
   status?: Maybe<String>;
   status_not?: Maybe<String>;
   status_in?: Maybe<String[] | String>;
@@ -572,7 +680,11 @@ export interface StudyUpdateManyWithWhereNestedInput {
 export interface StudyUpdateManyDataInput {
   name?: Maybe<String>;
   area?: Maybe<String>;
+  protocol_number?: Maybe<String>;
+  title?: Maybe<String>;
   phase?: Maybe<Int>;
+  services?: Maybe<Int>;
+  modified_date?: Maybe<DateTimeInput>;
   status?: Maybe<String>;
 }
 
@@ -591,7 +703,11 @@ export interface StudyUpdateOneRequiredInput {
 export interface StudyUpdateDataInput {
   name?: Maybe<String>;
   area?: Maybe<String>;
+  protocol_number?: Maybe<String>;
+  title?: Maybe<String>;
   phase?: Maybe<Int>;
+  services?: Maybe<Int>;
+  modified_date?: Maybe<DateTimeInput>;
   status?: Maybe<String>;
   company?: Maybe<CompanyUpdateOneRequiredWithoutStudiesInput>;
 }
@@ -720,7 +836,11 @@ export interface CompanyUpdateManyMutationInput {
 export interface StudyUpdateInput {
   name?: Maybe<String>;
   area?: Maybe<String>;
+  protocol_number?: Maybe<String>;
+  title?: Maybe<String>;
   phase?: Maybe<Int>;
+  services?: Maybe<Int>;
+  modified_date?: Maybe<DateTimeInput>;
   status?: Maybe<String>;
   company?: Maybe<CompanyUpdateOneRequiredWithoutStudiesInput>;
 }
@@ -728,7 +848,11 @@ export interface StudyUpdateInput {
 export interface StudyUpdateManyMutationInput {
   name?: Maybe<String>;
   area?: Maybe<String>;
+  protocol_number?: Maybe<String>;
+  title?: Maybe<String>;
   phase?: Maybe<Int>;
+  services?: Maybe<Int>;
+  modified_date?: Maybe<DateTimeInput>;
   status?: Maybe<String>;
 }
 
@@ -883,7 +1007,11 @@ export interface Study {
   id: ID_Output;
   name: String;
   area: String;
+  protocol_number: String;
+  title: String;
   phase: Int;
+  services: Int;
+  modified_date: DateTimeOutput;
   status: String;
 }
 
@@ -891,7 +1019,11 @@ export interface StudyPromise extends Promise<Study>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   area: () => Promise<String>;
+  protocol_number: () => Promise<String>;
+  title: () => Promise<String>;
   phase: () => Promise<Int>;
+  services: () => Promise<Int>;
+  modified_date: () => Promise<DateTimeOutput>;
   status: () => Promise<String>;
   company: <T = CompanyPromise>() => T;
 }
@@ -902,7 +1034,11 @@ export interface StudySubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   area: () => Promise<AsyncIterator<String>>;
+  protocol_number: () => Promise<AsyncIterator<String>>;
+  title: () => Promise<AsyncIterator<String>>;
   phase: () => Promise<AsyncIterator<Int>>;
+  services: () => Promise<AsyncIterator<Int>>;
+  modified_date: () => Promise<AsyncIterator<DateTimeOutput>>;
   status: () => Promise<AsyncIterator<String>>;
   company: <T = CompanySubscription>() => T;
 }
@@ -913,7 +1049,11 @@ export interface StudyNullablePromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   area: () => Promise<String>;
+  protocol_number: () => Promise<String>;
+  title: () => Promise<String>;
   phase: () => Promise<Int>;
+  services: () => Promise<Int>;
+  modified_date: () => Promise<DateTimeOutput>;
   status: () => Promise<String>;
   company: <T = CompanyPromise>() => T;
 }
@@ -1239,7 +1379,11 @@ export interface StudyPreviousValues {
   id: ID_Output;
   name: String;
   area: String;
+  protocol_number: String;
+  title: String;
   phase: Int;
+  services: Int;
+  modified_date: DateTimeOutput;
   status: String;
 }
 
@@ -1249,7 +1393,11 @@ export interface StudyPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   area: () => Promise<String>;
+  protocol_number: () => Promise<String>;
+  title: () => Promise<String>;
   phase: () => Promise<Int>;
+  services: () => Promise<Int>;
+  modified_date: () => Promise<DateTimeOutput>;
   status: () => Promise<String>;
 }
 
@@ -1259,7 +1407,11 @@ export interface StudyPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   area: () => Promise<AsyncIterator<String>>;
+  protocol_number: () => Promise<AsyncIterator<String>>;
+  title: () => Promise<AsyncIterator<String>>;
   phase: () => Promise<AsyncIterator<Int>>;
+  services: () => Promise<AsyncIterator<Int>>;
+  modified_date: () => Promise<AsyncIterator<DateTimeOutput>>;
   status: () => Promise<AsyncIterator<String>>;
 }
 
@@ -1278,6 +1430,16 @@ export type String = string;
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number;
+
+/*
+DateTime scalar input type, allowing Date
+*/
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
 
 /*
 The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
