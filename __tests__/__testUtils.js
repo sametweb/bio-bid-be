@@ -22,7 +22,7 @@ const prismaConnection = () => {
 }
 
 // Create a server instance that can be used for each test suite
-const constructTestServer = (testUserId = null) => {
+const constructTestServer = () => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
