@@ -12,10 +12,14 @@ module.exports = gql`
     }
 
     type Study {
-        id: ID! 
-        name: String! 
+        id: ID!
+        name: String!
         area: String!
+        protocol_number: String!
+        title: String!
         phase: Int!
+        services: Int!
+        modified_date: String!
         status: String!
         company: Company!
     }

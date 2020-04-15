@@ -17,7 +17,11 @@ type Study {
   id: ID! @id
   name: String! @unique
   area: String!
+  protocol_number: String!
+  title: String!
   phase: Int!
+  services: Int!
+  modified_date: DateTime!
   status: String!
   company: Company! @relation(link: INLINE)
 }
