@@ -27,7 +27,15 @@ const ADD_TEST_STUDY = gql`
 `
 
 const DELETE_TEST_STUDY = gql`
-
+  mutation DeleteStudy(
+    $id: String!
+  ){
+    deleteStudy(where: {
+      id: $id
+    }) {
+      id
+    }
+  }
 `
 
 module.exports = {
