@@ -1,4 +1,4 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/819afd4c021b7e39f08c/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/bio-bid-be/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/819afd4c021b7e39f08c/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/bio-bid-be/test_coverage) 
+[![Maintainability](https://api.codeclimate.com/v1/badges/819afd4c021b7e39f08c/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/bio-bid-be/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/819afd4c021b7e39f08c/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/bio-bid-be/test_coverage)
 
 # API Documentation
 
@@ -14,46 +14,48 @@ To get the server running locally:
 - **npm test** to start server using testing environment
 
 ### Contributors
-[Ben Rogers](https://www.github.com/thisbenrogers) | [Joshua Agins](https://www.github.com/jagins) | [Andrea Harris](https://www.github.com/aharris1012)   | [Alston Garrett](https://www.github.com/neytorokx)
+
+[Ben Rogers](https://www.github.com/thisbenrogers) | [Joshua Agins](https://www.github.com/jagins) | [Andrea Harris](https://www.github.com/aharris1012) | [Alston Garrett](https://www.github.com/neytorokx) | [David Shestopal](https://github.com/DavidShestopal)
 
 ### Backend framework
-We chose Apollo GraphQL because:
--    Allows Web clients to request the exact details that it will consume at a given time. This leads to an increase to performance as well and prevents overfetching data.
 
--    By using GraphQL it allows our API to be expanded on to include any number of features or to even make use to external APIs if needed in future releases.
+We chose Apollo GraphQL because:
+
+- Allows Web clients to request the exact details that it will consume at a given time. This leads to an increase to performance as well and prevents overfetching data.
+
+- By using GraphQL it allows our API to be expanded on to include any number of features or to even make use to external APIs if needed in future releases.
 
 ## Client Repository
 
 [Web Front-End](https://github.com/Lambda-School-Labs/bio-bid-fe) for details on the frontend of our project.
 
-
 ## Endpoints
 
 #### Queries
 
-| Query Name  |    Access Control   |                        Description                            |
-|-------------|---------------------|---------------------------------------------------------------|
-| companies   |   all users         |  Returns an array of companies                                |
-| bids        |   all users         |  Returns an array of bids                                     |
-| studies     |   all users         |  Returns a an array of studies                                |
+| Query Name | Access Control | Description                   |
+| ---------- | -------------- | ----------------------------- |
+| companies  | all users      | Returns an array of companies |
+| bids       | all users      | Returns an array of bids      |
+| studies    | all users      | Returns a an array of studies |
 
 #### Mutations
 
-| Mutation Name |   Access Control   |                        Description                                 |
-|---------------|--------------------|--------------------------------------------------------------------|
-| createCompany |   all users        |  Creates a new company                                             |
-| updateCompany |   all users        |  Updates the company details                                       |
-| deleteCompany |   all users        |  Deletes a company from the database. Requires the company name    |
-| createBid     |   all users        |  Creates a new bid                                                 |
-| updateBid     |   all users        |  Updates the bid details                                           |
-| deleteBid     |   all users        |  Deletes a bid from the database. Requires the ID of the bid       |
-| createStudy   |   all users        |  Creates a new study                                               |
-| updateStudy   |   all users        |  Updates study details                                             |
-| deleteStudy   |   all users        |  Deletes a study from the database. Requires the name of the study |
-
+| Mutation Name | Access Control | Description                                                       |
+| ------------- | -------------- | ----------------------------------------------------------------- |
+| createCompany | all users      | Creates a new company                                             |
+| updateCompany | all users      | Updates the company details                                       |
+| deleteCompany | all users      | Deletes a company from the database. Requires the company name    |
+| createBid     | all users      | Creates a new bid                                                 |
+| updateBid     | all users      | Updates the bid details                                           |
+| deleteBid     | all users      | Deletes a bid from the database. Requires the ID of the bid       |
+| createStudy   | all users      | Creates a new study                                               |
+| updateStudy   | all users      | Updates study details                                             |
+| deleteStudy   | all users      | Deletes a study from the database. Requires the name of the study |
 
 ## Data Model
-### Note: ! means the field is required or will return a value of not NULL 
+
+### Note: ! means the field is required or will return a value of not NULL
 
 #### Company
 
@@ -96,7 +98,7 @@ We chose Apollo GraphQL because:
   company: Company!
 }
 ```
-    
+
 ## Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
@@ -105,11 +107,12 @@ Please note we have a [code of conduct](./code_of_conduct.md). Please follow it 
 
 ### Issue/Bug Request
 
- **If you are having an issue with the existing project code, please submit a bug report under the following guidelines:**
- - Check first to see if your issue has already been reported.
- - Check to see if the issue has recently been fixed by attempting to reproduce the issue using the latest master branch in the repository.
- - Create a live example of the problem.
- - Submit a detailed bug report including your environment & browser, steps to reproduce the issue, actual and expected outcomes,  where you believe the issue is originating from, and any potential solutions you have considered.
+**If you are having an issue with the existing project code, please submit a bug report under the following guidelines:**
+
+- Check first to see if your issue has already been reported.
+- Check to see if the issue has recently been fixed by attempting to reproduce the issue using the latest master branch in the repository.
+- Create a live example of the problem.
+- Submit a detailed bug report including your environment & browser, steps to reproduce the issue, actual and expected outcomes, where you believe the issue is originating from, and any potential solutions you have considered.
 
 ### Feature Requests
 
