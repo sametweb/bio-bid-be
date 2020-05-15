@@ -15,9 +15,7 @@ To get the server running locally:
 
 ### Contributors
 
-
-[Ben Rogers](https://www.github.com/thisbenrogers) | [Joshua Agins](https://www.github.com/jagins) | [Andrea Harris](https://www.github.com/aharris1012) | [Alston Garrett](https://www.github.com/neytorokx) | [David Shestopal](https://github.com/DavidShestopal) | [Josiah Roa](https://github.com/josiahroa18)| [Samet Mutevelli](https://github.com/sametweb)
-
+[Ben Rogers](https://www.github.com/thisbenrogers) | [Joshua Agins](https://www.github.com/jagins) | [Andrea Harris](https://www.github.com/aharris1012) | [Alston Garrett](https://www.github.com/neytorokx) | [David Shestopal](https://github.com/DavidShestopal) | [Josiah Roa](https://github.com/josiahroa18) | [Samet Mutevelli](https://github.com/sametweb) | [Brandon Fulmer](https://github.com/nobro777)
 
 ### Backend framework
 
