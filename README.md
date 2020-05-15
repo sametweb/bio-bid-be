@@ -15,7 +15,7 @@ To get the server running locally:
 
 ### Contributors
 
-[Ben Rogers](https://www.github.com/thisbenrogers) | [Joshua Agins](https://www.github.com/jagins) | [Andrea Harris](https://www.github.com/aharris1012) | [Alston Garrett](https://www.github.com/neytorokx) | [David Shestopal](https://github.com/DavidShestopal)
+[Ben Rogers](https://www.github.com/thisbenrogers) | [Joshua Agins](https://www.github.com/jagins) | [Andrea Harris](https://www.github.com/aharris1012) | [Alston Garrett](https://www.github.com/neytorokx) | [David Shestopal](https://github.com/DavidShestopal) | [Josiah Roa](https://github.com/josiahroa18)
 
 ### Backend framework
 
