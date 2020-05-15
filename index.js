@@ -12,6 +12,7 @@ const server = new ApolloServer({
     context: {prisma} 
   });
 
-server.listen({port: process.env.PORT || 5000}).then(({url}) =>{
-    console.log(`Server is running at ${url}`);
+server.listen({port: process.env.PORT || 5000})
+  .then(({url}) =>{
+    console.log(`Server is running at ${url}`)
 })
