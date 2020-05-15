@@ -2,7 +2,7 @@ module.exports = {
     Query: {
         bids: (parent, args, {prisma}, info) => {
             return prisma.bids();
-       }
+        }
     },
     Mutation: {
         createBid: (parent, args, {prisma}, info) => {
@@ -19,7 +19,7 @@ module.exports = {
     },
     Bid: {
         study: (parent, args, {prisma}, info) => {
-           return prisma.bid({id: parent.id}).study();
+            return prisma.bid({id: parent.id}).study();
         },
         company: (parent, args, {prisma}, info) => {
             return prisma.bid({id: parent.id}).company();
