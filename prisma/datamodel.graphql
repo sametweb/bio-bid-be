@@ -1,8 +1,54 @@
 type Company {
   id: ID! @id
   name: String! @unique
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: [Service]! @relation
+  specialties: [Specialty]! @relation
+  regionsCovered: [Region]! @relation
+  therapeuticAreas: [TherapeuticArea]! @relation
   studies: [Study!]
   bids: [Bid!]
+}
+
+type Service {
+  id: ID! @id
+  name: String! @unique
+  companies: [Company]! @relation
+}
+
+type Specialty {
+  id: ID! @id
+  name: String! @unique
+  companies: [Company]! @relation
+}
+
+type Region {
+  id: ID! @id
+  name: String! @unique
+  companies: [Company]! @relation
+}
+
+type TherapeuticArea {
+  id: ID! @id
+  name: String! @unique
+  companies: [Company]! @relation
+}
+
+enum CompanySize { # https://developer.linkedin.com/docs/reference/company-size-codes
+  A # Self-employed
+  B # 1-10 employees
+  C # 11-50 employees
+  D # 51-200 employees
+  E # 201-500 employees
+  F # 501-1000 employees
+  G # 1001-5000 employees
+  H # 5001-10,000 employees
+  I # 10,001+ employees
 }
 
 type Bid {
