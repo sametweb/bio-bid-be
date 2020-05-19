@@ -18,7 +18,11 @@ export type Maybe<T> = T | undefined | null;
 export interface Exists {
   bid: (where?: BidWhereInput) => Promise<boolean>;
   company: (where?: CompanyWhereInput) => Promise<boolean>;
+  region: (where?: RegionWhereInput) => Promise<boolean>;
+  service: (where?: ServiceWhereInput) => Promise<boolean>;
+  specialty: (where?: SpecialtyWhereInput) => Promise<boolean>;
   study: (where?: StudyWhereInput) => Promise<boolean>;
+  therapeuticArea: (where?: TherapeuticAreaWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -78,6 +82,63 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => CompanyConnectionPromise;
+  region: (where: RegionWhereUniqueInput) => RegionNullablePromise;
+  regions: (args?: {
+    where?: RegionWhereInput;
+    orderBy?: RegionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Region>;
+  regionsConnection: (args?: {
+    where?: RegionWhereInput;
+    orderBy?: RegionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => RegionConnectionPromise;
+  service: (where: ServiceWhereUniqueInput) => ServiceNullablePromise;
+  services: (args?: {
+    where?: ServiceWhereInput;
+    orderBy?: ServiceOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Service>;
+  servicesConnection: (args?: {
+    where?: ServiceWhereInput;
+    orderBy?: ServiceOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => ServiceConnectionPromise;
+  specialty: (where: SpecialtyWhereUniqueInput) => SpecialtyNullablePromise;
+  specialties: (args?: {
+    where?: SpecialtyWhereInput;
+    orderBy?: SpecialtyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Specialty>;
+  specialtiesConnection: (args?: {
+    where?: SpecialtyWhereInput;
+    orderBy?: SpecialtyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => SpecialtyConnectionPromise;
   study: (where: StudyWhereUniqueInput) => StudyNullablePromise;
   studies: (args?: {
     where?: StudyWhereInput;
@@ -97,6 +158,27 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => StudyConnectionPromise;
+  therapeuticArea: (
+    where: TherapeuticAreaWhereUniqueInput
+  ) => TherapeuticAreaNullablePromise;
+  therapeuticAreas: (args?: {
+    where?: TherapeuticAreaWhereInput;
+    orderBy?: TherapeuticAreaOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<TherapeuticArea>;
+  therapeuticAreasConnection: (args?: {
+    where?: TherapeuticAreaWhereInput;
+    orderBy?: TherapeuticAreaOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => TherapeuticAreaConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
@@ -135,6 +217,54 @@ export interface Prisma {
   }) => CompanyPromise;
   deleteCompany: (where: CompanyWhereUniqueInput) => CompanyPromise;
   deleteManyCompanies: (where?: CompanyWhereInput) => BatchPayloadPromise;
+  createRegion: (data: RegionCreateInput) => RegionPromise;
+  updateRegion: (args: {
+    data: RegionUpdateInput;
+    where: RegionWhereUniqueInput;
+  }) => RegionPromise;
+  updateManyRegions: (args: {
+    data: RegionUpdateManyMutationInput;
+    where?: RegionWhereInput;
+  }) => BatchPayloadPromise;
+  upsertRegion: (args: {
+    where: RegionWhereUniqueInput;
+    create: RegionCreateInput;
+    update: RegionUpdateInput;
+  }) => RegionPromise;
+  deleteRegion: (where: RegionWhereUniqueInput) => RegionPromise;
+  deleteManyRegions: (where?: RegionWhereInput) => BatchPayloadPromise;
+  createService: (data: ServiceCreateInput) => ServicePromise;
+  updateService: (args: {
+    data: ServiceUpdateInput;
+    where: ServiceWhereUniqueInput;
+  }) => ServicePromise;
+  updateManyServices: (args: {
+    data: ServiceUpdateManyMutationInput;
+    where?: ServiceWhereInput;
+  }) => BatchPayloadPromise;
+  upsertService: (args: {
+    where: ServiceWhereUniqueInput;
+    create: ServiceCreateInput;
+    update: ServiceUpdateInput;
+  }) => ServicePromise;
+  deleteService: (where: ServiceWhereUniqueInput) => ServicePromise;
+  deleteManyServices: (where?: ServiceWhereInput) => BatchPayloadPromise;
+  createSpecialty: (data: SpecialtyCreateInput) => SpecialtyPromise;
+  updateSpecialty: (args: {
+    data: SpecialtyUpdateInput;
+    where: SpecialtyWhereUniqueInput;
+  }) => SpecialtyPromise;
+  updateManySpecialties: (args: {
+    data: SpecialtyUpdateManyMutationInput;
+    where?: SpecialtyWhereInput;
+  }) => BatchPayloadPromise;
+  upsertSpecialty: (args: {
+    where: SpecialtyWhereUniqueInput;
+    create: SpecialtyCreateInput;
+    update: SpecialtyUpdateInput;
+  }) => SpecialtyPromise;
+  deleteSpecialty: (where: SpecialtyWhereUniqueInput) => SpecialtyPromise;
+  deleteManySpecialties: (where?: SpecialtyWhereInput) => BatchPayloadPromise;
   createStudy: (data: StudyCreateInput) => StudyPromise;
   updateStudy: (args: {
     data: StudyUpdateInput;
@@ -151,6 +281,28 @@ export interface Prisma {
   }) => StudyPromise;
   deleteStudy: (where: StudyWhereUniqueInput) => StudyPromise;
   deleteManyStudies: (where?: StudyWhereInput) => BatchPayloadPromise;
+  createTherapeuticArea: (
+    data: TherapeuticAreaCreateInput
+  ) => TherapeuticAreaPromise;
+  updateTherapeuticArea: (args: {
+    data: TherapeuticAreaUpdateInput;
+    where: TherapeuticAreaWhereUniqueInput;
+  }) => TherapeuticAreaPromise;
+  updateManyTherapeuticAreas: (args: {
+    data: TherapeuticAreaUpdateManyMutationInput;
+    where?: TherapeuticAreaWhereInput;
+  }) => BatchPayloadPromise;
+  upsertTherapeuticArea: (args: {
+    where: TherapeuticAreaWhereUniqueInput;
+    create: TherapeuticAreaCreateInput;
+    update: TherapeuticAreaUpdateInput;
+  }) => TherapeuticAreaPromise;
+  deleteTherapeuticArea: (
+    where: TherapeuticAreaWhereUniqueInput
+  ) => TherapeuticAreaPromise;
+  deleteManyTherapeuticAreas: (
+    where?: TherapeuticAreaWhereInput
+  ) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -166,9 +318,21 @@ export interface Subscription {
   company: (
     where?: CompanySubscriptionWhereInput
   ) => CompanySubscriptionPayloadSubscription;
+  region: (
+    where?: RegionSubscriptionWhereInput
+  ) => RegionSubscriptionPayloadSubscription;
+  service: (
+    where?: ServiceSubscriptionWhereInput
+  ) => ServiceSubscriptionPayloadSubscription;
+  specialty: (
+    where?: SpecialtySubscriptionWhereInput
+  ) => SpecialtySubscriptionPayloadSubscription;
   study: (
     where?: StudySubscriptionWhereInput
   ) => StudySubscriptionPayloadSubscription;
+  therapeuticArea: (
+    where?: TherapeuticAreaSubscriptionWhereInput
+  ) => TherapeuticAreaSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -178,6 +342,50 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
+
+export type CompanySize = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I";
+
+export type ServiceOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC";
+
+export type CompanyOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "logoURL_ASC"
+  | "logoURL_DESC"
+  | "website_ASC"
+  | "website_DESC"
+  | "linkedin_ASC"
+  | "linkedin_DESC"
+  | "overview_ASC"
+  | "overview_DESC"
+  | "headquarters_ASC"
+  | "headquarters_DESC"
+  | "companySize_ASC"
+  | "companySize_DESC";
+
+export type SpecialtyOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC";
+
+export type RegionOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC";
+
+export type TherapeuticAreaOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC";
 
 export type StudyOrderByInput =
   | "id_ASC"
@@ -207,17 +415,285 @@ export type BidOrderByInput =
   | "is_approved_ASC"
   | "is_approved_DESC";
 
-export type CompanyOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC";
-
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type BidWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
+
+export interface ServiceWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  companies_every?: Maybe<CompanyWhereInput>;
+  companies_some?: Maybe<CompanyWhereInput>;
+  companies_none?: Maybe<CompanyWhereInput>;
+  AND?: Maybe<ServiceWhereInput[] | ServiceWhereInput>;
+  OR?: Maybe<ServiceWhereInput[] | ServiceWhereInput>;
+  NOT?: Maybe<ServiceWhereInput[] | ServiceWhereInput>;
+}
+
+export interface CompanyWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  logoURL?: Maybe<String>;
+  logoURL_not?: Maybe<String>;
+  logoURL_in?: Maybe<String[] | String>;
+  logoURL_not_in?: Maybe<String[] | String>;
+  logoURL_lt?: Maybe<String>;
+  logoURL_lte?: Maybe<String>;
+  logoURL_gt?: Maybe<String>;
+  logoURL_gte?: Maybe<String>;
+  logoURL_contains?: Maybe<String>;
+  logoURL_not_contains?: Maybe<String>;
+  logoURL_starts_with?: Maybe<String>;
+  logoURL_not_starts_with?: Maybe<String>;
+  logoURL_ends_with?: Maybe<String>;
+  logoURL_not_ends_with?: Maybe<String>;
+  website?: Maybe<String>;
+  website_not?: Maybe<String>;
+  website_in?: Maybe<String[] | String>;
+  website_not_in?: Maybe<String[] | String>;
+  website_lt?: Maybe<String>;
+  website_lte?: Maybe<String>;
+  website_gt?: Maybe<String>;
+  website_gte?: Maybe<String>;
+  website_contains?: Maybe<String>;
+  website_not_contains?: Maybe<String>;
+  website_starts_with?: Maybe<String>;
+  website_not_starts_with?: Maybe<String>;
+  website_ends_with?: Maybe<String>;
+  website_not_ends_with?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  linkedin_not?: Maybe<String>;
+  linkedin_in?: Maybe<String[] | String>;
+  linkedin_not_in?: Maybe<String[] | String>;
+  linkedin_lt?: Maybe<String>;
+  linkedin_lte?: Maybe<String>;
+  linkedin_gt?: Maybe<String>;
+  linkedin_gte?: Maybe<String>;
+  linkedin_contains?: Maybe<String>;
+  linkedin_not_contains?: Maybe<String>;
+  linkedin_starts_with?: Maybe<String>;
+  linkedin_not_starts_with?: Maybe<String>;
+  linkedin_ends_with?: Maybe<String>;
+  linkedin_not_ends_with?: Maybe<String>;
+  overview?: Maybe<String>;
+  overview_not?: Maybe<String>;
+  overview_in?: Maybe<String[] | String>;
+  overview_not_in?: Maybe<String[] | String>;
+  overview_lt?: Maybe<String>;
+  overview_lte?: Maybe<String>;
+  overview_gt?: Maybe<String>;
+  overview_gte?: Maybe<String>;
+  overview_contains?: Maybe<String>;
+  overview_not_contains?: Maybe<String>;
+  overview_starts_with?: Maybe<String>;
+  overview_not_starts_with?: Maybe<String>;
+  overview_ends_with?: Maybe<String>;
+  overview_not_ends_with?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  headquarters_not?: Maybe<String>;
+  headquarters_in?: Maybe<String[] | String>;
+  headquarters_not_in?: Maybe<String[] | String>;
+  headquarters_lt?: Maybe<String>;
+  headquarters_lte?: Maybe<String>;
+  headquarters_gt?: Maybe<String>;
+  headquarters_gte?: Maybe<String>;
+  headquarters_contains?: Maybe<String>;
+  headquarters_not_contains?: Maybe<String>;
+  headquarters_starts_with?: Maybe<String>;
+  headquarters_not_starts_with?: Maybe<String>;
+  headquarters_ends_with?: Maybe<String>;
+  headquarters_not_ends_with?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  companySize_not?: Maybe<CompanySize>;
+  companySize_in?: Maybe<CompanySize[] | CompanySize>;
+  companySize_not_in?: Maybe<CompanySize[] | CompanySize>;
+  services_every?: Maybe<ServiceWhereInput>;
+  services_some?: Maybe<ServiceWhereInput>;
+  services_none?: Maybe<ServiceWhereInput>;
+  specialties_every?: Maybe<SpecialtyWhereInput>;
+  specialties_some?: Maybe<SpecialtyWhereInput>;
+  specialties_none?: Maybe<SpecialtyWhereInput>;
+  regionsCovered_every?: Maybe<RegionWhereInput>;
+  regionsCovered_some?: Maybe<RegionWhereInput>;
+  regionsCovered_none?: Maybe<RegionWhereInput>;
+  therapeuticAreas_every?: Maybe<TherapeuticAreaWhereInput>;
+  therapeuticAreas_some?: Maybe<TherapeuticAreaWhereInput>;
+  therapeuticAreas_none?: Maybe<TherapeuticAreaWhereInput>;
+  studies_every?: Maybe<StudyWhereInput>;
+  studies_some?: Maybe<StudyWhereInput>;
+  studies_none?: Maybe<StudyWhereInput>;
+  bids_every?: Maybe<BidWhereInput>;
+  bids_some?: Maybe<BidWhereInput>;
+  bids_none?: Maybe<BidWhereInput>;
+  AND?: Maybe<CompanyWhereInput[] | CompanyWhereInput>;
+  OR?: Maybe<CompanyWhereInput[] | CompanyWhereInput>;
+  NOT?: Maybe<CompanyWhereInput[] | CompanyWhereInput>;
+}
+
+export interface SpecialtyWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  companies_every?: Maybe<CompanyWhereInput>;
+  companies_some?: Maybe<CompanyWhereInput>;
+  companies_none?: Maybe<CompanyWhereInput>;
+  AND?: Maybe<SpecialtyWhereInput[] | SpecialtyWhereInput>;
+  OR?: Maybe<SpecialtyWhereInput[] | SpecialtyWhereInput>;
+  NOT?: Maybe<SpecialtyWhereInput[] | SpecialtyWhereInput>;
+}
+
+export interface RegionWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  companies_every?: Maybe<CompanyWhereInput>;
+  companies_some?: Maybe<CompanyWhereInput>;
+  companies_none?: Maybe<CompanyWhereInput>;
+  AND?: Maybe<RegionWhereInput[] | RegionWhereInput>;
+  OR?: Maybe<RegionWhereInput[] | RegionWhereInput>;
+  NOT?: Maybe<RegionWhereInput[] | RegionWhereInput>;
+}
+
+export interface TherapeuticAreaWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  companies_every?: Maybe<CompanyWhereInput>;
+  companies_some?: Maybe<CompanyWhereInput>;
+  companies_none?: Maybe<CompanyWhereInput>;
+  AND?: Maybe<TherapeuticAreaWhereInput[] | TherapeuticAreaWhereInput>;
+  OR?: Maybe<TherapeuticAreaWhereInput[] | TherapeuticAreaWhereInput>;
+  NOT?: Maybe<TherapeuticAreaWhereInput[] | TherapeuticAreaWhereInput>;
+}
 
 export interface StudyWhereInput {
   id?: Maybe<ID_Input>;
@@ -334,46 +810,6 @@ export interface StudyWhereInput {
   NOT?: Maybe<StudyWhereInput[] | StudyWhereInput>;
 }
 
-export interface CompanyWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  studies_every?: Maybe<StudyWhereInput>;
-  studies_some?: Maybe<StudyWhereInput>;
-  studies_none?: Maybe<StudyWhereInput>;
-  bids_every?: Maybe<BidWhereInput>;
-  bids_some?: Maybe<BidWhereInput>;
-  bids_none?: Maybe<BidWhereInput>;
-  AND?: Maybe<CompanyWhereInput[] | CompanyWhereInput>;
-  OR?: Maybe<CompanyWhereInput[] | CompanyWhereInput>;
-  NOT?: Maybe<CompanyWhereInput[] | CompanyWhereInput>;
-}
-
 export interface BidWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
@@ -411,7 +847,27 @@ export type CompanyWhereUniqueInput = AtLeastOne<{
   name?: Maybe<String>;
 }>;
 
+export type RegionWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+}>;
+
+export type ServiceWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+}>;
+
+export type SpecialtyWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+}>;
+
 export type StudyWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+}>;
+
+export type TherapeuticAreaWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   name?: Maybe<String>;
 }>;
@@ -432,7 +888,69 @@ export interface CompanyCreateOneWithoutBidsInput {
 export interface CompanyCreateWithoutBidsInput {
   id?: Maybe<ID_Input>;
   name: String;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
+  specialties?: Maybe<SpecialtyCreateManyWithoutCompaniesInput>;
+  regionsCovered?: Maybe<RegionCreateManyWithoutCompaniesInput>;
+  therapeuticAreas?: Maybe<TherapeuticAreaCreateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
+}
+
+export interface ServiceCreateManyWithoutCompaniesInput {
+  create?: Maybe<
+    ServiceCreateWithoutCompaniesInput[] | ServiceCreateWithoutCompaniesInput
+  >;
+  connect?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
+}
+
+export interface ServiceCreateWithoutCompaniesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+}
+
+export interface SpecialtyCreateManyWithoutCompaniesInput {
+  create?: Maybe<
+    | SpecialtyCreateWithoutCompaniesInput[]
+    | SpecialtyCreateWithoutCompaniesInput
+  >;
+  connect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
+}
+
+export interface SpecialtyCreateWithoutCompaniesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+}
+
+export interface RegionCreateManyWithoutCompaniesInput {
+  create?: Maybe<
+    RegionCreateWithoutCompaniesInput[] | RegionCreateWithoutCompaniesInput
+  >;
+  connect?: Maybe<RegionWhereUniqueInput[] | RegionWhereUniqueInput>;
+}
+
+export interface RegionCreateWithoutCompaniesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+}
+
+export interface TherapeuticAreaCreateManyWithoutCompaniesInput {
+  create?: Maybe<
+    | TherapeuticAreaCreateWithoutCompaniesInput[]
+    | TherapeuticAreaCreateWithoutCompaniesInput
+  >;
+  connect?: Maybe<
+    TherapeuticAreaWhereUniqueInput[] | TherapeuticAreaWhereUniqueInput
+  >;
+}
+
+export interface TherapeuticAreaCreateWithoutCompaniesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
 }
 
 export interface StudyCreateManyWithoutCompanyInput {
@@ -480,6 +998,16 @@ export interface CompanyCreateOneWithoutStudiesInput {
 export interface CompanyCreateWithoutStudiesInput {
   id?: Maybe<ID_Input>;
   name: String;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
+  specialties?: Maybe<SpecialtyCreateManyWithoutCompaniesInput>;
+  regionsCovered?: Maybe<RegionCreateManyWithoutCompaniesInput>;
+  therapeuticAreas?: Maybe<TherapeuticAreaCreateManyWithoutCompaniesInput>;
   bids?: Maybe<BidCreateManyWithoutCompanyInput>;
 }
 
@@ -511,7 +1039,359 @@ export interface CompanyUpdateOneRequiredWithoutBidsInput {
 
 export interface CompanyUpdateWithoutBidsDataInput {
   name?: Maybe<String>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
+  specialties?: Maybe<SpecialtyUpdateManyWithoutCompaniesInput>;
+  regionsCovered?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
+  therapeuticAreas?: Maybe<TherapeuticAreaUpdateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
+}
+
+export interface ServiceUpdateManyWithoutCompaniesInput {
+  create?: Maybe<
+    ServiceCreateWithoutCompaniesInput[] | ServiceCreateWithoutCompaniesInput
+  >;
+  delete?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
+  connect?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
+  set?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
+  disconnect?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
+  update?: Maybe<
+    | ServiceUpdateWithWhereUniqueWithoutCompaniesInput[]
+    | ServiceUpdateWithWhereUniqueWithoutCompaniesInput
+  >;
+  upsert?: Maybe<
+    | ServiceUpsertWithWhereUniqueWithoutCompaniesInput[]
+    | ServiceUpsertWithWhereUniqueWithoutCompaniesInput
+  >;
+  deleteMany?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
+  updateMany?: Maybe<
+    | ServiceUpdateManyWithWhereNestedInput[]
+    | ServiceUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ServiceUpdateWithWhereUniqueWithoutCompaniesInput {
+  where: ServiceWhereUniqueInput;
+  data: ServiceUpdateWithoutCompaniesDataInput;
+}
+
+export interface ServiceUpdateWithoutCompaniesDataInput {
+  name?: Maybe<String>;
+}
+
+export interface ServiceUpsertWithWhereUniqueWithoutCompaniesInput {
+  where: ServiceWhereUniqueInput;
+  update: ServiceUpdateWithoutCompaniesDataInput;
+  create: ServiceCreateWithoutCompaniesInput;
+}
+
+export interface ServiceScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
+  OR?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
+  NOT?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
+}
+
+export interface ServiceUpdateManyWithWhereNestedInput {
+  where: ServiceScalarWhereInput;
+  data: ServiceUpdateManyDataInput;
+}
+
+export interface ServiceUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface SpecialtyUpdateManyWithoutCompaniesInput {
+  create?: Maybe<
+    | SpecialtyCreateWithoutCompaniesInput[]
+    | SpecialtyCreateWithoutCompaniesInput
+  >;
+  delete?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
+  connect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
+  set?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
+  disconnect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
+  update?: Maybe<
+    | SpecialtyUpdateWithWhereUniqueWithoutCompaniesInput[]
+    | SpecialtyUpdateWithWhereUniqueWithoutCompaniesInput
+  >;
+  upsert?: Maybe<
+    | SpecialtyUpsertWithWhereUniqueWithoutCompaniesInput[]
+    | SpecialtyUpsertWithWhereUniqueWithoutCompaniesInput
+  >;
+  deleteMany?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
+  updateMany?: Maybe<
+    | SpecialtyUpdateManyWithWhereNestedInput[]
+    | SpecialtyUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SpecialtyUpdateWithWhereUniqueWithoutCompaniesInput {
+  where: SpecialtyWhereUniqueInput;
+  data: SpecialtyUpdateWithoutCompaniesDataInput;
+}
+
+export interface SpecialtyUpdateWithoutCompaniesDataInput {
+  name?: Maybe<String>;
+}
+
+export interface SpecialtyUpsertWithWhereUniqueWithoutCompaniesInput {
+  where: SpecialtyWhereUniqueInput;
+  update: SpecialtyUpdateWithoutCompaniesDataInput;
+  create: SpecialtyCreateWithoutCompaniesInput;
+}
+
+export interface SpecialtyScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
+  OR?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
+  NOT?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
+}
+
+export interface SpecialtyUpdateManyWithWhereNestedInput {
+  where: SpecialtyScalarWhereInput;
+  data: SpecialtyUpdateManyDataInput;
+}
+
+export interface SpecialtyUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface RegionUpdateManyWithoutCompaniesInput {
+  create?: Maybe<
+    RegionCreateWithoutCompaniesInput[] | RegionCreateWithoutCompaniesInput
+  >;
+  delete?: Maybe<RegionWhereUniqueInput[] | RegionWhereUniqueInput>;
+  connect?: Maybe<RegionWhereUniqueInput[] | RegionWhereUniqueInput>;
+  set?: Maybe<RegionWhereUniqueInput[] | RegionWhereUniqueInput>;
+  disconnect?: Maybe<RegionWhereUniqueInput[] | RegionWhereUniqueInput>;
+  update?: Maybe<
+    | RegionUpdateWithWhereUniqueWithoutCompaniesInput[]
+    | RegionUpdateWithWhereUniqueWithoutCompaniesInput
+  >;
+  upsert?: Maybe<
+    | RegionUpsertWithWhereUniqueWithoutCompaniesInput[]
+    | RegionUpsertWithWhereUniqueWithoutCompaniesInput
+  >;
+  deleteMany?: Maybe<RegionScalarWhereInput[] | RegionScalarWhereInput>;
+  updateMany?: Maybe<
+    | RegionUpdateManyWithWhereNestedInput[]
+    | RegionUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface RegionUpdateWithWhereUniqueWithoutCompaniesInput {
+  where: RegionWhereUniqueInput;
+  data: RegionUpdateWithoutCompaniesDataInput;
+}
+
+export interface RegionUpdateWithoutCompaniesDataInput {
+  name?: Maybe<String>;
+}
+
+export interface RegionUpsertWithWhereUniqueWithoutCompaniesInput {
+  where: RegionWhereUniqueInput;
+  update: RegionUpdateWithoutCompaniesDataInput;
+  create: RegionCreateWithoutCompaniesInput;
+}
+
+export interface RegionScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<RegionScalarWhereInput[] | RegionScalarWhereInput>;
+  OR?: Maybe<RegionScalarWhereInput[] | RegionScalarWhereInput>;
+  NOT?: Maybe<RegionScalarWhereInput[] | RegionScalarWhereInput>;
+}
+
+export interface RegionUpdateManyWithWhereNestedInput {
+  where: RegionScalarWhereInput;
+  data: RegionUpdateManyDataInput;
+}
+
+export interface RegionUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface TherapeuticAreaUpdateManyWithoutCompaniesInput {
+  create?: Maybe<
+    | TherapeuticAreaCreateWithoutCompaniesInput[]
+    | TherapeuticAreaCreateWithoutCompaniesInput
+  >;
+  delete?: Maybe<
+    TherapeuticAreaWhereUniqueInput[] | TherapeuticAreaWhereUniqueInput
+  >;
+  connect?: Maybe<
+    TherapeuticAreaWhereUniqueInput[] | TherapeuticAreaWhereUniqueInput
+  >;
+  set?: Maybe<
+    TherapeuticAreaWhereUniqueInput[] | TherapeuticAreaWhereUniqueInput
+  >;
+  disconnect?: Maybe<
+    TherapeuticAreaWhereUniqueInput[] | TherapeuticAreaWhereUniqueInput
+  >;
+  update?: Maybe<
+    | TherapeuticAreaUpdateWithWhereUniqueWithoutCompaniesInput[]
+    | TherapeuticAreaUpdateWithWhereUniqueWithoutCompaniesInput
+  >;
+  upsert?: Maybe<
+    | TherapeuticAreaUpsertWithWhereUniqueWithoutCompaniesInput[]
+    | TherapeuticAreaUpsertWithWhereUniqueWithoutCompaniesInput
+  >;
+  deleteMany?: Maybe<
+    TherapeuticAreaScalarWhereInput[] | TherapeuticAreaScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | TherapeuticAreaUpdateManyWithWhereNestedInput[]
+    | TherapeuticAreaUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TherapeuticAreaUpdateWithWhereUniqueWithoutCompaniesInput {
+  where: TherapeuticAreaWhereUniqueInput;
+  data: TherapeuticAreaUpdateWithoutCompaniesDataInput;
+}
+
+export interface TherapeuticAreaUpdateWithoutCompaniesDataInput {
+  name?: Maybe<String>;
+}
+
+export interface TherapeuticAreaUpsertWithWhereUniqueWithoutCompaniesInput {
+  where: TherapeuticAreaWhereUniqueInput;
+  update: TherapeuticAreaUpdateWithoutCompaniesDataInput;
+  create: TherapeuticAreaCreateWithoutCompaniesInput;
+}
+
+export interface TherapeuticAreaScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<
+    TherapeuticAreaScalarWhereInput[] | TherapeuticAreaScalarWhereInput
+  >;
+  OR?: Maybe<
+    TherapeuticAreaScalarWhereInput[] | TherapeuticAreaScalarWhereInput
+  >;
+  NOT?: Maybe<
+    TherapeuticAreaScalarWhereInput[] | TherapeuticAreaScalarWhereInput
+  >;
+}
+
+export interface TherapeuticAreaUpdateManyWithWhereNestedInput {
+  where: TherapeuticAreaScalarWhereInput;
+  data: TherapeuticAreaUpdateManyDataInput;
+}
+
+export interface TherapeuticAreaUpdateManyDataInput {
+  name?: Maybe<String>;
 }
 
 export interface StudyUpdateManyWithoutCompanyInput {
@@ -721,6 +1601,16 @@ export interface CompanyUpdateOneRequiredWithoutStudiesInput {
 
 export interface CompanyUpdateWithoutStudiesDataInput {
   name?: Maybe<String>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
+  specialties?: Maybe<SpecialtyUpdateManyWithoutCompaniesInput>;
+  regionsCovered?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
+  therapeuticAreas?: Maybe<TherapeuticAreaUpdateManyWithoutCompaniesInput>;
   bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
 }
 
@@ -819,17 +1709,431 @@ export interface BidUpdateManyMutationInput {
 export interface CompanyCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
+  specialties?: Maybe<SpecialtyCreateManyWithoutCompaniesInput>;
+  regionsCovered?: Maybe<RegionCreateManyWithoutCompaniesInput>;
+  therapeuticAreas?: Maybe<TherapeuticAreaCreateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
   bids?: Maybe<BidCreateManyWithoutCompanyInput>;
 }
 
 export interface CompanyUpdateInput {
   name?: Maybe<String>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
+  specialties?: Maybe<SpecialtyUpdateManyWithoutCompaniesInput>;
+  regionsCovered?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
+  therapeuticAreas?: Maybe<TherapeuticAreaUpdateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
   bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
 }
 
 export interface CompanyUpdateManyMutationInput {
+  name?: Maybe<String>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+}
+
+export interface RegionCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  companies?: Maybe<CompanyCreateManyWithoutRegionsCoveredInput>;
+}
+
+export interface CompanyCreateManyWithoutRegionsCoveredInput {
+  create?: Maybe<
+    | CompanyCreateWithoutRegionsCoveredInput[]
+    | CompanyCreateWithoutRegionsCoveredInput
+  >;
+  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+}
+
+export interface CompanyCreateWithoutRegionsCoveredInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
+  specialties?: Maybe<SpecialtyCreateManyWithoutCompaniesInput>;
+  therapeuticAreas?: Maybe<TherapeuticAreaCreateManyWithoutCompaniesInput>;
+  studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
+  bids?: Maybe<BidCreateManyWithoutCompanyInput>;
+}
+
+export interface RegionUpdateInput {
+  name?: Maybe<String>;
+  companies?: Maybe<CompanyUpdateManyWithoutRegionsCoveredInput>;
+}
+
+export interface CompanyUpdateManyWithoutRegionsCoveredInput {
+  create?: Maybe<
+    | CompanyCreateWithoutRegionsCoveredInput[]
+    | CompanyCreateWithoutRegionsCoveredInput
+  >;
+  delete?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  set?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  disconnect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  update?: Maybe<
+    | CompanyUpdateWithWhereUniqueWithoutRegionsCoveredInput[]
+    | CompanyUpdateWithWhereUniqueWithoutRegionsCoveredInput
+  >;
+  upsert?: Maybe<
+    | CompanyUpsertWithWhereUniqueWithoutRegionsCoveredInput[]
+    | CompanyUpsertWithWhereUniqueWithoutRegionsCoveredInput
+  >;
+  deleteMany?: Maybe<CompanyScalarWhereInput[] | CompanyScalarWhereInput>;
+  updateMany?: Maybe<
+    | CompanyUpdateManyWithWhereNestedInput[]
+    | CompanyUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface CompanyUpdateWithWhereUniqueWithoutRegionsCoveredInput {
+  where: CompanyWhereUniqueInput;
+  data: CompanyUpdateWithoutRegionsCoveredDataInput;
+}
+
+export interface CompanyUpdateWithoutRegionsCoveredDataInput {
+  name?: Maybe<String>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
+  specialties?: Maybe<SpecialtyUpdateManyWithoutCompaniesInput>;
+  therapeuticAreas?: Maybe<TherapeuticAreaUpdateManyWithoutCompaniesInput>;
+  studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
+  bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
+}
+
+export interface CompanyUpsertWithWhereUniqueWithoutRegionsCoveredInput {
+  where: CompanyWhereUniqueInput;
+  update: CompanyUpdateWithoutRegionsCoveredDataInput;
+  create: CompanyCreateWithoutRegionsCoveredInput;
+}
+
+export interface CompanyScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  logoURL?: Maybe<String>;
+  logoURL_not?: Maybe<String>;
+  logoURL_in?: Maybe<String[] | String>;
+  logoURL_not_in?: Maybe<String[] | String>;
+  logoURL_lt?: Maybe<String>;
+  logoURL_lte?: Maybe<String>;
+  logoURL_gt?: Maybe<String>;
+  logoURL_gte?: Maybe<String>;
+  logoURL_contains?: Maybe<String>;
+  logoURL_not_contains?: Maybe<String>;
+  logoURL_starts_with?: Maybe<String>;
+  logoURL_not_starts_with?: Maybe<String>;
+  logoURL_ends_with?: Maybe<String>;
+  logoURL_not_ends_with?: Maybe<String>;
+  website?: Maybe<String>;
+  website_not?: Maybe<String>;
+  website_in?: Maybe<String[] | String>;
+  website_not_in?: Maybe<String[] | String>;
+  website_lt?: Maybe<String>;
+  website_lte?: Maybe<String>;
+  website_gt?: Maybe<String>;
+  website_gte?: Maybe<String>;
+  website_contains?: Maybe<String>;
+  website_not_contains?: Maybe<String>;
+  website_starts_with?: Maybe<String>;
+  website_not_starts_with?: Maybe<String>;
+  website_ends_with?: Maybe<String>;
+  website_not_ends_with?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  linkedin_not?: Maybe<String>;
+  linkedin_in?: Maybe<String[] | String>;
+  linkedin_not_in?: Maybe<String[] | String>;
+  linkedin_lt?: Maybe<String>;
+  linkedin_lte?: Maybe<String>;
+  linkedin_gt?: Maybe<String>;
+  linkedin_gte?: Maybe<String>;
+  linkedin_contains?: Maybe<String>;
+  linkedin_not_contains?: Maybe<String>;
+  linkedin_starts_with?: Maybe<String>;
+  linkedin_not_starts_with?: Maybe<String>;
+  linkedin_ends_with?: Maybe<String>;
+  linkedin_not_ends_with?: Maybe<String>;
+  overview?: Maybe<String>;
+  overview_not?: Maybe<String>;
+  overview_in?: Maybe<String[] | String>;
+  overview_not_in?: Maybe<String[] | String>;
+  overview_lt?: Maybe<String>;
+  overview_lte?: Maybe<String>;
+  overview_gt?: Maybe<String>;
+  overview_gte?: Maybe<String>;
+  overview_contains?: Maybe<String>;
+  overview_not_contains?: Maybe<String>;
+  overview_starts_with?: Maybe<String>;
+  overview_not_starts_with?: Maybe<String>;
+  overview_ends_with?: Maybe<String>;
+  overview_not_ends_with?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  headquarters_not?: Maybe<String>;
+  headquarters_in?: Maybe<String[] | String>;
+  headquarters_not_in?: Maybe<String[] | String>;
+  headquarters_lt?: Maybe<String>;
+  headquarters_lte?: Maybe<String>;
+  headquarters_gt?: Maybe<String>;
+  headquarters_gte?: Maybe<String>;
+  headquarters_contains?: Maybe<String>;
+  headquarters_not_contains?: Maybe<String>;
+  headquarters_starts_with?: Maybe<String>;
+  headquarters_not_starts_with?: Maybe<String>;
+  headquarters_ends_with?: Maybe<String>;
+  headquarters_not_ends_with?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  companySize_not?: Maybe<CompanySize>;
+  companySize_in?: Maybe<CompanySize[] | CompanySize>;
+  companySize_not_in?: Maybe<CompanySize[] | CompanySize>;
+  AND?: Maybe<CompanyScalarWhereInput[] | CompanyScalarWhereInput>;
+  OR?: Maybe<CompanyScalarWhereInput[] | CompanyScalarWhereInput>;
+  NOT?: Maybe<CompanyScalarWhereInput[] | CompanyScalarWhereInput>;
+}
+
+export interface CompanyUpdateManyWithWhereNestedInput {
+  where: CompanyScalarWhereInput;
+  data: CompanyUpdateManyDataInput;
+}
+
+export interface CompanyUpdateManyDataInput {
+  name?: Maybe<String>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+}
+
+export interface RegionUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface ServiceCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  companies?: Maybe<CompanyCreateManyWithoutServicesInput>;
+}
+
+export interface CompanyCreateManyWithoutServicesInput {
+  create?: Maybe<
+    CompanyCreateWithoutServicesInput[] | CompanyCreateWithoutServicesInput
+  >;
+  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+}
+
+export interface CompanyCreateWithoutServicesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  specialties?: Maybe<SpecialtyCreateManyWithoutCompaniesInput>;
+  regionsCovered?: Maybe<RegionCreateManyWithoutCompaniesInput>;
+  therapeuticAreas?: Maybe<TherapeuticAreaCreateManyWithoutCompaniesInput>;
+  studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
+  bids?: Maybe<BidCreateManyWithoutCompanyInput>;
+}
+
+export interface ServiceUpdateInput {
+  name?: Maybe<String>;
+  companies?: Maybe<CompanyUpdateManyWithoutServicesInput>;
+}
+
+export interface CompanyUpdateManyWithoutServicesInput {
+  create?: Maybe<
+    CompanyCreateWithoutServicesInput[] | CompanyCreateWithoutServicesInput
+  >;
+  delete?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  set?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  disconnect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  update?: Maybe<
+    | CompanyUpdateWithWhereUniqueWithoutServicesInput[]
+    | CompanyUpdateWithWhereUniqueWithoutServicesInput
+  >;
+  upsert?: Maybe<
+    | CompanyUpsertWithWhereUniqueWithoutServicesInput[]
+    | CompanyUpsertWithWhereUniqueWithoutServicesInput
+  >;
+  deleteMany?: Maybe<CompanyScalarWhereInput[] | CompanyScalarWhereInput>;
+  updateMany?: Maybe<
+    | CompanyUpdateManyWithWhereNestedInput[]
+    | CompanyUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface CompanyUpdateWithWhereUniqueWithoutServicesInput {
+  where: CompanyWhereUniqueInput;
+  data: CompanyUpdateWithoutServicesDataInput;
+}
+
+export interface CompanyUpdateWithoutServicesDataInput {
+  name?: Maybe<String>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  specialties?: Maybe<SpecialtyUpdateManyWithoutCompaniesInput>;
+  regionsCovered?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
+  therapeuticAreas?: Maybe<TherapeuticAreaUpdateManyWithoutCompaniesInput>;
+  studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
+  bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
+}
+
+export interface CompanyUpsertWithWhereUniqueWithoutServicesInput {
+  where: CompanyWhereUniqueInput;
+  update: CompanyUpdateWithoutServicesDataInput;
+  create: CompanyCreateWithoutServicesInput;
+}
+
+export interface ServiceUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface SpecialtyCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  companies?: Maybe<CompanyCreateManyWithoutSpecialtiesInput>;
+}
+
+export interface CompanyCreateManyWithoutSpecialtiesInput {
+  create?: Maybe<
+    | CompanyCreateWithoutSpecialtiesInput[]
+    | CompanyCreateWithoutSpecialtiesInput
+  >;
+  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+}
+
+export interface CompanyCreateWithoutSpecialtiesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
+  regionsCovered?: Maybe<RegionCreateManyWithoutCompaniesInput>;
+  therapeuticAreas?: Maybe<TherapeuticAreaCreateManyWithoutCompaniesInput>;
+  studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
+  bids?: Maybe<BidCreateManyWithoutCompanyInput>;
+}
+
+export interface SpecialtyUpdateInput {
+  name?: Maybe<String>;
+  companies?: Maybe<CompanyUpdateManyWithoutSpecialtiesInput>;
+}
+
+export interface CompanyUpdateManyWithoutSpecialtiesInput {
+  create?: Maybe<
+    | CompanyCreateWithoutSpecialtiesInput[]
+    | CompanyCreateWithoutSpecialtiesInput
+  >;
+  delete?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  set?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  disconnect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  update?: Maybe<
+    | CompanyUpdateWithWhereUniqueWithoutSpecialtiesInput[]
+    | CompanyUpdateWithWhereUniqueWithoutSpecialtiesInput
+  >;
+  upsert?: Maybe<
+    | CompanyUpsertWithWhereUniqueWithoutSpecialtiesInput[]
+    | CompanyUpsertWithWhereUniqueWithoutSpecialtiesInput
+  >;
+  deleteMany?: Maybe<CompanyScalarWhereInput[] | CompanyScalarWhereInput>;
+  updateMany?: Maybe<
+    | CompanyUpdateManyWithWhereNestedInput[]
+    | CompanyUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface CompanyUpdateWithWhereUniqueWithoutSpecialtiesInput {
+  where: CompanyWhereUniqueInput;
+  data: CompanyUpdateWithoutSpecialtiesDataInput;
+}
+
+export interface CompanyUpdateWithoutSpecialtiesDataInput {
+  name?: Maybe<String>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
+  regionsCovered?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
+  therapeuticAreas?: Maybe<TherapeuticAreaUpdateManyWithoutCompaniesInput>;
+  studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
+  bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
+}
+
+export interface CompanyUpsertWithWhereUniqueWithoutSpecialtiesInput {
+  where: CompanyWhereUniqueInput;
+  update: CompanyUpdateWithoutSpecialtiesDataInput;
+  create: CompanyCreateWithoutSpecialtiesInput;
+}
+
+export interface SpecialtyUpdateManyMutationInput {
   name?: Maybe<String>;
 }
 
@@ -856,6 +2160,95 @@ export interface StudyUpdateManyMutationInput {
   status?: Maybe<String>;
 }
 
+export interface TherapeuticAreaCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  companies?: Maybe<CompanyCreateManyWithoutTherapeuticAreasInput>;
+}
+
+export interface CompanyCreateManyWithoutTherapeuticAreasInput {
+  create?: Maybe<
+    | CompanyCreateWithoutTherapeuticAreasInput[]
+    | CompanyCreateWithoutTherapeuticAreasInput
+  >;
+  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+}
+
+export interface CompanyCreateWithoutTherapeuticAreasInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
+  specialties?: Maybe<SpecialtyCreateManyWithoutCompaniesInput>;
+  regionsCovered?: Maybe<RegionCreateManyWithoutCompaniesInput>;
+  studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
+  bids?: Maybe<BidCreateManyWithoutCompanyInput>;
+}
+
+export interface TherapeuticAreaUpdateInput {
+  name?: Maybe<String>;
+  companies?: Maybe<CompanyUpdateManyWithoutTherapeuticAreasInput>;
+}
+
+export interface CompanyUpdateManyWithoutTherapeuticAreasInput {
+  create?: Maybe<
+    | CompanyCreateWithoutTherapeuticAreasInput[]
+    | CompanyCreateWithoutTherapeuticAreasInput
+  >;
+  delete?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  set?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  disconnect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  update?: Maybe<
+    | CompanyUpdateWithWhereUniqueWithoutTherapeuticAreasInput[]
+    | CompanyUpdateWithWhereUniqueWithoutTherapeuticAreasInput
+  >;
+  upsert?: Maybe<
+    | CompanyUpsertWithWhereUniqueWithoutTherapeuticAreasInput[]
+    | CompanyUpsertWithWhereUniqueWithoutTherapeuticAreasInput
+  >;
+  deleteMany?: Maybe<CompanyScalarWhereInput[] | CompanyScalarWhereInput>;
+  updateMany?: Maybe<
+    | CompanyUpdateManyWithWhereNestedInput[]
+    | CompanyUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface CompanyUpdateWithWhereUniqueWithoutTherapeuticAreasInput {
+  where: CompanyWhereUniqueInput;
+  data: CompanyUpdateWithoutTherapeuticAreasDataInput;
+}
+
+export interface CompanyUpdateWithoutTherapeuticAreasDataInput {
+  name?: Maybe<String>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
+  specialties?: Maybe<SpecialtyUpdateManyWithoutCompaniesInput>;
+  regionsCovered?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
+  studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
+  bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
+}
+
+export interface CompanyUpsertWithWhereUniqueWithoutTherapeuticAreasInput {
+  where: CompanyWhereUniqueInput;
+  update: CompanyUpdateWithoutTherapeuticAreasDataInput;
+  create: CompanyCreateWithoutTherapeuticAreasInput;
+}
+
+export interface TherapeuticAreaUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
 export interface BidSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -878,6 +2271,45 @@ export interface CompanySubscriptionWhereInput {
   NOT?: Maybe<CompanySubscriptionWhereInput[] | CompanySubscriptionWhereInput>;
 }
 
+export interface RegionSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<RegionWhereInput>;
+  AND?: Maybe<RegionSubscriptionWhereInput[] | RegionSubscriptionWhereInput>;
+  OR?: Maybe<RegionSubscriptionWhereInput[] | RegionSubscriptionWhereInput>;
+  NOT?: Maybe<RegionSubscriptionWhereInput[] | RegionSubscriptionWhereInput>;
+}
+
+export interface ServiceSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ServiceWhereInput>;
+  AND?: Maybe<ServiceSubscriptionWhereInput[] | ServiceSubscriptionWhereInput>;
+  OR?: Maybe<ServiceSubscriptionWhereInput[] | ServiceSubscriptionWhereInput>;
+  NOT?: Maybe<ServiceSubscriptionWhereInput[] | ServiceSubscriptionWhereInput>;
+}
+
+export interface SpecialtySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<SpecialtyWhereInput>;
+  AND?: Maybe<
+    SpecialtySubscriptionWhereInput[] | SpecialtySubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    SpecialtySubscriptionWhereInput[] | SpecialtySubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    SpecialtySubscriptionWhereInput[] | SpecialtySubscriptionWhereInput
+  >;
+}
+
 export interface StudySubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -887,6 +2319,26 @@ export interface StudySubscriptionWhereInput {
   AND?: Maybe<StudySubscriptionWhereInput[] | StudySubscriptionWhereInput>;
   OR?: Maybe<StudySubscriptionWhereInput[] | StudySubscriptionWhereInput>;
   NOT?: Maybe<StudySubscriptionWhereInput[] | StudySubscriptionWhereInput>;
+}
+
+export interface TherapeuticAreaSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TherapeuticAreaWhereInput>;
+  AND?: Maybe<
+    | TherapeuticAreaSubscriptionWhereInput[]
+    | TherapeuticAreaSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    | TherapeuticAreaSubscriptionWhereInput[]
+    | TherapeuticAreaSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    | TherapeuticAreaSubscriptionWhereInput[]
+    | TherapeuticAreaSubscriptionWhereInput
+  >;
 }
 
 export interface NodeNode {
@@ -928,11 +2380,59 @@ export interface BidNullablePromise extends Promise<Bid | null>, Fragmentable {
 export interface Company {
   id: ID_Output;
   name: String;
+  logoURL?: String;
+  website?: String;
+  linkedin?: String;
+  overview?: String;
+  headquarters?: String;
+  companySize?: CompanySize;
 }
 
 export interface CompanyPromise extends Promise<Company>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  logoURL: () => Promise<String>;
+  website: () => Promise<String>;
+  linkedin: () => Promise<String>;
+  overview: () => Promise<String>;
+  headquarters: () => Promise<String>;
+  companySize: () => Promise<CompanySize>;
+  services: <T = FragmentableArray<Service>>(args?: {
+    where?: ServiceWhereInput;
+    orderBy?: ServiceOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  specialties: <T = FragmentableArray<Specialty>>(args?: {
+    where?: SpecialtyWhereInput;
+    orderBy?: SpecialtyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  regionsCovered: <T = FragmentableArray<Region>>(args?: {
+    where?: RegionWhereInput;
+    orderBy?: RegionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  therapeuticAreas: <T = FragmentableArray<TherapeuticArea>>(args?: {
+    where?: TherapeuticAreaWhereInput;
+    orderBy?: TherapeuticAreaOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   studies: <T = FragmentableArray<Study>>(args?: {
     where?: StudyWhereInput;
     orderBy?: StudyOrderByInput;
@@ -958,6 +2458,50 @@ export interface CompanySubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  logoURL: () => Promise<AsyncIterator<String>>;
+  website: () => Promise<AsyncIterator<String>>;
+  linkedin: () => Promise<AsyncIterator<String>>;
+  overview: () => Promise<AsyncIterator<String>>;
+  headquarters: () => Promise<AsyncIterator<String>>;
+  companySize: () => Promise<AsyncIterator<CompanySize>>;
+  services: <T = Promise<AsyncIterator<ServiceSubscription>>>(args?: {
+    where?: ServiceWhereInput;
+    orderBy?: ServiceOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  specialties: <T = Promise<AsyncIterator<SpecialtySubscription>>>(args?: {
+    where?: SpecialtyWhereInput;
+    orderBy?: SpecialtyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  regionsCovered: <T = Promise<AsyncIterator<RegionSubscription>>>(args?: {
+    where?: RegionWhereInput;
+    orderBy?: RegionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  therapeuticAreas: <
+    T = Promise<AsyncIterator<TherapeuticAreaSubscription>>
+  >(args?: {
+    where?: TherapeuticAreaWhereInput;
+    orderBy?: TherapeuticAreaOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   studies: <T = Promise<AsyncIterator<StudySubscription>>>(args?: {
     where?: StudyWhereInput;
     orderBy?: StudyOrderByInput;
@@ -983,6 +2527,48 @@ export interface CompanyNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  logoURL: () => Promise<String>;
+  website: () => Promise<String>;
+  linkedin: () => Promise<String>;
+  overview: () => Promise<String>;
+  headquarters: () => Promise<String>;
+  companySize: () => Promise<CompanySize>;
+  services: <T = FragmentableArray<Service>>(args?: {
+    where?: ServiceWhereInput;
+    orderBy?: ServiceOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  specialties: <T = FragmentableArray<Specialty>>(args?: {
+    where?: SpecialtyWhereInput;
+    orderBy?: SpecialtyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  regionsCovered: <T = FragmentableArray<Region>>(args?: {
+    where?: RegionWhereInput;
+    orderBy?: RegionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  therapeuticAreas: <T = FragmentableArray<TherapeuticArea>>(args?: {
+    where?: TherapeuticAreaWhereInput;
+    orderBy?: TherapeuticAreaOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   studies: <T = FragmentableArray<Study>>(args?: {
     where?: StudyWhereInput;
     orderBy?: StudyOrderByInput;
@@ -995,6 +2581,212 @@ export interface CompanyNullablePromise
   bids: <T = FragmentableArray<Bid>>(args?: {
     where?: BidWhereInput;
     orderBy?: BidOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface Service {
+  id: ID_Output;
+  name: String;
+}
+
+export interface ServicePromise extends Promise<Service>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  companies: <T = FragmentableArray<Company>>(args?: {
+    where?: CompanyWhereInput;
+    orderBy?: CompanyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface ServiceSubscription
+  extends Promise<AsyncIterator<Service>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  companies: <T = Promise<AsyncIterator<CompanySubscription>>>(args?: {
+    where?: CompanyWhereInput;
+    orderBy?: CompanyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface ServiceNullablePromise
+  extends Promise<Service | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  companies: <T = FragmentableArray<Company>>(args?: {
+    where?: CompanyWhereInput;
+    orderBy?: CompanyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface Specialty {
+  id: ID_Output;
+  name: String;
+}
+
+export interface SpecialtyPromise extends Promise<Specialty>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  companies: <T = FragmentableArray<Company>>(args?: {
+    where?: CompanyWhereInput;
+    orderBy?: CompanyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface SpecialtySubscription
+  extends Promise<AsyncIterator<Specialty>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  companies: <T = Promise<AsyncIterator<CompanySubscription>>>(args?: {
+    where?: CompanyWhereInput;
+    orderBy?: CompanyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface SpecialtyNullablePromise
+  extends Promise<Specialty | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  companies: <T = FragmentableArray<Company>>(args?: {
+    where?: CompanyWhereInput;
+    orderBy?: CompanyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface Region {
+  id: ID_Output;
+  name: String;
+}
+
+export interface RegionPromise extends Promise<Region>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  companies: <T = FragmentableArray<Company>>(args?: {
+    where?: CompanyWhereInput;
+    orderBy?: CompanyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface RegionSubscription
+  extends Promise<AsyncIterator<Region>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  companies: <T = Promise<AsyncIterator<CompanySubscription>>>(args?: {
+    where?: CompanyWhereInput;
+    orderBy?: CompanyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface RegionNullablePromise
+  extends Promise<Region | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  companies: <T = FragmentableArray<Company>>(args?: {
+    where?: CompanyWhereInput;
+    orderBy?: CompanyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface TherapeuticArea {
+  id: ID_Output;
+  name: String;
+}
+
+export interface TherapeuticAreaPromise
+  extends Promise<TherapeuticArea>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  companies: <T = FragmentableArray<Company>>(args?: {
+    where?: CompanyWhereInput;
+    orderBy?: CompanyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface TherapeuticAreaSubscription
+  extends Promise<AsyncIterator<TherapeuticArea>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  companies: <T = Promise<AsyncIterator<CompanySubscription>>>(args?: {
+    where?: CompanyWhereInput;
+    orderBy?: CompanyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface TherapeuticAreaNullablePromise
+  extends Promise<TherapeuticArea | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  companies: <T = FragmentableArray<Company>>(args?: {
+    where?: CompanyWhereInput;
+    orderBy?: CompanyOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -1189,6 +2981,170 @@ export interface AggregateCompanySubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface RegionConnection {
+  pageInfo: PageInfo;
+  edges: RegionEdge[];
+}
+
+export interface RegionConnectionPromise
+  extends Promise<RegionConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<RegionEdge>>() => T;
+  aggregate: <T = AggregateRegionPromise>() => T;
+}
+
+export interface RegionConnectionSubscription
+  extends Promise<AsyncIterator<RegionConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<RegionEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateRegionSubscription>() => T;
+}
+
+export interface RegionEdge {
+  node: Region;
+  cursor: String;
+}
+
+export interface RegionEdgePromise extends Promise<RegionEdge>, Fragmentable {
+  node: <T = RegionPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface RegionEdgeSubscription
+  extends Promise<AsyncIterator<RegionEdge>>,
+    Fragmentable {
+  node: <T = RegionSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateRegion {
+  count: Int;
+}
+
+export interface AggregateRegionPromise
+  extends Promise<AggregateRegion>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateRegionSubscription
+  extends Promise<AsyncIterator<AggregateRegion>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ServiceConnection {
+  pageInfo: PageInfo;
+  edges: ServiceEdge[];
+}
+
+export interface ServiceConnectionPromise
+  extends Promise<ServiceConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ServiceEdge>>() => T;
+  aggregate: <T = AggregateServicePromise>() => T;
+}
+
+export interface ServiceConnectionSubscription
+  extends Promise<AsyncIterator<ServiceConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ServiceEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateServiceSubscription>() => T;
+}
+
+export interface ServiceEdge {
+  node: Service;
+  cursor: String;
+}
+
+export interface ServiceEdgePromise extends Promise<ServiceEdge>, Fragmentable {
+  node: <T = ServicePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ServiceEdgeSubscription
+  extends Promise<AsyncIterator<ServiceEdge>>,
+    Fragmentable {
+  node: <T = ServiceSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateService {
+  count: Int;
+}
+
+export interface AggregateServicePromise
+  extends Promise<AggregateService>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateServiceSubscription
+  extends Promise<AsyncIterator<AggregateService>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface SpecialtyConnection {
+  pageInfo: PageInfo;
+  edges: SpecialtyEdge[];
+}
+
+export interface SpecialtyConnectionPromise
+  extends Promise<SpecialtyConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<SpecialtyEdge>>() => T;
+  aggregate: <T = AggregateSpecialtyPromise>() => T;
+}
+
+export interface SpecialtyConnectionSubscription
+  extends Promise<AsyncIterator<SpecialtyConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<SpecialtyEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSpecialtySubscription>() => T;
+}
+
+export interface SpecialtyEdge {
+  node: Specialty;
+  cursor: String;
+}
+
+export interface SpecialtyEdgePromise
+  extends Promise<SpecialtyEdge>,
+    Fragmentable {
+  node: <T = SpecialtyPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface SpecialtyEdgeSubscription
+  extends Promise<AsyncIterator<SpecialtyEdge>>,
+    Fragmentable {
+  node: <T = SpecialtySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateSpecialty {
+  count: Int;
+}
+
+export interface AggregateSpecialtyPromise
+  extends Promise<AggregateSpecialty>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateSpecialtySubscription
+  extends Promise<AsyncIterator<AggregateSpecialty>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface StudyConnection {
   pageInfo: PageInfo;
   edges: StudyEdge[];
@@ -1239,6 +3195,62 @@ export interface AggregateStudyPromise
 
 export interface AggregateStudySubscription
   extends Promise<AsyncIterator<AggregateStudy>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TherapeuticAreaConnection {
+  pageInfo: PageInfo;
+  edges: TherapeuticAreaEdge[];
+}
+
+export interface TherapeuticAreaConnectionPromise
+  extends Promise<TherapeuticAreaConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TherapeuticAreaEdge>>() => T;
+  aggregate: <T = AggregateTherapeuticAreaPromise>() => T;
+}
+
+export interface TherapeuticAreaConnectionSubscription
+  extends Promise<AsyncIterator<TherapeuticAreaConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TherapeuticAreaEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTherapeuticAreaSubscription>() => T;
+}
+
+export interface TherapeuticAreaEdge {
+  node: TherapeuticArea;
+  cursor: String;
+}
+
+export interface TherapeuticAreaEdgePromise
+  extends Promise<TherapeuticAreaEdge>,
+    Fragmentable {
+  node: <T = TherapeuticAreaPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TherapeuticAreaEdgeSubscription
+  extends Promise<AsyncIterator<TherapeuticAreaEdge>>,
+    Fragmentable {
+  node: <T = TherapeuticAreaSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTherapeuticArea {
+  count: Int;
+}
+
+export interface AggregateTherapeuticAreaPromise
+  extends Promise<AggregateTherapeuticArea>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTherapeuticAreaSubscription
+  extends Promise<AsyncIterator<AggregateTherapeuticArea>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -1334,6 +3346,12 @@ export interface CompanySubscriptionPayloadSubscription
 export interface CompanyPreviousValues {
   id: ID_Output;
   name: String;
+  logoURL?: String;
+  website?: String;
+  linkedin?: String;
+  overview?: String;
+  headquarters?: String;
+  companySize?: CompanySize;
 }
 
 export interface CompanyPreviousValuesPromise
@@ -1341,10 +3359,154 @@ export interface CompanyPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  logoURL: () => Promise<String>;
+  website: () => Promise<String>;
+  linkedin: () => Promise<String>;
+  overview: () => Promise<String>;
+  headquarters: () => Promise<String>;
+  companySize: () => Promise<CompanySize>;
 }
 
 export interface CompanyPreviousValuesSubscription
   extends Promise<AsyncIterator<CompanyPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  logoURL: () => Promise<AsyncIterator<String>>;
+  website: () => Promise<AsyncIterator<String>>;
+  linkedin: () => Promise<AsyncIterator<String>>;
+  overview: () => Promise<AsyncIterator<String>>;
+  headquarters: () => Promise<AsyncIterator<String>>;
+  companySize: () => Promise<AsyncIterator<CompanySize>>;
+}
+
+export interface RegionSubscriptionPayload {
+  mutation: MutationType;
+  node: Region;
+  updatedFields: String[];
+  previousValues: RegionPreviousValues;
+}
+
+export interface RegionSubscriptionPayloadPromise
+  extends Promise<RegionSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = RegionPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = RegionPreviousValuesPromise>() => T;
+}
+
+export interface RegionSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<RegionSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = RegionSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = RegionPreviousValuesSubscription>() => T;
+}
+
+export interface RegionPreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface RegionPreviousValuesPromise
+  extends Promise<RegionPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface RegionPreviousValuesSubscription
+  extends Promise<AsyncIterator<RegionPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ServiceSubscriptionPayload {
+  mutation: MutationType;
+  node: Service;
+  updatedFields: String[];
+  previousValues: ServicePreviousValues;
+}
+
+export interface ServiceSubscriptionPayloadPromise
+  extends Promise<ServiceSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ServicePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ServicePreviousValuesPromise>() => T;
+}
+
+export interface ServiceSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ServiceSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ServiceSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ServicePreviousValuesSubscription>() => T;
+}
+
+export interface ServicePreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface ServicePreviousValuesPromise
+  extends Promise<ServicePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface ServicePreviousValuesSubscription
+  extends Promise<AsyncIterator<ServicePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface SpecialtySubscriptionPayload {
+  mutation: MutationType;
+  node: Specialty;
+  updatedFields: String[];
+  previousValues: SpecialtyPreviousValues;
+}
+
+export interface SpecialtySubscriptionPayloadPromise
+  extends Promise<SpecialtySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = SpecialtyPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = SpecialtyPreviousValuesPromise>() => T;
+}
+
+export interface SpecialtySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<SpecialtySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = SpecialtySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = SpecialtyPreviousValuesSubscription>() => T;
+}
+
+export interface SpecialtyPreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface SpecialtyPreviousValuesPromise
+  extends Promise<SpecialtyPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface SpecialtyPreviousValuesSubscription
+  extends Promise<AsyncIterator<SpecialtyPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
@@ -1415,6 +3577,50 @@ export interface StudyPreviousValuesSubscription
   status: () => Promise<AsyncIterator<String>>;
 }
 
+export interface TherapeuticAreaSubscriptionPayload {
+  mutation: MutationType;
+  node: TherapeuticArea;
+  updatedFields: String[];
+  previousValues: TherapeuticAreaPreviousValues;
+}
+
+export interface TherapeuticAreaSubscriptionPayloadPromise
+  extends Promise<TherapeuticAreaSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TherapeuticAreaPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TherapeuticAreaPreviousValuesPromise>() => T;
+}
+
+export interface TherapeuticAreaSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TherapeuticAreaSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TherapeuticAreaSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TherapeuticAreaPreviousValuesSubscription>() => T;
+}
+
+export interface TherapeuticAreaPreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface TherapeuticAreaPreviousValuesPromise
+  extends Promise<TherapeuticAreaPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface TherapeuticAreaPreviousValuesSubscription
+  extends Promise<AsyncIterator<TherapeuticAreaPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
@@ -1460,6 +3666,26 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "Company",
+    embedded: false
+  },
+  {
+    name: "Service",
+    embedded: false
+  },
+  {
+    name: "Specialty",
+    embedded: false
+  },
+  {
+    name: "Region",
+    embedded: false
+  },
+  {
+    name: "TherapeuticArea",
+    embedded: false
+  },
+  {
+    name: "CompanySize",
     embedded: false
   },
   {

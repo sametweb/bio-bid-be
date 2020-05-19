@@ -1,9 +1,6 @@
-const bidResolver = require('./bidResolver');
-const companyResolver = require('./companyResolver');
-const studyResolver = require('./studyResolver');
+const bidResolver = require("./bidResolver");
+const companyResolver = require("./companyResolver");
+const studyResolver = require("./studyResolver");
+const serviceResolver = require("./serviceResolver");
 
-module.exports = [
-    bidResolver,
-    companyResolver,
-    studyResolver
-]
+module.exports = [bidResolver, companyResolver, studyResolver, serviceResolver];
