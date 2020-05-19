@@ -230,11 +230,11 @@ type Company {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
-  specialties(where: SpecialtyWhereInput, orderBy: SpecialtyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialty!]
+  headquarters: String
+  companySize: CompanySize
   services(where: ServiceWhereInput, orderBy: ServiceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Service!]
+  specialties(where: SpecialtyWhereInput, orderBy: SpecialtyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialty!]
   regionsCovered(where: RegionWhereInput, orderBy: RegionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Region!]
   therapeuticAreas(where: TherapeuticAreaWhereInput, orderBy: TherapeuticAreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TherapeuticArea!]
   studies(where: StudyWhereInput, orderBy: StudyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Study!]
@@ -253,11 +253,11 @@ input CompanyCreateInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
-  specialties: SpecialtyCreateManyWithoutCompaniesInput
+  headquarters: String
+  companySize: CompanySize
   services: ServiceCreateManyWithoutCompaniesInput
+  specialties: SpecialtyCreateManyWithoutCompaniesInput
   regionsCovered: RegionCreateManyWithoutCompaniesInput
   therapeuticAreas: TherapeuticAreaCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
@@ -300,11 +300,11 @@ input CompanyCreateWithoutBidsInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
-  specialties: SpecialtyCreateManyWithoutCompaniesInput
+  headquarters: String
+  companySize: CompanySize
   services: ServiceCreateManyWithoutCompaniesInput
+  specialties: SpecialtyCreateManyWithoutCompaniesInput
   regionsCovered: RegionCreateManyWithoutCompaniesInput
   therapeuticAreas: TherapeuticAreaCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
@@ -316,11 +316,11 @@ input CompanyCreateWithoutRegionsCoveredInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
-  specialties: SpecialtyCreateManyWithoutCompaniesInput
+  headquarters: String
+  companySize: CompanySize
   services: ServiceCreateManyWithoutCompaniesInput
+  specialties: SpecialtyCreateManyWithoutCompaniesInput
   therapeuticAreas: TherapeuticAreaCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
   bids: BidCreateManyWithoutCompanyInput
@@ -332,9 +332,9 @@ input CompanyCreateWithoutServicesInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
+  headquarters: String
+  companySize: CompanySize
   specialties: SpecialtyCreateManyWithoutCompaniesInput
   regionsCovered: RegionCreateManyWithoutCompaniesInput
   therapeuticAreas: TherapeuticAreaCreateManyWithoutCompaniesInput
@@ -348,9 +348,9 @@ input CompanyCreateWithoutSpecialtiesInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
+  headquarters: String
+  companySize: CompanySize
   services: ServiceCreateManyWithoutCompaniesInput
   regionsCovered: RegionCreateManyWithoutCompaniesInput
   therapeuticAreas: TherapeuticAreaCreateManyWithoutCompaniesInput
@@ -364,11 +364,11 @@ input CompanyCreateWithoutStudiesInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
-  specialties: SpecialtyCreateManyWithoutCompaniesInput
+  headquarters: String
+  companySize: CompanySize
   services: ServiceCreateManyWithoutCompaniesInput
+  specialties: SpecialtyCreateManyWithoutCompaniesInput
   regionsCovered: RegionCreateManyWithoutCompaniesInput
   therapeuticAreas: TherapeuticAreaCreateManyWithoutCompaniesInput
   bids: BidCreateManyWithoutCompanyInput
@@ -380,11 +380,11 @@ input CompanyCreateWithoutTherapeuticAreasInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
-  specialties: SpecialtyCreateManyWithoutCompaniesInput
+  headquarters: String
+  companySize: CompanySize
   services: ServiceCreateManyWithoutCompaniesInput
+  specialties: SpecialtyCreateManyWithoutCompaniesInput
   regionsCovered: RegionCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
   bids: BidCreateManyWithoutCompanyInput
@@ -406,12 +406,12 @@ enum CompanyOrderByInput {
   website_DESC
   linkedin_ASC
   linkedin_DESC
-  companySize_ASC
-  companySize_DESC
-  headquarters_ASC
-  headquarters_DESC
   overview_ASC
   overview_DESC
+  headquarters_ASC
+  headquarters_DESC
+  companySize_ASC
+  companySize_DESC
 }
 
 type CompanyPreviousValues {
@@ -420,9 +420,9 @@ type CompanyPreviousValues {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
+  headquarters: String
+  companySize: CompanySize
 }
 
 input CompanyScalarWhereInput {
@@ -496,24 +496,6 @@ input CompanyScalarWhereInput {
   linkedin_not_starts_with: String
   linkedin_ends_with: String
   linkedin_not_ends_with: String
-  companySize: CompanySize
-  companySize_not: CompanySize
-  companySize_in: [CompanySize!]
-  companySize_not_in: [CompanySize!]
-  headquarters: String
-  headquarters_not: String
-  headquarters_in: [String!]
-  headquarters_not_in: [String!]
-  headquarters_lt: String
-  headquarters_lte: String
-  headquarters_gt: String
-  headquarters_gte: String
-  headquarters_contains: String
-  headquarters_not_contains: String
-  headquarters_starts_with: String
-  headquarters_not_starts_with: String
-  headquarters_ends_with: String
-  headquarters_not_ends_with: String
   overview: String
   overview_not: String
   overview_in: [String!]
@@ -528,6 +510,24 @@ input CompanyScalarWhereInput {
   overview_not_starts_with: String
   overview_ends_with: String
   overview_not_ends_with: String
+  headquarters: String
+  headquarters_not: String
+  headquarters_in: [String!]
+  headquarters_not_in: [String!]
+  headquarters_lt: String
+  headquarters_lte: String
+  headquarters_gt: String
+  headquarters_gte: String
+  headquarters_contains: String
+  headquarters_not_contains: String
+  headquarters_starts_with: String
+  headquarters_not_starts_with: String
+  headquarters_ends_with: String
+  headquarters_not_ends_with: String
+  companySize: CompanySize
+  companySize_not: CompanySize
+  companySize_in: [CompanySize!]
+  companySize_not_in: [CompanySize!]
   AND: [CompanyScalarWhereInput!]
   OR: [CompanyScalarWhereInput!]
   NOT: [CompanyScalarWhereInput!]
@@ -568,11 +568,11 @@ input CompanyUpdateInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
-  specialties: SpecialtyUpdateManyWithoutCompaniesInput
+  headquarters: String
+  companySize: CompanySize
   services: ServiceUpdateManyWithoutCompaniesInput
+  specialties: SpecialtyUpdateManyWithoutCompaniesInput
   regionsCovered: RegionUpdateManyWithoutCompaniesInput
   therapeuticAreas: TherapeuticAreaUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
@@ -584,9 +584,9 @@ input CompanyUpdateManyDataInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
+  headquarters: String
+  companySize: CompanySize
 }
 
 input CompanyUpdateManyMutationInput {
@@ -594,9 +594,9 @@ input CompanyUpdateManyMutationInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
+  headquarters: String
+  companySize: CompanySize
 }
 
 input CompanyUpdateManyWithoutRegionsCoveredInput {
@@ -671,11 +671,11 @@ input CompanyUpdateWithoutBidsDataInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
-  specialties: SpecialtyUpdateManyWithoutCompaniesInput
+  headquarters: String
+  companySize: CompanySize
   services: ServiceUpdateManyWithoutCompaniesInput
+  specialties: SpecialtyUpdateManyWithoutCompaniesInput
   regionsCovered: RegionUpdateManyWithoutCompaniesInput
   therapeuticAreas: TherapeuticAreaUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
@@ -686,11 +686,11 @@ input CompanyUpdateWithoutRegionsCoveredDataInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
-  specialties: SpecialtyUpdateManyWithoutCompaniesInput
+  headquarters: String
+  companySize: CompanySize
   services: ServiceUpdateManyWithoutCompaniesInput
+  specialties: SpecialtyUpdateManyWithoutCompaniesInput
   therapeuticAreas: TherapeuticAreaUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
   bids: BidUpdateManyWithoutCompanyInput
@@ -701,9 +701,9 @@ input CompanyUpdateWithoutServicesDataInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
+  headquarters: String
+  companySize: CompanySize
   specialties: SpecialtyUpdateManyWithoutCompaniesInput
   regionsCovered: RegionUpdateManyWithoutCompaniesInput
   therapeuticAreas: TherapeuticAreaUpdateManyWithoutCompaniesInput
@@ -716,9 +716,9 @@ input CompanyUpdateWithoutSpecialtiesDataInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
+  headquarters: String
+  companySize: CompanySize
   services: ServiceUpdateManyWithoutCompaniesInput
   regionsCovered: RegionUpdateManyWithoutCompaniesInput
   therapeuticAreas: TherapeuticAreaUpdateManyWithoutCompaniesInput
@@ -731,11 +731,11 @@ input CompanyUpdateWithoutStudiesDataInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
-  specialties: SpecialtyUpdateManyWithoutCompaniesInput
+  headquarters: String
+  companySize: CompanySize
   services: ServiceUpdateManyWithoutCompaniesInput
+  specialties: SpecialtyUpdateManyWithoutCompaniesInput
   regionsCovered: RegionUpdateManyWithoutCompaniesInput
   therapeuticAreas: TherapeuticAreaUpdateManyWithoutCompaniesInput
   bids: BidUpdateManyWithoutCompanyInput
@@ -746,11 +746,11 @@ input CompanyUpdateWithoutTherapeuticAreasDataInput {
   logoURL: String
   website: String
   linkedin: String
-  companySize: CompanySize
-  headquarters: String
   overview: String
-  specialties: SpecialtyUpdateManyWithoutCompaniesInput
+  headquarters: String
+  companySize: CompanySize
   services: ServiceUpdateManyWithoutCompaniesInput
+  specialties: SpecialtyUpdateManyWithoutCompaniesInput
   regionsCovered: RegionUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
   bids: BidUpdateManyWithoutCompanyInput
@@ -881,24 +881,6 @@ input CompanyWhereInput {
   linkedin_not_starts_with: String
   linkedin_ends_with: String
   linkedin_not_ends_with: String
-  companySize: CompanySize
-  companySize_not: CompanySize
-  companySize_in: [CompanySize!]
-  companySize_not_in: [CompanySize!]
-  headquarters: String
-  headquarters_not: String
-  headquarters_in: [String!]
-  headquarters_not_in: [String!]
-  headquarters_lt: String
-  headquarters_lte: String
-  headquarters_gt: String
-  headquarters_gte: String
-  headquarters_contains: String
-  headquarters_not_contains: String
-  headquarters_starts_with: String
-  headquarters_not_starts_with: String
-  headquarters_ends_with: String
-  headquarters_not_ends_with: String
   overview: String
   overview_not: String
   overview_in: [String!]
@@ -913,12 +895,30 @@ input CompanyWhereInput {
   overview_not_starts_with: String
   overview_ends_with: String
   overview_not_ends_with: String
-  specialties_every: SpecialtyWhereInput
-  specialties_some: SpecialtyWhereInput
-  specialties_none: SpecialtyWhereInput
+  headquarters: String
+  headquarters_not: String
+  headquarters_in: [String!]
+  headquarters_not_in: [String!]
+  headquarters_lt: String
+  headquarters_lte: String
+  headquarters_gt: String
+  headquarters_gte: String
+  headquarters_contains: String
+  headquarters_not_contains: String
+  headquarters_starts_with: String
+  headquarters_not_starts_with: String
+  headquarters_ends_with: String
+  headquarters_not_ends_with: String
+  companySize: CompanySize
+  companySize_not: CompanySize
+  companySize_in: [CompanySize!]
+  companySize_not_in: [CompanySize!]
   services_every: ServiceWhereInput
   services_some: ServiceWhereInput
   services_none: ServiceWhereInput
+  specialties_every: SpecialtyWhereInput
+  specialties_some: SpecialtyWhereInput
+  specialties_none: SpecialtyWhereInput
   regionsCovered_every: RegionWhereInput
   regionsCovered_some: RegionWhereInput
   regionsCovered_none: RegionWhereInput

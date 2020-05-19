@@ -17,7 +17,6 @@ module.exports = {
           const created = await prisma.service({ name: service.name });
         } catch {
           await prisma.createService(service);
-          console.log(created);
         }
       });
 

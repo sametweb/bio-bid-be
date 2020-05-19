@@ -4,6 +4,7 @@ module.exports = gql`
   extend type Query {
     services: [Service!]
     service(name: String!): Service!
+    searchService(search: String!): [Service]!
   }
 
   extend type Mutation {

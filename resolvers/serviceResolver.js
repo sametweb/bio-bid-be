@@ -6,10 +6,14 @@ module.exports = {
     service: (parent, { name }, { prisma }, info) => {
       return prisma.service({ name });
     },
+    searchService: (parent, { search }, { prisma }, info) => {
+      return prisma.services({
+        where: { name_contains: search },
+      });
+    },
   },
   Mutation: {
-    createService: (parent, args, { prisma }, info) => {
-      const { name } = args;
+    createService: (parent, { name }, { prisma }, info) => {
       return prisma.createService({ name });
     },
     updateService: (parent, args, { prisma }, info) => {

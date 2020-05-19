@@ -13,7 +13,7 @@ var models = [
     embedded: false
   },
   {
-    name: "TherapeuticArea",
+    name: "Specialty",
     embedded: false
   },
   {
@@ -21,7 +21,7 @@ var models = [
     embedded: false
   },
   {
-    name: "Specialty",
+    name: "TherapeuticArea",
     embedded: false
   },
   {
