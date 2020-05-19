@@ -7,11 +7,16 @@ module.exports = gql`
   }
 
   extend type Mutation {
-    createCompany(name: String!, services: [ServiceInput]!): Company!
-    updateCompany(
-      updated_name: String
-      updated_services: [ServiceInput]!
+    createCompany(
       name: String!
+      services: [ServiceInput]
+      specialties: [SpecialtyInput]
+    ): Company!
+    updateCompany(
+      name: String! # FILTER
+      updated_name: String
+      updated_services: [ServiceInput]
+      updated_specialties: [SpecialtyInput]
     ): Company!
     deleteCompany(name: String!): Company!
   }
@@ -21,10 +26,15 @@ module.exports = gql`
     name: String!
     studies: [Study!]
     services: [Service!]
+    specialties: [Specialty!]
     bids: [Bid!]
   }
 
   input ServiceInput {
+    name: String!
+  }
+
+  input SpecialtyInput {
     name: String!
   }
 `;

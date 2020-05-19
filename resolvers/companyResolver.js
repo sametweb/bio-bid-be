@@ -1,3 +1,10 @@
+const asyncForEach = async (array, finder, creator) => {
+  for (let i = 0; i < array.length; i++) {
+    const created = await finder({ name: array[i].name });
+    if (!created) await creator(array[i]);
+  }
+};
+
 module.exports = {
   Query: {
     companies: (parent, args, { prisma }, info) => {
@@ -9,16 +16,10 @@ module.exports = {
   },
   Mutation: {
     createCompany: async (parent, args, { prisma }, info) => {
-      const { name, services } = args;
+      const { name, services, specialties } = args;
 
       // If the service is not in DB, add it
-      services.forEach(async (service) => {
-        try {
-          const created = await prisma.service({ name: service.name });
-        } catch {
-          await prisma.createService(service);
-        }
-      });
+      await asyncForEach(services, prisma.service, prisma.createService);
 
       return await prisma.createCompany({
         name,
@@ -29,14 +30,11 @@ module.exports = {
       const { updated_name, updated_services, name } = args;
 
       // If the service is not in DB, add it
-      updated_services.forEach(async (service) => {
-        try {
-          const created = await prisma.service({ name: service.name });
-        } catch {
-          await prisma.createService(service);
-          console.log(created);
-        }
-      });
+      await asyncForEach(
+        updated_services,
+        prisma.service,
+        prisma.createService
+      );
 
       return await prisma.updateCompany({
         data: {
@@ -56,6 +54,9 @@ module.exports = {
     },
     services: ({ id }, args, { prisma }, info) => {
       return prisma.company({ id }).services();
+    },
+    specialties: ({ id }, args, { prisma }, info) => {
+      return prisma.company({ id }).specialties();
     },
   },
 };

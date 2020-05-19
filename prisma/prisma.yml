@@ -1,5 +1,5 @@
-endpoint: https://us1.prisma.sh/biobid-team/production/prod
-# endpoint: http://localhost:4466
+# endpoint: https://us1.prisma.sh/biobid-team/production/prod
+endpoint: http://localhost:4466
 datamodel: datamodel.graphql
 
 generate:
