@@ -1,9 +1,4 @@
-const asyncForEach = async (array, finder, creator) => {
-  for (let i = 0; i < array.length; i++) {
-    const found = await finder({ name: array[i].name });
-    if (!found) await creator(array[i]);
-  }
-};
+const { asyncForEach, oldItemRemover } = require("../helpers");
 
 module.exports = {
   Query: {
@@ -66,6 +61,29 @@ module.exports = {
         updated_specialties,
         name,
       } = args;
+
+      // If front-end provides updated_services, we remove the old services, thinking
+      // that the user is providing a new list to replace the old one.
+      // If user provides and empty array, all current services will be removed.
+      // If user does not provide updated_services array, nothing happens.
+      if (updated_services) {
+        await oldItemRemover(
+          name, // Company Name
+          "services", // What table to remove items from
+          prisma.company({ name }).services, // Function for listing old items
+          prisma.updateCompany // Function to update company and disconnect old records
+        );
+      }
+
+      // Same process for updated_specialties
+      if (updated_specialties) {
+        await oldItemRemover(
+          name,
+          "specialties",
+          prisma.company({ name }).specialties,
+          prisma.updateCompany
+        );
+      }
 
       // If the service is not in DB, add it
       if (updated_services) {
