@@ -36,6 +36,19 @@ We chose Apollo GraphQL because:
 | Query Name | Access Control | Description                   |
 | ---------- | -------------- | ----------------------------- |
 | companies  | all users      | Returns an array of companies |
+| company  | all users      | Returns a a company that matches the name or id requested |
+| services   | all users      | Returns an array of services  |
+| service    | all users      | Returns a service matching the name requested |
+| searchService | all users   | Returns an array of services that cointain or match the name requested |
+| regions | all users | Returns an array of regions |
+| region | all users | Returns a region that matches the name requested |
+| searchRegion | all users | Returns an array of regions that cointain or match the name requested |
+| therapeutics | all users | Returns an array of therapeutics |
+| therapeutic | all users | Returns a therapeutic that matches the name requested |
+| searchTherapeutic | all users | Returns an array of therapeutics that cointain or match the name requested |
+| specialties | all users | Returns an array of specialties |
+| specialty | all users | Returns a specialty that matches the name requested |
+| searchSpecialty | all users | Returns an array of specialties that cointain or match the name requested |
 | bids       | all users      | Returns an array of bids      |
 | studies    | all users      | Returns a an array of studies |
 
