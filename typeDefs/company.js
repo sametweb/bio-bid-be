@@ -17,6 +17,8 @@ module.exports = gql`
       companySize: CompanySize
       services: [ServiceInput]
       specialties: [SpecialtyInput]
+      regions: [RegionInput]
+      therapeutics: [TherapeuticInput]
     ): Company!
 
     updateCompany(
@@ -30,6 +32,8 @@ module.exports = gql`
       updated_companySize: CompanySize
       updated_services: [ServiceInput]
       updated_specialties: [SpecialtyInput]
+      updated_regions: [RegionInput]
+      updated_therapeutics: [TherapeuticInput]
     ): Company!
 
     deleteCompany(name: String!): Company!
@@ -46,6 +50,8 @@ module.exports = gql`
     companySize: CompanySize
     services: [Service!]
     specialties: [Specialty!]
+    regions: [Region!]
+    therapeutics: [Therapeutic!]
     studies: [Study!]
     bids: [Bid!]
   }
@@ -55,6 +61,14 @@ module.exports = gql`
   }
 
   input SpecialtyInput {
+    name: String!
+  }
+
+  input RegionInput {
+    name: String!
+  }
+
+  input TherapeuticInput {
     name: String!
   }
 

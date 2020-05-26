@@ -6,13 +6,12 @@ const regionResolver = require("./regionResolver");
 const therapeuticResolver = require("./therapeuticResolver");
 const specialtyResolver = require("./specialtyResolver");
 
-
 module.exports = [
   bidResolver,
   companyResolver,
   studyResolver,
   serviceResolver,
   regionResolver,
-  therapeuticResolver
+  therapeuticResolver,
   specialtyResolver,
 ];

@@ -21,6 +21,8 @@ module.exports = {
         companySize,
         services,
         specialties,
+        regions,
+        therapeutics,
       } = args;
 
       // If the service is not in DB, add it
@@ -36,6 +38,18 @@ module.exports = {
         );
       }
 
+      if (regions) {
+        await asyncForEach(regions, prisma.region, prisma.createRegion);
+      }
+
+      if (therapeutics) {
+        await asyncForEach(
+          therapeutics,
+          prisma.therapeutic,
+          prisma.createTherapeutic
+        );
+      }
+
       return await prisma.createCompany({
         name,
         logoURL,
@@ -46,6 +60,8 @@ module.exports = {
         companySize,
         services: { connect: services },
         specialties: { connect: specialties },
+        regions: { connect: regions },
+        therapeutics: { connect: therapeutics },
       });
     },
     updateCompany: async (parent, args, { prisma }, info) => {
@@ -59,6 +75,8 @@ module.exports = {
         updated_companySize,
         updated_services,
         updated_specialties,
+        updated_regions,
+        updated_therapeutics,
         name,
       } = args;
 
@@ -85,6 +103,26 @@ module.exports = {
         );
       }
 
+      // Same process for updated_regions
+      if (updated_regions) {
+        await oldItemRemover(
+          name,
+          "regions",
+          prisma.company({ name }).regions,
+          prisma.updateCompany
+        );
+      }
+
+      // Same process for updated_therapeutics
+      if (updated_therapeutics) {
+        await oldItemRemover(
+          name,
+          "therapeutics",
+          prisma.company({ name }).therapeutics,
+          prisma.updateCompany
+        );
+      }
+
       // If the service is not in DB, add it
       if (updated_services) {
         await asyncForEach(
@@ -102,6 +140,18 @@ module.exports = {
         );
       }
 
+      if (updated_regions) {
+        await asyncForEach(updated_regions, prisma.region, prisma.createRegion);
+      }
+
+      if (updated_therapeutics) {
+        await asyncForEach(
+          updated_therapeutics,
+          prisma.therapeutic,
+          prisma.createTherapeutic
+        );
+      }
+
       return await prisma.updateCompany({
         data: {
           name: updated_name,
@@ -113,6 +163,8 @@ module.exports = {
           companySize: updated_companySize,
           services: { connect: updated_services },
           specialties: { connect: updated_specialties },
+          regions: { connect: updated_regions },
+          therapeutics: { connect: updated_therapeutics },
         },
         where: { name },
       });
@@ -130,6 +182,12 @@ module.exports = {
     },
     specialties: ({ id }, args, { prisma }, info) => {
       return prisma.company({ id }).specialties();
+    },
+    regions: ({ id }, args, { prisma }, info) => {
+      return prisma.company({ id }).regions();
+    },
+    therapeutics: ({ id }, args, { prisma }, info) => {
+      return prisma.company({ id }).therapeutics();
     },
   },
 };

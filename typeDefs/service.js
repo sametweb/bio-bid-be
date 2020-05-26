@@ -14,6 +14,7 @@ module.exports = gql`
   }
 
   type Service {
+    id: ID
     name: String!
     companies: [Company]!
   }

@@ -27,7 +27,7 @@ type AggregateStudy {
   count: Int!
 }
 
-type AggregateTherapeuticArea {
+type AggregateTherapeutic {
   count: Int!
 }
 
@@ -235,8 +235,8 @@ type Company {
   companySize: CompanySize
   services(where: ServiceWhereInput, orderBy: ServiceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Service!]
   specialties(where: SpecialtyWhereInput, orderBy: SpecialtyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialty!]
-  regionsCovered(where: RegionWhereInput, orderBy: RegionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Region!]
-  therapeuticAreas(where: TherapeuticAreaWhereInput, orderBy: TherapeuticAreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TherapeuticArea!]
+  regions(where: RegionWhereInput, orderBy: RegionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Region!]
+  therapeutics(where: TherapeuticWhereInput, orderBy: TherapeuticOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Therapeutic!]
   studies(where: StudyWhereInput, orderBy: StudyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Study!]
   bids(where: BidWhereInput, orderBy: BidOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bid!]
 }
@@ -258,14 +258,14 @@ input CompanyCreateInput {
   companySize: CompanySize
   services: ServiceCreateManyWithoutCompaniesInput
   specialties: SpecialtyCreateManyWithoutCompaniesInput
-  regionsCovered: RegionCreateManyWithoutCompaniesInput
-  therapeuticAreas: TherapeuticAreaCreateManyWithoutCompaniesInput
+  regions: RegionCreateManyWithoutCompaniesInput
+  therapeutics: TherapeuticCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
   bids: BidCreateManyWithoutCompanyInput
 }
 
-input CompanyCreateManyWithoutRegionsCoveredInput {
-  create: [CompanyCreateWithoutRegionsCoveredInput!]
+input CompanyCreateManyWithoutRegionsInput {
+  create: [CompanyCreateWithoutRegionsInput!]
   connect: [CompanyWhereUniqueInput!]
 }
 
@@ -279,8 +279,8 @@ input CompanyCreateManyWithoutSpecialtiesInput {
   connect: [CompanyWhereUniqueInput!]
 }
 
-input CompanyCreateManyWithoutTherapeuticAreasInput {
-  create: [CompanyCreateWithoutTherapeuticAreasInput!]
+input CompanyCreateManyWithoutTherapeuticsInput {
+  create: [CompanyCreateWithoutTherapeuticsInput!]
   connect: [CompanyWhereUniqueInput!]
 }
 
@@ -305,12 +305,12 @@ input CompanyCreateWithoutBidsInput {
   companySize: CompanySize
   services: ServiceCreateManyWithoutCompaniesInput
   specialties: SpecialtyCreateManyWithoutCompaniesInput
-  regionsCovered: RegionCreateManyWithoutCompaniesInput
-  therapeuticAreas: TherapeuticAreaCreateManyWithoutCompaniesInput
+  regions: RegionCreateManyWithoutCompaniesInput
+  therapeutics: TherapeuticCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
 }
 
-input CompanyCreateWithoutRegionsCoveredInput {
+input CompanyCreateWithoutRegionsInput {
   id: ID
   name: String!
   logoURL: String
@@ -321,7 +321,7 @@ input CompanyCreateWithoutRegionsCoveredInput {
   companySize: CompanySize
   services: ServiceCreateManyWithoutCompaniesInput
   specialties: SpecialtyCreateManyWithoutCompaniesInput
-  therapeuticAreas: TherapeuticAreaCreateManyWithoutCompaniesInput
+  therapeutics: TherapeuticCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
   bids: BidCreateManyWithoutCompanyInput
 }
@@ -336,8 +336,8 @@ input CompanyCreateWithoutServicesInput {
   headquarters: String
   companySize: CompanySize
   specialties: SpecialtyCreateManyWithoutCompaniesInput
-  regionsCovered: RegionCreateManyWithoutCompaniesInput
-  therapeuticAreas: TherapeuticAreaCreateManyWithoutCompaniesInput
+  regions: RegionCreateManyWithoutCompaniesInput
+  therapeutics: TherapeuticCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
   bids: BidCreateManyWithoutCompanyInput
 }
@@ -352,8 +352,8 @@ input CompanyCreateWithoutSpecialtiesInput {
   headquarters: String
   companySize: CompanySize
   services: ServiceCreateManyWithoutCompaniesInput
-  regionsCovered: RegionCreateManyWithoutCompaniesInput
-  therapeuticAreas: TherapeuticAreaCreateManyWithoutCompaniesInput
+  regions: RegionCreateManyWithoutCompaniesInput
+  therapeutics: TherapeuticCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
   bids: BidCreateManyWithoutCompanyInput
 }
@@ -369,12 +369,12 @@ input CompanyCreateWithoutStudiesInput {
   companySize: CompanySize
   services: ServiceCreateManyWithoutCompaniesInput
   specialties: SpecialtyCreateManyWithoutCompaniesInput
-  regionsCovered: RegionCreateManyWithoutCompaniesInput
-  therapeuticAreas: TherapeuticAreaCreateManyWithoutCompaniesInput
+  regions: RegionCreateManyWithoutCompaniesInput
+  therapeutics: TherapeuticCreateManyWithoutCompaniesInput
   bids: BidCreateManyWithoutCompanyInput
 }
 
-input CompanyCreateWithoutTherapeuticAreasInput {
+input CompanyCreateWithoutTherapeuticsInput {
   id: ID
   name: String!
   logoURL: String
@@ -385,7 +385,7 @@ input CompanyCreateWithoutTherapeuticAreasInput {
   companySize: CompanySize
   services: ServiceCreateManyWithoutCompaniesInput
   specialties: SpecialtyCreateManyWithoutCompaniesInput
-  regionsCovered: RegionCreateManyWithoutCompaniesInput
+  regions: RegionCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
   bids: BidCreateManyWithoutCompanyInput
 }
@@ -573,8 +573,8 @@ input CompanyUpdateInput {
   companySize: CompanySize
   services: ServiceUpdateManyWithoutCompaniesInput
   specialties: SpecialtyUpdateManyWithoutCompaniesInput
-  regionsCovered: RegionUpdateManyWithoutCompaniesInput
-  therapeuticAreas: TherapeuticAreaUpdateManyWithoutCompaniesInput
+  regions: RegionUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
   bids: BidUpdateManyWithoutCompanyInput
 }
@@ -599,14 +599,14 @@ input CompanyUpdateManyMutationInput {
   companySize: CompanySize
 }
 
-input CompanyUpdateManyWithoutRegionsCoveredInput {
-  create: [CompanyCreateWithoutRegionsCoveredInput!]
+input CompanyUpdateManyWithoutRegionsInput {
+  create: [CompanyCreateWithoutRegionsInput!]
   delete: [CompanyWhereUniqueInput!]
   connect: [CompanyWhereUniqueInput!]
   set: [CompanyWhereUniqueInput!]
   disconnect: [CompanyWhereUniqueInput!]
-  update: [CompanyUpdateWithWhereUniqueWithoutRegionsCoveredInput!]
-  upsert: [CompanyUpsertWithWhereUniqueWithoutRegionsCoveredInput!]
+  update: [CompanyUpdateWithWhereUniqueWithoutRegionsInput!]
+  upsert: [CompanyUpsertWithWhereUniqueWithoutRegionsInput!]
   deleteMany: [CompanyScalarWhereInput!]
   updateMany: [CompanyUpdateManyWithWhereNestedInput!]
 }
@@ -635,14 +635,14 @@ input CompanyUpdateManyWithoutSpecialtiesInput {
   updateMany: [CompanyUpdateManyWithWhereNestedInput!]
 }
 
-input CompanyUpdateManyWithoutTherapeuticAreasInput {
-  create: [CompanyCreateWithoutTherapeuticAreasInput!]
+input CompanyUpdateManyWithoutTherapeuticsInput {
+  create: [CompanyCreateWithoutTherapeuticsInput!]
   delete: [CompanyWhereUniqueInput!]
   connect: [CompanyWhereUniqueInput!]
   set: [CompanyWhereUniqueInput!]
   disconnect: [CompanyWhereUniqueInput!]
-  update: [CompanyUpdateWithWhereUniqueWithoutTherapeuticAreasInput!]
-  upsert: [CompanyUpsertWithWhereUniqueWithoutTherapeuticAreasInput!]
+  update: [CompanyUpdateWithWhereUniqueWithoutTherapeuticsInput!]
+  upsert: [CompanyUpsertWithWhereUniqueWithoutTherapeuticsInput!]
   deleteMany: [CompanyScalarWhereInput!]
   updateMany: [CompanyUpdateManyWithWhereNestedInput!]
 }
@@ -676,12 +676,12 @@ input CompanyUpdateWithoutBidsDataInput {
   companySize: CompanySize
   services: ServiceUpdateManyWithoutCompaniesInput
   specialties: SpecialtyUpdateManyWithoutCompaniesInput
-  regionsCovered: RegionUpdateManyWithoutCompaniesInput
-  therapeuticAreas: TherapeuticAreaUpdateManyWithoutCompaniesInput
+  regions: RegionUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
 }
 
-input CompanyUpdateWithoutRegionsCoveredDataInput {
+input CompanyUpdateWithoutRegionsDataInput {
   name: String
   logoURL: String
   website: String
@@ -691,7 +691,7 @@ input CompanyUpdateWithoutRegionsCoveredDataInput {
   companySize: CompanySize
   services: ServiceUpdateManyWithoutCompaniesInput
   specialties: SpecialtyUpdateManyWithoutCompaniesInput
-  therapeuticAreas: TherapeuticAreaUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
   bids: BidUpdateManyWithoutCompanyInput
 }
@@ -705,8 +705,8 @@ input CompanyUpdateWithoutServicesDataInput {
   headquarters: String
   companySize: CompanySize
   specialties: SpecialtyUpdateManyWithoutCompaniesInput
-  regionsCovered: RegionUpdateManyWithoutCompaniesInput
-  therapeuticAreas: TherapeuticAreaUpdateManyWithoutCompaniesInput
+  regions: RegionUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
   bids: BidUpdateManyWithoutCompanyInput
 }
@@ -720,8 +720,8 @@ input CompanyUpdateWithoutSpecialtiesDataInput {
   headquarters: String
   companySize: CompanySize
   services: ServiceUpdateManyWithoutCompaniesInput
-  regionsCovered: RegionUpdateManyWithoutCompaniesInput
-  therapeuticAreas: TherapeuticAreaUpdateManyWithoutCompaniesInput
+  regions: RegionUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
   bids: BidUpdateManyWithoutCompanyInput
 }
@@ -736,12 +736,12 @@ input CompanyUpdateWithoutStudiesDataInput {
   companySize: CompanySize
   services: ServiceUpdateManyWithoutCompaniesInput
   specialties: SpecialtyUpdateManyWithoutCompaniesInput
-  regionsCovered: RegionUpdateManyWithoutCompaniesInput
-  therapeuticAreas: TherapeuticAreaUpdateManyWithoutCompaniesInput
+  regions: RegionUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
   bids: BidUpdateManyWithoutCompanyInput
 }
 
-input CompanyUpdateWithoutTherapeuticAreasDataInput {
+input CompanyUpdateWithoutTherapeuticsDataInput {
   name: String
   logoURL: String
   website: String
@@ -751,14 +751,14 @@ input CompanyUpdateWithoutTherapeuticAreasDataInput {
   companySize: CompanySize
   services: ServiceUpdateManyWithoutCompaniesInput
   specialties: SpecialtyUpdateManyWithoutCompaniesInput
-  regionsCovered: RegionUpdateManyWithoutCompaniesInput
+  regions: RegionUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
   bids: BidUpdateManyWithoutCompanyInput
 }
 
-input CompanyUpdateWithWhereUniqueWithoutRegionsCoveredInput {
+input CompanyUpdateWithWhereUniqueWithoutRegionsInput {
   where: CompanyWhereUniqueInput!
-  data: CompanyUpdateWithoutRegionsCoveredDataInput!
+  data: CompanyUpdateWithoutRegionsDataInput!
 }
 
 input CompanyUpdateWithWhereUniqueWithoutServicesInput {
@@ -771,9 +771,9 @@ input CompanyUpdateWithWhereUniqueWithoutSpecialtiesInput {
   data: CompanyUpdateWithoutSpecialtiesDataInput!
 }
 
-input CompanyUpdateWithWhereUniqueWithoutTherapeuticAreasInput {
+input CompanyUpdateWithWhereUniqueWithoutTherapeuticsInput {
   where: CompanyWhereUniqueInput!
-  data: CompanyUpdateWithoutTherapeuticAreasDataInput!
+  data: CompanyUpdateWithoutTherapeuticsDataInput!
 }
 
 input CompanyUpsertWithoutBidsInput {
@@ -786,10 +786,10 @@ input CompanyUpsertWithoutStudiesInput {
   create: CompanyCreateWithoutStudiesInput!
 }
 
-input CompanyUpsertWithWhereUniqueWithoutRegionsCoveredInput {
+input CompanyUpsertWithWhereUniqueWithoutRegionsInput {
   where: CompanyWhereUniqueInput!
-  update: CompanyUpdateWithoutRegionsCoveredDataInput!
-  create: CompanyCreateWithoutRegionsCoveredInput!
+  update: CompanyUpdateWithoutRegionsDataInput!
+  create: CompanyCreateWithoutRegionsInput!
 }
 
 input CompanyUpsertWithWhereUniqueWithoutServicesInput {
@@ -804,10 +804,10 @@ input CompanyUpsertWithWhereUniqueWithoutSpecialtiesInput {
   create: CompanyCreateWithoutSpecialtiesInput!
 }
 
-input CompanyUpsertWithWhereUniqueWithoutTherapeuticAreasInput {
+input CompanyUpsertWithWhereUniqueWithoutTherapeuticsInput {
   where: CompanyWhereUniqueInput!
-  update: CompanyUpdateWithoutTherapeuticAreasDataInput!
-  create: CompanyCreateWithoutTherapeuticAreasInput!
+  update: CompanyUpdateWithoutTherapeuticsDataInput!
+  create: CompanyCreateWithoutTherapeuticsInput!
 }
 
 input CompanyWhereInput {
@@ -919,12 +919,12 @@ input CompanyWhereInput {
   specialties_every: SpecialtyWhereInput
   specialties_some: SpecialtyWhereInput
   specialties_none: SpecialtyWhereInput
-  regionsCovered_every: RegionWhereInput
-  regionsCovered_some: RegionWhereInput
-  regionsCovered_none: RegionWhereInput
-  therapeuticAreas_every: TherapeuticAreaWhereInput
-  therapeuticAreas_some: TherapeuticAreaWhereInput
-  therapeuticAreas_none: TherapeuticAreaWhereInput
+  regions_every: RegionWhereInput
+  regions_some: RegionWhereInput
+  regions_none: RegionWhereInput
+  therapeutics_every: TherapeuticWhereInput
+  therapeutics_some: TherapeuticWhereInput
+  therapeutics_none: TherapeuticWhereInput
   studies_every: StudyWhereInput
   studies_some: StudyWhereInput
   studies_none: StudyWhereInput
@@ -982,12 +982,12 @@ type Mutation {
   upsertStudy(where: StudyWhereUniqueInput!, create: StudyCreateInput!, update: StudyUpdateInput!): Study!
   deleteStudy(where: StudyWhereUniqueInput!): Study
   deleteManyStudies(where: StudyWhereInput): BatchPayload!
-  createTherapeuticArea(data: TherapeuticAreaCreateInput!): TherapeuticArea!
-  updateTherapeuticArea(data: TherapeuticAreaUpdateInput!, where: TherapeuticAreaWhereUniqueInput!): TherapeuticArea
-  updateManyTherapeuticAreas(data: TherapeuticAreaUpdateManyMutationInput!, where: TherapeuticAreaWhereInput): BatchPayload!
-  upsertTherapeuticArea(where: TherapeuticAreaWhereUniqueInput!, create: TherapeuticAreaCreateInput!, update: TherapeuticAreaUpdateInput!): TherapeuticArea!
-  deleteTherapeuticArea(where: TherapeuticAreaWhereUniqueInput!): TherapeuticArea
-  deleteManyTherapeuticAreas(where: TherapeuticAreaWhereInput): BatchPayload!
+  createTherapeutic(data: TherapeuticCreateInput!): Therapeutic!
+  updateTherapeutic(data: TherapeuticUpdateInput!, where: TherapeuticWhereUniqueInput!): Therapeutic
+  updateManyTherapeutics(data: TherapeuticUpdateManyMutationInput!, where: TherapeuticWhereInput): BatchPayload!
+  upsertTherapeutic(where: TherapeuticWhereUniqueInput!, create: TherapeuticCreateInput!, update: TherapeuticUpdateInput!): Therapeutic!
+  deleteTherapeutic(where: TherapeuticWhereUniqueInput!): Therapeutic
+  deleteManyTherapeutics(where: TherapeuticWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -1026,9 +1026,9 @@ type Query {
   study(where: StudyWhereUniqueInput!): Study
   studies(where: StudyWhereInput, orderBy: StudyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Study]!
   studiesConnection(where: StudyWhereInput, orderBy: StudyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudyConnection!
-  therapeuticArea(where: TherapeuticAreaWhereUniqueInput!): TherapeuticArea
-  therapeuticAreas(where: TherapeuticAreaWhereInput, orderBy: TherapeuticAreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TherapeuticArea]!
-  therapeuticAreasConnection(where: TherapeuticAreaWhereInput, orderBy: TherapeuticAreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TherapeuticAreaConnection!
+  therapeutic(where: TherapeuticWhereUniqueInput!): Therapeutic
+  therapeutics(where: TherapeuticWhereInput, orderBy: TherapeuticOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Therapeutic]!
+  therapeuticsConnection(where: TherapeuticWhereInput, orderBy: TherapeuticOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TherapeuticConnection!
   node(id: ID!): Node
 }
 
@@ -1047,7 +1047,7 @@ type RegionConnection {
 input RegionCreateInput {
   id: ID
   name: String!
-  companies: CompanyCreateManyWithoutRegionsCoveredInput
+  companies: CompanyCreateManyWithoutRegionsInput
 }
 
 input RegionCreateManyWithoutCompaniesInput {
@@ -1131,7 +1131,7 @@ input RegionSubscriptionWhereInput {
 
 input RegionUpdateInput {
   name: String
-  companies: CompanyUpdateManyWithoutRegionsCoveredInput
+  companies: CompanyUpdateManyWithoutRegionsInput
 }
 
 input RegionUpdateManyDataInput {
@@ -2032,55 +2032,55 @@ type Subscription {
   service(where: ServiceSubscriptionWhereInput): ServiceSubscriptionPayload
   specialty(where: SpecialtySubscriptionWhereInput): SpecialtySubscriptionPayload
   study(where: StudySubscriptionWhereInput): StudySubscriptionPayload
-  therapeuticArea(where: TherapeuticAreaSubscriptionWhereInput): TherapeuticAreaSubscriptionPayload
+  therapeutic(where: TherapeuticSubscriptionWhereInput): TherapeuticSubscriptionPayload
 }
 
-type TherapeuticArea {
+type Therapeutic {
   id: ID!
   name: String!
   companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company!]
 }
 
-type TherapeuticAreaConnection {
+type TherapeuticConnection {
   pageInfo: PageInfo!
-  edges: [TherapeuticAreaEdge]!
-  aggregate: AggregateTherapeuticArea!
+  edges: [TherapeuticEdge]!
+  aggregate: AggregateTherapeutic!
 }
 
-input TherapeuticAreaCreateInput {
+input TherapeuticCreateInput {
   id: ID
   name: String!
-  companies: CompanyCreateManyWithoutTherapeuticAreasInput
+  companies: CompanyCreateManyWithoutTherapeuticsInput
 }
 
-input TherapeuticAreaCreateManyWithoutCompaniesInput {
-  create: [TherapeuticAreaCreateWithoutCompaniesInput!]
-  connect: [TherapeuticAreaWhereUniqueInput!]
+input TherapeuticCreateManyWithoutCompaniesInput {
+  create: [TherapeuticCreateWithoutCompaniesInput!]
+  connect: [TherapeuticWhereUniqueInput!]
 }
 
-input TherapeuticAreaCreateWithoutCompaniesInput {
+input TherapeuticCreateWithoutCompaniesInput {
   id: ID
   name: String!
 }
 
-type TherapeuticAreaEdge {
-  node: TherapeuticArea!
+type TherapeuticEdge {
+  node: Therapeutic!
   cursor: String!
 }
 
-enum TherapeuticAreaOrderByInput {
+enum TherapeuticOrderByInput {
   id_ASC
   id_DESC
   name_ASC
   name_DESC
 }
 
-type TherapeuticAreaPreviousValues {
+type TherapeuticPreviousValues {
   id: ID!
   name: String!
 }
 
-input TherapeuticAreaScalarWhereInput {
+input TherapeuticScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -2109,75 +2109,75 @@ input TherapeuticAreaScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  AND: [TherapeuticAreaScalarWhereInput!]
-  OR: [TherapeuticAreaScalarWhereInput!]
-  NOT: [TherapeuticAreaScalarWhereInput!]
+  AND: [TherapeuticScalarWhereInput!]
+  OR: [TherapeuticScalarWhereInput!]
+  NOT: [TherapeuticScalarWhereInput!]
 }
 
-type TherapeuticAreaSubscriptionPayload {
+type TherapeuticSubscriptionPayload {
   mutation: MutationType!
-  node: TherapeuticArea
+  node: Therapeutic
   updatedFields: [String!]
-  previousValues: TherapeuticAreaPreviousValues
+  previousValues: TherapeuticPreviousValues
 }
 
-input TherapeuticAreaSubscriptionWhereInput {
+input TherapeuticSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: TherapeuticAreaWhereInput
-  AND: [TherapeuticAreaSubscriptionWhereInput!]
-  OR: [TherapeuticAreaSubscriptionWhereInput!]
-  NOT: [TherapeuticAreaSubscriptionWhereInput!]
+  node: TherapeuticWhereInput
+  AND: [TherapeuticSubscriptionWhereInput!]
+  OR: [TherapeuticSubscriptionWhereInput!]
+  NOT: [TherapeuticSubscriptionWhereInput!]
 }
 
-input TherapeuticAreaUpdateInput {
+input TherapeuticUpdateInput {
   name: String
-  companies: CompanyUpdateManyWithoutTherapeuticAreasInput
+  companies: CompanyUpdateManyWithoutTherapeuticsInput
 }
 
-input TherapeuticAreaUpdateManyDataInput {
-  name: String
-}
-
-input TherapeuticAreaUpdateManyMutationInput {
+input TherapeuticUpdateManyDataInput {
   name: String
 }
 
-input TherapeuticAreaUpdateManyWithoutCompaniesInput {
-  create: [TherapeuticAreaCreateWithoutCompaniesInput!]
-  delete: [TherapeuticAreaWhereUniqueInput!]
-  connect: [TherapeuticAreaWhereUniqueInput!]
-  set: [TherapeuticAreaWhereUniqueInput!]
-  disconnect: [TherapeuticAreaWhereUniqueInput!]
-  update: [TherapeuticAreaUpdateWithWhereUniqueWithoutCompaniesInput!]
-  upsert: [TherapeuticAreaUpsertWithWhereUniqueWithoutCompaniesInput!]
-  deleteMany: [TherapeuticAreaScalarWhereInput!]
-  updateMany: [TherapeuticAreaUpdateManyWithWhereNestedInput!]
-}
-
-input TherapeuticAreaUpdateManyWithWhereNestedInput {
-  where: TherapeuticAreaScalarWhereInput!
-  data: TherapeuticAreaUpdateManyDataInput!
-}
-
-input TherapeuticAreaUpdateWithoutCompaniesDataInput {
+input TherapeuticUpdateManyMutationInput {
   name: String
 }
 
-input TherapeuticAreaUpdateWithWhereUniqueWithoutCompaniesInput {
-  where: TherapeuticAreaWhereUniqueInput!
-  data: TherapeuticAreaUpdateWithoutCompaniesDataInput!
+input TherapeuticUpdateManyWithoutCompaniesInput {
+  create: [TherapeuticCreateWithoutCompaniesInput!]
+  delete: [TherapeuticWhereUniqueInput!]
+  connect: [TherapeuticWhereUniqueInput!]
+  set: [TherapeuticWhereUniqueInput!]
+  disconnect: [TherapeuticWhereUniqueInput!]
+  update: [TherapeuticUpdateWithWhereUniqueWithoutCompaniesInput!]
+  upsert: [TherapeuticUpsertWithWhereUniqueWithoutCompaniesInput!]
+  deleteMany: [TherapeuticScalarWhereInput!]
+  updateMany: [TherapeuticUpdateManyWithWhereNestedInput!]
 }
 
-input TherapeuticAreaUpsertWithWhereUniqueWithoutCompaniesInput {
-  where: TherapeuticAreaWhereUniqueInput!
-  update: TherapeuticAreaUpdateWithoutCompaniesDataInput!
-  create: TherapeuticAreaCreateWithoutCompaniesInput!
+input TherapeuticUpdateManyWithWhereNestedInput {
+  where: TherapeuticScalarWhereInput!
+  data: TherapeuticUpdateManyDataInput!
 }
 
-input TherapeuticAreaWhereInput {
+input TherapeuticUpdateWithoutCompaniesDataInput {
+  name: String
+}
+
+input TherapeuticUpdateWithWhereUniqueWithoutCompaniesInput {
+  where: TherapeuticWhereUniqueInput!
+  data: TherapeuticUpdateWithoutCompaniesDataInput!
+}
+
+input TherapeuticUpsertWithWhereUniqueWithoutCompaniesInput {
+  where: TherapeuticWhereUniqueInput!
+  update: TherapeuticUpdateWithoutCompaniesDataInput!
+  create: TherapeuticCreateWithoutCompaniesInput!
+}
+
+input TherapeuticWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -2209,12 +2209,12 @@ input TherapeuticAreaWhereInput {
   companies_every: CompanyWhereInput
   companies_some: CompanyWhereInput
   companies_none: CompanyWhereInput
-  AND: [TherapeuticAreaWhereInput!]
-  OR: [TherapeuticAreaWhereInput!]
-  NOT: [TherapeuticAreaWhereInput!]
+  AND: [TherapeuticWhereInput!]
+  OR: [TherapeuticWhereInput!]
+  NOT: [TherapeuticWhereInput!]
 }
 
-input TherapeuticAreaWhereUniqueInput {
+input TherapeuticWhereUniqueInput {
   id: ID
   name: String
 }

@@ -2,8 +2,8 @@ const { gql } = require("apollo-server");
 
 module.exports = gql`
   extend type Query {
-    regionsCovered: [Region!]
-    regionCovered(name: String!): Region!
+    regions: [Region!]
+    region(name: String!): Region!
     searchRegion(search: String!): [Region]!
   }
 
@@ -14,6 +14,7 @@ module.exports = gql`
   }
 
   type Region {
+    id: ID
     name: String!
     companies: [Company]!
   }

@@ -27,7 +27,7 @@ module.exports = {
       return prisma.deleteTherapeutic({ name });
     },
   },
-  TherapeuticArea: {
+  Therapeutic: {
     companies: ({ name }, args, { prisma }, info) => {
       return prisma.therapeutic({ name }).companies();
     },

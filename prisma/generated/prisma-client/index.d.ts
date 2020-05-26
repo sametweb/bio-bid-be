@@ -22,7 +22,7 @@ export interface Exists {
   service: (where?: ServiceWhereInput) => Promise<boolean>;
   specialty: (where?: SpecialtyWhereInput) => Promise<boolean>;
   study: (where?: StudyWhereInput) => Promise<boolean>;
-  therapeuticArea: (where?: TherapeuticAreaWhereInput) => Promise<boolean>;
+  therapeutic: (where?: TherapeuticWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -158,27 +158,27 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => StudyConnectionPromise;
-  therapeuticArea: (
-    where: TherapeuticAreaWhereUniqueInput
-  ) => TherapeuticAreaNullablePromise;
-  therapeuticAreas: (args?: {
-    where?: TherapeuticAreaWhereInput;
-    orderBy?: TherapeuticAreaOrderByInput;
+  therapeutic: (
+    where: TherapeuticWhereUniqueInput
+  ) => TherapeuticNullablePromise;
+  therapeutics: (args?: {
+    where?: TherapeuticWhereInput;
+    orderBy?: TherapeuticOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<TherapeuticArea>;
-  therapeuticAreasConnection: (args?: {
-    where?: TherapeuticAreaWhereInput;
-    orderBy?: TherapeuticAreaOrderByInput;
+  }) => FragmentableArray<Therapeutic>;
+  therapeuticsConnection: (args?: {
+    where?: TherapeuticWhereInput;
+    orderBy?: TherapeuticOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => TherapeuticAreaConnectionPromise;
+  }) => TherapeuticConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
@@ -281,27 +281,23 @@ export interface Prisma {
   }) => StudyPromise;
   deleteStudy: (where: StudyWhereUniqueInput) => StudyPromise;
   deleteManyStudies: (where?: StudyWhereInput) => BatchPayloadPromise;
-  createTherapeuticArea: (
-    data: TherapeuticAreaCreateInput
-  ) => TherapeuticAreaPromise;
-  updateTherapeuticArea: (args: {
-    data: TherapeuticAreaUpdateInput;
-    where: TherapeuticAreaWhereUniqueInput;
-  }) => TherapeuticAreaPromise;
-  updateManyTherapeuticAreas: (args: {
-    data: TherapeuticAreaUpdateManyMutationInput;
-    where?: TherapeuticAreaWhereInput;
+  createTherapeutic: (data: TherapeuticCreateInput) => TherapeuticPromise;
+  updateTherapeutic: (args: {
+    data: TherapeuticUpdateInput;
+    where: TherapeuticWhereUniqueInput;
+  }) => TherapeuticPromise;
+  updateManyTherapeutics: (args: {
+    data: TherapeuticUpdateManyMutationInput;
+    where?: TherapeuticWhereInput;
   }) => BatchPayloadPromise;
-  upsertTherapeuticArea: (args: {
-    where: TherapeuticAreaWhereUniqueInput;
-    create: TherapeuticAreaCreateInput;
-    update: TherapeuticAreaUpdateInput;
-  }) => TherapeuticAreaPromise;
-  deleteTherapeuticArea: (
-    where: TherapeuticAreaWhereUniqueInput
-  ) => TherapeuticAreaPromise;
-  deleteManyTherapeuticAreas: (
-    where?: TherapeuticAreaWhereInput
+  upsertTherapeutic: (args: {
+    where: TherapeuticWhereUniqueInput;
+    create: TherapeuticCreateInput;
+    update: TherapeuticUpdateInput;
+  }) => TherapeuticPromise;
+  deleteTherapeutic: (where: TherapeuticWhereUniqueInput) => TherapeuticPromise;
+  deleteManyTherapeutics: (
+    where?: TherapeuticWhereInput
   ) => BatchPayloadPromise;
 
   /**
@@ -330,9 +326,9 @@ export interface Subscription {
   study: (
     where?: StudySubscriptionWhereInput
   ) => StudySubscriptionPayloadSubscription;
-  therapeuticArea: (
-    where?: TherapeuticAreaSubscriptionWhereInput
-  ) => TherapeuticAreaSubscriptionPayloadSubscription;
+  therapeutic: (
+    where?: TherapeuticSubscriptionWhereInput
+  ) => TherapeuticSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -381,7 +377,7 @@ export type RegionOrderByInput =
   | "name_ASC"
   | "name_DESC";
 
-export type TherapeuticAreaOrderByInput =
+export type TherapeuticOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "name_ASC"
@@ -567,12 +563,12 @@ export interface CompanyWhereInput {
   specialties_every?: Maybe<SpecialtyWhereInput>;
   specialties_some?: Maybe<SpecialtyWhereInput>;
   specialties_none?: Maybe<SpecialtyWhereInput>;
-  regionsCovered_every?: Maybe<RegionWhereInput>;
-  regionsCovered_some?: Maybe<RegionWhereInput>;
-  regionsCovered_none?: Maybe<RegionWhereInput>;
-  therapeuticAreas_every?: Maybe<TherapeuticAreaWhereInput>;
-  therapeuticAreas_some?: Maybe<TherapeuticAreaWhereInput>;
-  therapeuticAreas_none?: Maybe<TherapeuticAreaWhereInput>;
+  regions_every?: Maybe<RegionWhereInput>;
+  regions_some?: Maybe<RegionWhereInput>;
+  regions_none?: Maybe<RegionWhereInput>;
+  therapeutics_every?: Maybe<TherapeuticWhereInput>;
+  therapeutics_some?: Maybe<TherapeuticWhereInput>;
+  therapeutics_none?: Maybe<TherapeuticWhereInput>;
   studies_every?: Maybe<StudyWhereInput>;
   studies_some?: Maybe<StudyWhereInput>;
   studies_none?: Maybe<StudyWhereInput>;
@@ -658,7 +654,7 @@ export interface RegionWhereInput {
   NOT?: Maybe<RegionWhereInput[] | RegionWhereInput>;
 }
 
-export interface TherapeuticAreaWhereInput {
+export interface TherapeuticWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -690,9 +686,9 @@ export interface TherapeuticAreaWhereInput {
   companies_every?: Maybe<CompanyWhereInput>;
   companies_some?: Maybe<CompanyWhereInput>;
   companies_none?: Maybe<CompanyWhereInput>;
-  AND?: Maybe<TherapeuticAreaWhereInput[] | TherapeuticAreaWhereInput>;
-  OR?: Maybe<TherapeuticAreaWhereInput[] | TherapeuticAreaWhereInput>;
-  NOT?: Maybe<TherapeuticAreaWhereInput[] | TherapeuticAreaWhereInput>;
+  AND?: Maybe<TherapeuticWhereInput[] | TherapeuticWhereInput>;
+  OR?: Maybe<TherapeuticWhereInput[] | TherapeuticWhereInput>;
+  NOT?: Maybe<TherapeuticWhereInput[] | TherapeuticWhereInput>;
 }
 
 export interface StudyWhereInput {
@@ -867,7 +863,7 @@ export type StudyWhereUniqueInput = AtLeastOne<{
   name?: Maybe<String>;
 }>;
 
-export type TherapeuticAreaWhereUniqueInput = AtLeastOne<{
+export type TherapeuticWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   name?: Maybe<String>;
 }>;
@@ -896,8 +892,8 @@ export interface CompanyCreateWithoutBidsInput {
   companySize?: Maybe<CompanySize>;
   services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
   specialties?: Maybe<SpecialtyCreateManyWithoutCompaniesInput>;
-  regionsCovered?: Maybe<RegionCreateManyWithoutCompaniesInput>;
-  therapeuticAreas?: Maybe<TherapeuticAreaCreateManyWithoutCompaniesInput>;
+  regions?: Maybe<RegionCreateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticCreateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
 }
 
@@ -938,17 +934,15 @@ export interface RegionCreateWithoutCompaniesInput {
   name: String;
 }
 
-export interface TherapeuticAreaCreateManyWithoutCompaniesInput {
+export interface TherapeuticCreateManyWithoutCompaniesInput {
   create?: Maybe<
-    | TherapeuticAreaCreateWithoutCompaniesInput[]
-    | TherapeuticAreaCreateWithoutCompaniesInput
+    | TherapeuticCreateWithoutCompaniesInput[]
+    | TherapeuticCreateWithoutCompaniesInput
   >;
-  connect?: Maybe<
-    TherapeuticAreaWhereUniqueInput[] | TherapeuticAreaWhereUniqueInput
-  >;
+  connect?: Maybe<TherapeuticWhereUniqueInput[] | TherapeuticWhereUniqueInput>;
 }
 
-export interface TherapeuticAreaCreateWithoutCompaniesInput {
+export interface TherapeuticCreateWithoutCompaniesInput {
   id?: Maybe<ID_Input>;
   name: String;
 }
@@ -1006,8 +1000,8 @@ export interface CompanyCreateWithoutStudiesInput {
   companySize?: Maybe<CompanySize>;
   services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
   specialties?: Maybe<SpecialtyCreateManyWithoutCompaniesInput>;
-  regionsCovered?: Maybe<RegionCreateManyWithoutCompaniesInput>;
-  therapeuticAreas?: Maybe<TherapeuticAreaCreateManyWithoutCompaniesInput>;
+  regions?: Maybe<RegionCreateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticCreateManyWithoutCompaniesInput>;
   bids?: Maybe<BidCreateManyWithoutCompanyInput>;
 }
 
@@ -1047,8 +1041,8 @@ export interface CompanyUpdateWithoutBidsDataInput {
   companySize?: Maybe<CompanySize>;
   services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
   specialties?: Maybe<SpecialtyUpdateManyWithoutCompaniesInput>;
-  regionsCovered?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
-  therapeuticAreas?: Maybe<TherapeuticAreaUpdateManyWithoutCompaniesInput>;
+  regions?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
 }
 
@@ -1296,56 +1290,50 @@ export interface RegionUpdateManyDataInput {
   name?: Maybe<String>;
 }
 
-export interface TherapeuticAreaUpdateManyWithoutCompaniesInput {
+export interface TherapeuticUpdateManyWithoutCompaniesInput {
   create?: Maybe<
-    | TherapeuticAreaCreateWithoutCompaniesInput[]
-    | TherapeuticAreaCreateWithoutCompaniesInput
+    | TherapeuticCreateWithoutCompaniesInput[]
+    | TherapeuticCreateWithoutCompaniesInput
   >;
-  delete?: Maybe<
-    TherapeuticAreaWhereUniqueInput[] | TherapeuticAreaWhereUniqueInput
-  >;
-  connect?: Maybe<
-    TherapeuticAreaWhereUniqueInput[] | TherapeuticAreaWhereUniqueInput
-  >;
-  set?: Maybe<
-    TherapeuticAreaWhereUniqueInput[] | TherapeuticAreaWhereUniqueInput
-  >;
+  delete?: Maybe<TherapeuticWhereUniqueInput[] | TherapeuticWhereUniqueInput>;
+  connect?: Maybe<TherapeuticWhereUniqueInput[] | TherapeuticWhereUniqueInput>;
+  set?: Maybe<TherapeuticWhereUniqueInput[] | TherapeuticWhereUniqueInput>;
   disconnect?: Maybe<
-    TherapeuticAreaWhereUniqueInput[] | TherapeuticAreaWhereUniqueInput
+    TherapeuticWhereUniqueInput[] | TherapeuticWhereUniqueInput
   >;
   update?: Maybe<
-    | TherapeuticAreaUpdateWithWhereUniqueWithoutCompaniesInput[]
-    | TherapeuticAreaUpdateWithWhereUniqueWithoutCompaniesInput
+    | TherapeuticUpdateWithWhereUniqueWithoutCompaniesInput[]
+    | TherapeuticUpdateWithWhereUniqueWithoutCompaniesInput
   >;
   upsert?: Maybe<
-    | TherapeuticAreaUpsertWithWhereUniqueWithoutCompaniesInput[]
-    | TherapeuticAreaUpsertWithWhereUniqueWithoutCompaniesInput
+    | TherapeuticUpsertWithWhereUniqueWithoutCompaniesInput[]
+    | TherapeuticUpsertWithWhereUniqueWithoutCompaniesInput
   >;
   deleteMany?: Maybe<
-    TherapeuticAreaScalarWhereInput[] | TherapeuticAreaScalarWhereInput
+    TherapeuticScalarWhereInput[] | TherapeuticScalarWhereInput
   >;
   updateMany?: Maybe<
-    | TherapeuticAreaUpdateManyWithWhereNestedInput[]
-    | TherapeuticAreaUpdateManyWithWhereNestedInput
+    | TherapeuticUpdateManyWithWhereNestedInput[]
+    | TherapeuticUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface TherapeuticAreaUpdateWithWhereUniqueWithoutCompaniesInput {
-  where: TherapeuticAreaWhereUniqueInput;
-  data: TherapeuticAreaUpdateWithoutCompaniesDataInput;
+export interface TherapeuticUpdateWithWhereUniqueWithoutCompaniesInput {
+  where: TherapeuticWhereUniqueInput;
+  data: TherapeuticUpdateWithoutCompaniesDataInput;
 }
 
-export interface TherapeuticAreaUpdateWithoutCompaniesDataInput {
+export interface TherapeuticUpdateWithoutCompaniesDataInput {
   name?: Maybe<String>;
 }
 
-export interface TherapeuticAreaUpsertWithWhereUniqueWithoutCompaniesInput {
-  where: TherapeuticAreaWhereUniqueInput;
-  update: TherapeuticAreaUpdateWithoutCompaniesDataInput;
-  create: TherapeuticAreaCreateWithoutCompaniesInput;
+export interface TherapeuticUpsertWithWhereUniqueWithoutCompaniesInput {
+  where: TherapeuticWhereUniqueInput;
+  update: TherapeuticUpdateWithoutCompaniesDataInput;
+  create: TherapeuticCreateWithoutCompaniesInput;
 }
 
-export interface TherapeuticAreaScalarWhereInput {
+export interface TherapeuticScalarWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -1374,23 +1362,17 @@ export interface TherapeuticAreaScalarWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<
-    TherapeuticAreaScalarWhereInput[] | TherapeuticAreaScalarWhereInput
-  >;
-  OR?: Maybe<
-    TherapeuticAreaScalarWhereInput[] | TherapeuticAreaScalarWhereInput
-  >;
-  NOT?: Maybe<
-    TherapeuticAreaScalarWhereInput[] | TherapeuticAreaScalarWhereInput
-  >;
+  AND?: Maybe<TherapeuticScalarWhereInput[] | TherapeuticScalarWhereInput>;
+  OR?: Maybe<TherapeuticScalarWhereInput[] | TherapeuticScalarWhereInput>;
+  NOT?: Maybe<TherapeuticScalarWhereInput[] | TherapeuticScalarWhereInput>;
 }
 
-export interface TherapeuticAreaUpdateManyWithWhereNestedInput {
-  where: TherapeuticAreaScalarWhereInput;
-  data: TherapeuticAreaUpdateManyDataInput;
+export interface TherapeuticUpdateManyWithWhereNestedInput {
+  where: TherapeuticScalarWhereInput;
+  data: TherapeuticUpdateManyDataInput;
 }
 
-export interface TherapeuticAreaUpdateManyDataInput {
+export interface TherapeuticUpdateManyDataInput {
   name?: Maybe<String>;
 }
 
@@ -1609,8 +1591,8 @@ export interface CompanyUpdateWithoutStudiesDataInput {
   companySize?: Maybe<CompanySize>;
   services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
   specialties?: Maybe<SpecialtyUpdateManyWithoutCompaniesInput>;
-  regionsCovered?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
-  therapeuticAreas?: Maybe<TherapeuticAreaUpdateManyWithoutCompaniesInput>;
+  regions?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
   bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
 }
 
@@ -1717,8 +1699,8 @@ export interface CompanyCreateInput {
   companySize?: Maybe<CompanySize>;
   services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
   specialties?: Maybe<SpecialtyCreateManyWithoutCompaniesInput>;
-  regionsCovered?: Maybe<RegionCreateManyWithoutCompaniesInput>;
-  therapeuticAreas?: Maybe<TherapeuticAreaCreateManyWithoutCompaniesInput>;
+  regions?: Maybe<RegionCreateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticCreateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
   bids?: Maybe<BidCreateManyWithoutCompanyInput>;
 }
@@ -1733,8 +1715,8 @@ export interface CompanyUpdateInput {
   companySize?: Maybe<CompanySize>;
   services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
   specialties?: Maybe<SpecialtyUpdateManyWithoutCompaniesInput>;
-  regionsCovered?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
-  therapeuticAreas?: Maybe<TherapeuticAreaUpdateManyWithoutCompaniesInput>;
+  regions?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
   bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
 }
@@ -1752,18 +1734,17 @@ export interface CompanyUpdateManyMutationInput {
 export interface RegionCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
-  companies?: Maybe<CompanyCreateManyWithoutRegionsCoveredInput>;
+  companies?: Maybe<CompanyCreateManyWithoutRegionsInput>;
 }
 
-export interface CompanyCreateManyWithoutRegionsCoveredInput {
+export interface CompanyCreateManyWithoutRegionsInput {
   create?: Maybe<
-    | CompanyCreateWithoutRegionsCoveredInput[]
-    | CompanyCreateWithoutRegionsCoveredInput
+    CompanyCreateWithoutRegionsInput[] | CompanyCreateWithoutRegionsInput
   >;
   connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
 }
 
-export interface CompanyCreateWithoutRegionsCoveredInput {
+export interface CompanyCreateWithoutRegionsInput {
   id?: Maybe<ID_Input>;
   name: String;
   logoURL?: Maybe<String>;
@@ -1774,32 +1755,31 @@ export interface CompanyCreateWithoutRegionsCoveredInput {
   companySize?: Maybe<CompanySize>;
   services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
   specialties?: Maybe<SpecialtyCreateManyWithoutCompaniesInput>;
-  therapeuticAreas?: Maybe<TherapeuticAreaCreateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticCreateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
   bids?: Maybe<BidCreateManyWithoutCompanyInput>;
 }
 
 export interface RegionUpdateInput {
   name?: Maybe<String>;
-  companies?: Maybe<CompanyUpdateManyWithoutRegionsCoveredInput>;
+  companies?: Maybe<CompanyUpdateManyWithoutRegionsInput>;
 }
 
-export interface CompanyUpdateManyWithoutRegionsCoveredInput {
+export interface CompanyUpdateManyWithoutRegionsInput {
   create?: Maybe<
-    | CompanyCreateWithoutRegionsCoveredInput[]
-    | CompanyCreateWithoutRegionsCoveredInput
+    CompanyCreateWithoutRegionsInput[] | CompanyCreateWithoutRegionsInput
   >;
   delete?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
   connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
   set?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
   disconnect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
   update?: Maybe<
-    | CompanyUpdateWithWhereUniqueWithoutRegionsCoveredInput[]
-    | CompanyUpdateWithWhereUniqueWithoutRegionsCoveredInput
+    | CompanyUpdateWithWhereUniqueWithoutRegionsInput[]
+    | CompanyUpdateWithWhereUniqueWithoutRegionsInput
   >;
   upsert?: Maybe<
-    | CompanyUpsertWithWhereUniqueWithoutRegionsCoveredInput[]
-    | CompanyUpsertWithWhereUniqueWithoutRegionsCoveredInput
+    | CompanyUpsertWithWhereUniqueWithoutRegionsInput[]
+    | CompanyUpsertWithWhereUniqueWithoutRegionsInput
   >;
   deleteMany?: Maybe<CompanyScalarWhereInput[] | CompanyScalarWhereInput>;
   updateMany?: Maybe<
@@ -1808,12 +1788,12 @@ export interface CompanyUpdateManyWithoutRegionsCoveredInput {
   >;
 }
 
-export interface CompanyUpdateWithWhereUniqueWithoutRegionsCoveredInput {
+export interface CompanyUpdateWithWhereUniqueWithoutRegionsInput {
   where: CompanyWhereUniqueInput;
-  data: CompanyUpdateWithoutRegionsCoveredDataInput;
+  data: CompanyUpdateWithoutRegionsDataInput;
 }
 
-export interface CompanyUpdateWithoutRegionsCoveredDataInput {
+export interface CompanyUpdateWithoutRegionsDataInput {
   name?: Maybe<String>;
   logoURL?: Maybe<String>;
   website?: Maybe<String>;
@@ -1823,15 +1803,15 @@ export interface CompanyUpdateWithoutRegionsCoveredDataInput {
   companySize?: Maybe<CompanySize>;
   services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
   specialties?: Maybe<SpecialtyUpdateManyWithoutCompaniesInput>;
-  therapeuticAreas?: Maybe<TherapeuticAreaUpdateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
   bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
 }
 
-export interface CompanyUpsertWithWhereUniqueWithoutRegionsCoveredInput {
+export interface CompanyUpsertWithWhereUniqueWithoutRegionsInput {
   where: CompanyWhereUniqueInput;
-  update: CompanyUpdateWithoutRegionsCoveredDataInput;
-  create: CompanyCreateWithoutRegionsCoveredInput;
+  update: CompanyUpdateWithoutRegionsDataInput;
+  create: CompanyCreateWithoutRegionsInput;
 }
 
 export interface CompanyScalarWhereInput {
@@ -1984,8 +1964,8 @@ export interface CompanyCreateWithoutServicesInput {
   headquarters?: Maybe<String>;
   companySize?: Maybe<CompanySize>;
   specialties?: Maybe<SpecialtyCreateManyWithoutCompaniesInput>;
-  regionsCovered?: Maybe<RegionCreateManyWithoutCompaniesInput>;
-  therapeuticAreas?: Maybe<TherapeuticAreaCreateManyWithoutCompaniesInput>;
+  regions?: Maybe<RegionCreateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticCreateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
   bids?: Maybe<BidCreateManyWithoutCompanyInput>;
 }
@@ -2032,8 +2012,8 @@ export interface CompanyUpdateWithoutServicesDataInput {
   headquarters?: Maybe<String>;
   companySize?: Maybe<CompanySize>;
   specialties?: Maybe<SpecialtyUpdateManyWithoutCompaniesInput>;
-  regionsCovered?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
-  therapeuticAreas?: Maybe<TherapeuticAreaUpdateManyWithoutCompaniesInput>;
+  regions?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
   bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
 }
@@ -2072,8 +2052,8 @@ export interface CompanyCreateWithoutSpecialtiesInput {
   headquarters?: Maybe<String>;
   companySize?: Maybe<CompanySize>;
   services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
-  regionsCovered?: Maybe<RegionCreateManyWithoutCompaniesInput>;
-  therapeuticAreas?: Maybe<TherapeuticAreaCreateManyWithoutCompaniesInput>;
+  regions?: Maybe<RegionCreateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticCreateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
   bids?: Maybe<BidCreateManyWithoutCompanyInput>;
 }
@@ -2121,8 +2101,8 @@ export interface CompanyUpdateWithoutSpecialtiesDataInput {
   headquarters?: Maybe<String>;
   companySize?: Maybe<CompanySize>;
   services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
-  regionsCovered?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
-  therapeuticAreas?: Maybe<TherapeuticAreaUpdateManyWithoutCompaniesInput>;
+  regions?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
   bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
 }
@@ -2160,21 +2140,21 @@ export interface StudyUpdateManyMutationInput {
   status?: Maybe<String>;
 }
 
-export interface TherapeuticAreaCreateInput {
+export interface TherapeuticCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
-  companies?: Maybe<CompanyCreateManyWithoutTherapeuticAreasInput>;
+  companies?: Maybe<CompanyCreateManyWithoutTherapeuticsInput>;
 }
 
-export interface CompanyCreateManyWithoutTherapeuticAreasInput {
+export interface CompanyCreateManyWithoutTherapeuticsInput {
   create?: Maybe<
-    | CompanyCreateWithoutTherapeuticAreasInput[]
-    | CompanyCreateWithoutTherapeuticAreasInput
+    | CompanyCreateWithoutTherapeuticsInput[]
+    | CompanyCreateWithoutTherapeuticsInput
   >;
   connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
 }
 
-export interface CompanyCreateWithoutTherapeuticAreasInput {
+export interface CompanyCreateWithoutTherapeuticsInput {
   id?: Maybe<ID_Input>;
   name: String;
   logoURL?: Maybe<String>;
@@ -2185,32 +2165,32 @@ export interface CompanyCreateWithoutTherapeuticAreasInput {
   companySize?: Maybe<CompanySize>;
   services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
   specialties?: Maybe<SpecialtyCreateManyWithoutCompaniesInput>;
-  regionsCovered?: Maybe<RegionCreateManyWithoutCompaniesInput>;
+  regions?: Maybe<RegionCreateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
   bids?: Maybe<BidCreateManyWithoutCompanyInput>;
 }
 
-export interface TherapeuticAreaUpdateInput {
+export interface TherapeuticUpdateInput {
   name?: Maybe<String>;
-  companies?: Maybe<CompanyUpdateManyWithoutTherapeuticAreasInput>;
+  companies?: Maybe<CompanyUpdateManyWithoutTherapeuticsInput>;
 }
 
-export interface CompanyUpdateManyWithoutTherapeuticAreasInput {
+export interface CompanyUpdateManyWithoutTherapeuticsInput {
   create?: Maybe<
-    | CompanyCreateWithoutTherapeuticAreasInput[]
-    | CompanyCreateWithoutTherapeuticAreasInput
+    | CompanyCreateWithoutTherapeuticsInput[]
+    | CompanyCreateWithoutTherapeuticsInput
   >;
   delete?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
   connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
   set?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
   disconnect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
   update?: Maybe<
-    | CompanyUpdateWithWhereUniqueWithoutTherapeuticAreasInput[]
-    | CompanyUpdateWithWhereUniqueWithoutTherapeuticAreasInput
+    | CompanyUpdateWithWhereUniqueWithoutTherapeuticsInput[]
+    | CompanyUpdateWithWhereUniqueWithoutTherapeuticsInput
   >;
   upsert?: Maybe<
-    | CompanyUpsertWithWhereUniqueWithoutTherapeuticAreasInput[]
-    | CompanyUpsertWithWhereUniqueWithoutTherapeuticAreasInput
+    | CompanyUpsertWithWhereUniqueWithoutTherapeuticsInput[]
+    | CompanyUpsertWithWhereUniqueWithoutTherapeuticsInput
   >;
   deleteMany?: Maybe<CompanyScalarWhereInput[] | CompanyScalarWhereInput>;
   updateMany?: Maybe<
@@ -2219,12 +2199,12 @@ export interface CompanyUpdateManyWithoutTherapeuticAreasInput {
   >;
 }
 
-export interface CompanyUpdateWithWhereUniqueWithoutTherapeuticAreasInput {
+export interface CompanyUpdateWithWhereUniqueWithoutTherapeuticsInput {
   where: CompanyWhereUniqueInput;
-  data: CompanyUpdateWithoutTherapeuticAreasDataInput;
+  data: CompanyUpdateWithoutTherapeuticsDataInput;
 }
 
-export interface CompanyUpdateWithoutTherapeuticAreasDataInput {
+export interface CompanyUpdateWithoutTherapeuticsDataInput {
   name?: Maybe<String>;
   logoURL?: Maybe<String>;
   website?: Maybe<String>;
@@ -2234,18 +2214,18 @@ export interface CompanyUpdateWithoutTherapeuticAreasDataInput {
   companySize?: Maybe<CompanySize>;
   services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
   specialties?: Maybe<SpecialtyUpdateManyWithoutCompaniesInput>;
-  regionsCovered?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
+  regions?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
   bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
 }
 
-export interface CompanyUpsertWithWhereUniqueWithoutTherapeuticAreasInput {
+export interface CompanyUpsertWithWhereUniqueWithoutTherapeuticsInput {
   where: CompanyWhereUniqueInput;
-  update: CompanyUpdateWithoutTherapeuticAreasDataInput;
-  create: CompanyCreateWithoutTherapeuticAreasInput;
+  update: CompanyUpdateWithoutTherapeuticsDataInput;
+  create: CompanyCreateWithoutTherapeuticsInput;
 }
 
-export interface TherapeuticAreaUpdateManyMutationInput {
+export interface TherapeuticUpdateManyMutationInput {
   name?: Maybe<String>;
 }
 
@@ -2321,23 +2301,20 @@ export interface StudySubscriptionWhereInput {
   NOT?: Maybe<StudySubscriptionWhereInput[] | StudySubscriptionWhereInput>;
 }
 
-export interface TherapeuticAreaSubscriptionWhereInput {
+export interface TherapeuticSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<TherapeuticAreaWhereInput>;
+  node?: Maybe<TherapeuticWhereInput>;
   AND?: Maybe<
-    | TherapeuticAreaSubscriptionWhereInput[]
-    | TherapeuticAreaSubscriptionWhereInput
+    TherapeuticSubscriptionWhereInput[] | TherapeuticSubscriptionWhereInput
   >;
   OR?: Maybe<
-    | TherapeuticAreaSubscriptionWhereInput[]
-    | TherapeuticAreaSubscriptionWhereInput
+    TherapeuticSubscriptionWhereInput[] | TherapeuticSubscriptionWhereInput
   >;
   NOT?: Maybe<
-    | TherapeuticAreaSubscriptionWhereInput[]
-    | TherapeuticAreaSubscriptionWhereInput
+    TherapeuticSubscriptionWhereInput[] | TherapeuticSubscriptionWhereInput
   >;
 }
 
@@ -2415,7 +2392,7 @@ export interface CompanyPromise extends Promise<Company>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  regionsCovered: <T = FragmentableArray<Region>>(args?: {
+  regions: <T = FragmentableArray<Region>>(args?: {
     where?: RegionWhereInput;
     orderBy?: RegionOrderByInput;
     skip?: Int;
@@ -2424,9 +2401,9 @@ export interface CompanyPromise extends Promise<Company>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  therapeuticAreas: <T = FragmentableArray<TherapeuticArea>>(args?: {
-    where?: TherapeuticAreaWhereInput;
-    orderBy?: TherapeuticAreaOrderByInput;
+  therapeutics: <T = FragmentableArray<Therapeutic>>(args?: {
+    where?: TherapeuticWhereInput;
+    orderBy?: TherapeuticOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -2482,7 +2459,7 @@ export interface CompanySubscription
     first?: Int;
     last?: Int;
   }) => T;
-  regionsCovered: <T = Promise<AsyncIterator<RegionSubscription>>>(args?: {
+  regions: <T = Promise<AsyncIterator<RegionSubscription>>>(args?: {
     where?: RegionWhereInput;
     orderBy?: RegionOrderByInput;
     skip?: Int;
@@ -2491,11 +2468,9 @@ export interface CompanySubscription
     first?: Int;
     last?: Int;
   }) => T;
-  therapeuticAreas: <
-    T = Promise<AsyncIterator<TherapeuticAreaSubscription>>
-  >(args?: {
-    where?: TherapeuticAreaWhereInput;
-    orderBy?: TherapeuticAreaOrderByInput;
+  therapeutics: <T = Promise<AsyncIterator<TherapeuticSubscription>>>(args?: {
+    where?: TherapeuticWhereInput;
+    orderBy?: TherapeuticOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -2551,7 +2526,7 @@ export interface CompanyNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  regionsCovered: <T = FragmentableArray<Region>>(args?: {
+  regions: <T = FragmentableArray<Region>>(args?: {
     where?: RegionWhereInput;
     orderBy?: RegionOrderByInput;
     skip?: Int;
@@ -2560,9 +2535,9 @@ export interface CompanyNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  therapeuticAreas: <T = FragmentableArray<TherapeuticArea>>(args?: {
-    where?: TherapeuticAreaWhereInput;
-    orderBy?: TherapeuticAreaOrderByInput;
+  therapeutics: <T = FragmentableArray<Therapeutic>>(args?: {
+    where?: TherapeuticWhereInput;
+    orderBy?: TherapeuticOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -2742,14 +2717,12 @@ export interface RegionNullablePromise
   }) => T;
 }
 
-export interface TherapeuticArea {
+export interface Therapeutic {
   id: ID_Output;
   name: String;
 }
 
-export interface TherapeuticAreaPromise
-  extends Promise<TherapeuticArea>,
-    Fragmentable {
+export interface TherapeuticPromise extends Promise<Therapeutic>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   companies: <T = FragmentableArray<Company>>(args?: {
@@ -2763,8 +2736,8 @@ export interface TherapeuticAreaPromise
   }) => T;
 }
 
-export interface TherapeuticAreaSubscription
-  extends Promise<AsyncIterator<TherapeuticArea>>,
+export interface TherapeuticSubscription
+  extends Promise<AsyncIterator<Therapeutic>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
@@ -2779,8 +2752,8 @@ export interface TherapeuticAreaSubscription
   }) => T;
 }
 
-export interface TherapeuticAreaNullablePromise
-  extends Promise<TherapeuticArea | null>,
+export interface TherapeuticNullablePromise
+  extends Promise<Therapeutic | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
@@ -3199,58 +3172,58 @@ export interface AggregateStudySubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface TherapeuticAreaConnection {
+export interface TherapeuticConnection {
   pageInfo: PageInfo;
-  edges: TherapeuticAreaEdge[];
+  edges: TherapeuticEdge[];
 }
 
-export interface TherapeuticAreaConnectionPromise
-  extends Promise<TherapeuticAreaConnection>,
+export interface TherapeuticConnectionPromise
+  extends Promise<TherapeuticConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<TherapeuticAreaEdge>>() => T;
-  aggregate: <T = AggregateTherapeuticAreaPromise>() => T;
+  edges: <T = FragmentableArray<TherapeuticEdge>>() => T;
+  aggregate: <T = AggregateTherapeuticPromise>() => T;
 }
 
-export interface TherapeuticAreaConnectionSubscription
-  extends Promise<AsyncIterator<TherapeuticAreaConnection>>,
+export interface TherapeuticConnectionSubscription
+  extends Promise<AsyncIterator<TherapeuticConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<TherapeuticAreaEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateTherapeuticAreaSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TherapeuticEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTherapeuticSubscription>() => T;
 }
 
-export interface TherapeuticAreaEdge {
-  node: TherapeuticArea;
+export interface TherapeuticEdge {
+  node: Therapeutic;
   cursor: String;
 }
 
-export interface TherapeuticAreaEdgePromise
-  extends Promise<TherapeuticAreaEdge>,
+export interface TherapeuticEdgePromise
+  extends Promise<TherapeuticEdge>,
     Fragmentable {
-  node: <T = TherapeuticAreaPromise>() => T;
+  node: <T = TherapeuticPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface TherapeuticAreaEdgeSubscription
-  extends Promise<AsyncIterator<TherapeuticAreaEdge>>,
+export interface TherapeuticEdgeSubscription
+  extends Promise<AsyncIterator<TherapeuticEdge>>,
     Fragmentable {
-  node: <T = TherapeuticAreaSubscription>() => T;
+  node: <T = TherapeuticSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateTherapeuticArea {
+export interface AggregateTherapeutic {
   count: Int;
 }
 
-export interface AggregateTherapeuticAreaPromise
-  extends Promise<AggregateTherapeuticArea>,
+export interface AggregateTherapeuticPromise
+  extends Promise<AggregateTherapeutic>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateTherapeuticAreaSubscription
-  extends Promise<AsyncIterator<AggregateTherapeuticArea>>,
+export interface AggregateTherapeuticSubscription
+  extends Promise<AsyncIterator<AggregateTherapeutic>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -3577,45 +3550,45 @@ export interface StudyPreviousValuesSubscription
   status: () => Promise<AsyncIterator<String>>;
 }
 
-export interface TherapeuticAreaSubscriptionPayload {
+export interface TherapeuticSubscriptionPayload {
   mutation: MutationType;
-  node: TherapeuticArea;
+  node: Therapeutic;
   updatedFields: String[];
-  previousValues: TherapeuticAreaPreviousValues;
+  previousValues: TherapeuticPreviousValues;
 }
 
-export interface TherapeuticAreaSubscriptionPayloadPromise
-  extends Promise<TherapeuticAreaSubscriptionPayload>,
+export interface TherapeuticSubscriptionPayloadPromise
+  extends Promise<TherapeuticSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = TherapeuticAreaPromise>() => T;
+  node: <T = TherapeuticPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = TherapeuticAreaPreviousValuesPromise>() => T;
+  previousValues: <T = TherapeuticPreviousValuesPromise>() => T;
 }
 
-export interface TherapeuticAreaSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<TherapeuticAreaSubscriptionPayload>>,
+export interface TherapeuticSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TherapeuticSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = TherapeuticAreaSubscription>() => T;
+  node: <T = TherapeuticSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = TherapeuticAreaPreviousValuesSubscription>() => T;
+  previousValues: <T = TherapeuticPreviousValuesSubscription>() => T;
 }
 
-export interface TherapeuticAreaPreviousValues {
+export interface TherapeuticPreviousValues {
   id: ID_Output;
   name: String;
 }
 
-export interface TherapeuticAreaPreviousValuesPromise
-  extends Promise<TherapeuticAreaPreviousValues>,
+export interface TherapeuticPreviousValuesPromise
+  extends Promise<TherapeuticPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
 }
 
-export interface TherapeuticAreaPreviousValuesSubscription
-  extends Promise<AsyncIterator<TherapeuticAreaPreviousValues>>,
+export interface TherapeuticPreviousValuesSubscription
+  extends Promise<AsyncIterator<TherapeuticPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
@@ -3681,7 +3654,7 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "TherapeuticArea",
+    name: "Therapeutic",
     embedded: false
   },
   {

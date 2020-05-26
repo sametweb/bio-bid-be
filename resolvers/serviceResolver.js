@@ -4,9 +4,9 @@ module.exports = {
       return prisma.services();
     },
     service: async (parent, { name }, { prisma }, info) => {
-      const service = await prisma.service({ name });
+      const service = await prisma.$exists.service({ name });
       if (!service) throw new Error("Service with that name does not exist...");
-      return service;
+      return await prisma.service({ name });
     },
     searchService: (parent, { search }, { prisma }, info) => {
       return prisma.services({

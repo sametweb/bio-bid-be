@@ -1,13 +1,13 @@
 module.exports = {
   Query: {
-    regionsCovered: (parent, args, { prisma }, info) => {
-      return prisma.regionsCovered();
+    regions: (parent, args, { prisma }, info) => {
+      return prisma.regions();
     },
-    regionCovered: (parent, { name }, { prisma }, info) => {
-      return prisma.regionCovered({ name });
+    region: (parent, { name }, { prisma }, info) => {
+      return prisma.region({ name });
     },
     searchRegion: (parent, { region }, { prisma }, info) => {
-      return prisma.regionsCovered({
+      return prisma.regions({
         where: { name_contains: region },
       });
     },
@@ -29,7 +29,7 @@ module.exports = {
   },
   Region: {
     companies: ({ name }, args, { prisma }, info) => {
-      return prisma.regionCovered({ name }).companies();
+      return prisma.region({ name }).companies();
     },
   },
 };

@@ -9,8 +9,8 @@ type Company {
   companySize: CompanySize
   services: [Service]! @relation
   specialties: [Specialty]! @relation
-  regionsCovered: [Region]! @relation
-  therapeuticAreas: [TherapeuticArea]! @relation
+  regions: [Region]! @relation
+  therapeutics: [Therapeutic]! @relation
   studies: [Study!]
   bids: [Bid!]
 }
@@ -33,7 +33,7 @@ type Region {
   companies: [Company]! @relation
 }
 
-type TherapeuticArea {
+type Therapeutic {
   id: ID! @id
   name: String! @unique
   companies: [Company]! @relation

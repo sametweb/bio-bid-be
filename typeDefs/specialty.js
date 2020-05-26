@@ -14,6 +14,7 @@ module.exports = gql`
   }
 
   type Specialty {
+    id: ID
     name: String!
     companies: [Company]!
   }
