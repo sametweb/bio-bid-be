@@ -3,8 +3,11 @@ module.exports = {
     specialties: (parent, args, { prisma }, info) => {
       return prisma.specialties();
     },
-    specialty: (parent, { name }, { prisma }, info) => {
-      return prisma.specialty({ name });
+    specialty: async (parent, { name }, { prisma }, info) => {
+      const specialty = await prisma.specialty({ name });
+      if (!specialty)
+        throw new Error("Specialty with that name does not exist...");
+      return specialty;
     },
     searchSpecialty: (parent, { search }, { prisma }, info) => {
       return prisma.specialties({

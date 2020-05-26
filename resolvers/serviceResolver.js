@@ -3,12 +3,14 @@ module.exports = {
     services: (parent, args, { prisma }, info) => {
       return prisma.services();
     },
-    service: (parent, { name }, { prisma }, info) => {
-      return prisma.service({ name });
+    service: async (parent, { name }, { prisma }, info) => {
+      const service = await prisma.service({ name });
+      if (!service) throw new Error("Service with that name does not exist...");
+      return service;
     },
     searchService: (parent, { search }, { prisma }, info) => {
       return prisma.services({
-        where: { name_contains: search },
+        where: { name_contains: search.toLowerCase() },
       });
     },
   },
