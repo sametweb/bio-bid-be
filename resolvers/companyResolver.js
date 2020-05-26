@@ -5,8 +5,8 @@ module.exports = {
     companies: (parent, args, { prisma }, info) => {
       return prisma.companies();
     },
-    company: (parent, { name }, { prisma }, info) => {
-      return prisma.company({ name });
+    company: (parent, { id, name }, { prisma }, info) => {
+      return id ? prisma.company({ id }) : prisma.company({ name });
     },
   },
   Mutation: {
