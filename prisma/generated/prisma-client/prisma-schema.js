@@ -11,7 +11,23 @@ type AggregateCompany {
   count: Int!
 }
 
+type AggregateRegion {
+  count: Int!
+}
+
+type AggregateService {
+  count: Int!
+}
+
+type AggregateSpecialty {
+  count: Int!
+}
+
 type AggregateStudy {
+  count: Int!
+}
+
+type AggregateTherapeutic {
   count: Int!
 }
 
@@ -211,6 +227,16 @@ input BidWhereUniqueInput {
 type Company {
   id: ID!
   name: String!
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services(where: ServiceWhereInput, orderBy: ServiceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Service!]
+  specialties(where: SpecialtyWhereInput, orderBy: SpecialtyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialty!]
+  regions(where: RegionWhereInput, orderBy: RegionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Region!]
+  therapeutics(where: TherapeuticWhereInput, orderBy: TherapeuticOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Therapeutic!]
   studies(where: StudyWhereInput, orderBy: StudyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Study!]
   bids(where: BidWhereInput, orderBy: BidOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bid!]
 }
@@ -224,8 +250,38 @@ type CompanyConnection {
 input CompanyCreateInput {
   id: ID
   name: String!
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceCreateManyWithoutCompaniesInput
+  specialties: SpecialtyCreateManyWithoutCompaniesInput
+  regions: RegionCreateManyWithoutCompaniesInput
+  therapeutics: TherapeuticCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
   bids: BidCreateManyWithoutCompanyInput
+}
+
+input CompanyCreateManyWithoutRegionsInput {
+  create: [CompanyCreateWithoutRegionsInput!]
+  connect: [CompanyWhereUniqueInput!]
+}
+
+input CompanyCreateManyWithoutServicesInput {
+  create: [CompanyCreateWithoutServicesInput!]
+  connect: [CompanyWhereUniqueInput!]
+}
+
+input CompanyCreateManyWithoutSpecialtiesInput {
+  create: [CompanyCreateWithoutSpecialtiesInput!]
+  connect: [CompanyWhereUniqueInput!]
+}
+
+input CompanyCreateManyWithoutTherapeuticsInput {
+  create: [CompanyCreateWithoutTherapeuticsInput!]
+  connect: [CompanyWhereUniqueInput!]
 }
 
 input CompanyCreateOneWithoutBidsInput {
@@ -241,12 +297,96 @@ input CompanyCreateOneWithoutStudiesInput {
 input CompanyCreateWithoutBidsInput {
   id: ID
   name: String!
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceCreateManyWithoutCompaniesInput
+  specialties: SpecialtyCreateManyWithoutCompaniesInput
+  regions: RegionCreateManyWithoutCompaniesInput
+  therapeutics: TherapeuticCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
+}
+
+input CompanyCreateWithoutRegionsInput {
+  id: ID
+  name: String!
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceCreateManyWithoutCompaniesInput
+  specialties: SpecialtyCreateManyWithoutCompaniesInput
+  therapeutics: TherapeuticCreateManyWithoutCompaniesInput
+  studies: StudyCreateManyWithoutCompanyInput
+  bids: BidCreateManyWithoutCompanyInput
+}
+
+input CompanyCreateWithoutServicesInput {
+  id: ID
+  name: String!
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  specialties: SpecialtyCreateManyWithoutCompaniesInput
+  regions: RegionCreateManyWithoutCompaniesInput
+  therapeutics: TherapeuticCreateManyWithoutCompaniesInput
+  studies: StudyCreateManyWithoutCompanyInput
+  bids: BidCreateManyWithoutCompanyInput
+}
+
+input CompanyCreateWithoutSpecialtiesInput {
+  id: ID
+  name: String!
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceCreateManyWithoutCompaniesInput
+  regions: RegionCreateManyWithoutCompaniesInput
+  therapeutics: TherapeuticCreateManyWithoutCompaniesInput
+  studies: StudyCreateManyWithoutCompanyInput
+  bids: BidCreateManyWithoutCompanyInput
 }
 
 input CompanyCreateWithoutStudiesInput {
   id: ID
   name: String!
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceCreateManyWithoutCompaniesInput
+  specialties: SpecialtyCreateManyWithoutCompaniesInput
+  regions: RegionCreateManyWithoutCompaniesInput
+  therapeutics: TherapeuticCreateManyWithoutCompaniesInput
+  bids: BidCreateManyWithoutCompanyInput
+}
+
+input CompanyCreateWithoutTherapeuticsInput {
+  id: ID
+  name: String!
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceCreateManyWithoutCompaniesInput
+  specialties: SpecialtyCreateManyWithoutCompaniesInput
+  regions: RegionCreateManyWithoutCompaniesInput
+  studies: StudyCreateManyWithoutCompanyInput
   bids: BidCreateManyWithoutCompanyInput
 }
 
@@ -260,11 +400,149 @@ enum CompanyOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  logoURL_ASC
+  logoURL_DESC
+  website_ASC
+  website_DESC
+  linkedin_ASC
+  linkedin_DESC
+  overview_ASC
+  overview_DESC
+  headquarters_ASC
+  headquarters_DESC
+  companySize_ASC
+  companySize_DESC
 }
 
 type CompanyPreviousValues {
   id: ID!
   name: String!
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+}
+
+input CompanyScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  logoURL: String
+  logoURL_not: String
+  logoURL_in: [String!]
+  logoURL_not_in: [String!]
+  logoURL_lt: String
+  logoURL_lte: String
+  logoURL_gt: String
+  logoURL_gte: String
+  logoURL_contains: String
+  logoURL_not_contains: String
+  logoURL_starts_with: String
+  logoURL_not_starts_with: String
+  logoURL_ends_with: String
+  logoURL_not_ends_with: String
+  website: String
+  website_not: String
+  website_in: [String!]
+  website_not_in: [String!]
+  website_lt: String
+  website_lte: String
+  website_gt: String
+  website_gte: String
+  website_contains: String
+  website_not_contains: String
+  website_starts_with: String
+  website_not_starts_with: String
+  website_ends_with: String
+  website_not_ends_with: String
+  linkedin: String
+  linkedin_not: String
+  linkedin_in: [String!]
+  linkedin_not_in: [String!]
+  linkedin_lt: String
+  linkedin_lte: String
+  linkedin_gt: String
+  linkedin_gte: String
+  linkedin_contains: String
+  linkedin_not_contains: String
+  linkedin_starts_with: String
+  linkedin_not_starts_with: String
+  linkedin_ends_with: String
+  linkedin_not_ends_with: String
+  overview: String
+  overview_not: String
+  overview_in: [String!]
+  overview_not_in: [String!]
+  overview_lt: String
+  overview_lte: String
+  overview_gt: String
+  overview_gte: String
+  overview_contains: String
+  overview_not_contains: String
+  overview_starts_with: String
+  overview_not_starts_with: String
+  overview_ends_with: String
+  overview_not_ends_with: String
+  headquarters: String
+  headquarters_not: String
+  headquarters_in: [String!]
+  headquarters_not_in: [String!]
+  headquarters_lt: String
+  headquarters_lte: String
+  headquarters_gt: String
+  headquarters_gte: String
+  headquarters_contains: String
+  headquarters_not_contains: String
+  headquarters_starts_with: String
+  headquarters_not_starts_with: String
+  headquarters_ends_with: String
+  headquarters_not_ends_with: String
+  companySize: CompanySize
+  companySize_not: CompanySize
+  companySize_in: [CompanySize!]
+  companySize_not_in: [CompanySize!]
+  AND: [CompanyScalarWhereInput!]
+  OR: [CompanyScalarWhereInput!]
+  NOT: [CompanyScalarWhereInput!]
+}
+
+enum CompanySize {
+  A
+  B
+  C
+  D
+  E
+  F
+  G
+  H
+  I
 }
 
 type CompanySubscriptionPayload {
@@ -287,12 +565,91 @@ input CompanySubscriptionWhereInput {
 
 input CompanyUpdateInput {
   name: String
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceUpdateManyWithoutCompaniesInput
+  specialties: SpecialtyUpdateManyWithoutCompaniesInput
+  regions: RegionUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
   bids: BidUpdateManyWithoutCompanyInput
 }
 
+input CompanyUpdateManyDataInput {
+  name: String
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+}
+
 input CompanyUpdateManyMutationInput {
   name: String
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+}
+
+input CompanyUpdateManyWithoutRegionsInput {
+  create: [CompanyCreateWithoutRegionsInput!]
+  delete: [CompanyWhereUniqueInput!]
+  connect: [CompanyWhereUniqueInput!]
+  set: [CompanyWhereUniqueInput!]
+  disconnect: [CompanyWhereUniqueInput!]
+  update: [CompanyUpdateWithWhereUniqueWithoutRegionsInput!]
+  upsert: [CompanyUpsertWithWhereUniqueWithoutRegionsInput!]
+  deleteMany: [CompanyScalarWhereInput!]
+  updateMany: [CompanyUpdateManyWithWhereNestedInput!]
+}
+
+input CompanyUpdateManyWithoutServicesInput {
+  create: [CompanyCreateWithoutServicesInput!]
+  delete: [CompanyWhereUniqueInput!]
+  connect: [CompanyWhereUniqueInput!]
+  set: [CompanyWhereUniqueInput!]
+  disconnect: [CompanyWhereUniqueInput!]
+  update: [CompanyUpdateWithWhereUniqueWithoutServicesInput!]
+  upsert: [CompanyUpsertWithWhereUniqueWithoutServicesInput!]
+  deleteMany: [CompanyScalarWhereInput!]
+  updateMany: [CompanyUpdateManyWithWhereNestedInput!]
+}
+
+input CompanyUpdateManyWithoutSpecialtiesInput {
+  create: [CompanyCreateWithoutSpecialtiesInput!]
+  delete: [CompanyWhereUniqueInput!]
+  connect: [CompanyWhereUniqueInput!]
+  set: [CompanyWhereUniqueInput!]
+  disconnect: [CompanyWhereUniqueInput!]
+  update: [CompanyUpdateWithWhereUniqueWithoutSpecialtiesInput!]
+  upsert: [CompanyUpsertWithWhereUniqueWithoutSpecialtiesInput!]
+  deleteMany: [CompanyScalarWhereInput!]
+  updateMany: [CompanyUpdateManyWithWhereNestedInput!]
+}
+
+input CompanyUpdateManyWithoutTherapeuticsInput {
+  create: [CompanyCreateWithoutTherapeuticsInput!]
+  delete: [CompanyWhereUniqueInput!]
+  connect: [CompanyWhereUniqueInput!]
+  set: [CompanyWhereUniqueInput!]
+  disconnect: [CompanyWhereUniqueInput!]
+  update: [CompanyUpdateWithWhereUniqueWithoutTherapeuticsInput!]
+  upsert: [CompanyUpsertWithWhereUniqueWithoutTherapeuticsInput!]
+  deleteMany: [CompanyScalarWhereInput!]
+  updateMany: [CompanyUpdateManyWithWhereNestedInput!]
+}
+
+input CompanyUpdateManyWithWhereNestedInput {
+  where: CompanyScalarWhereInput!
+  data: CompanyUpdateManyDataInput!
 }
 
 input CompanyUpdateOneRequiredWithoutBidsInput {
@@ -311,12 +668,112 @@ input CompanyUpdateOneRequiredWithoutStudiesInput {
 
 input CompanyUpdateWithoutBidsDataInput {
   name: String
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceUpdateManyWithoutCompaniesInput
+  specialties: SpecialtyUpdateManyWithoutCompaniesInput
+  regions: RegionUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
+}
+
+input CompanyUpdateWithoutRegionsDataInput {
+  name: String
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceUpdateManyWithoutCompaniesInput
+  specialties: SpecialtyUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
+  studies: StudyUpdateManyWithoutCompanyInput
+  bids: BidUpdateManyWithoutCompanyInput
+}
+
+input CompanyUpdateWithoutServicesDataInput {
+  name: String
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  specialties: SpecialtyUpdateManyWithoutCompaniesInput
+  regions: RegionUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
+  studies: StudyUpdateManyWithoutCompanyInput
+  bids: BidUpdateManyWithoutCompanyInput
+}
+
+input CompanyUpdateWithoutSpecialtiesDataInput {
+  name: String
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceUpdateManyWithoutCompaniesInput
+  regions: RegionUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
+  studies: StudyUpdateManyWithoutCompanyInput
+  bids: BidUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpdateWithoutStudiesDataInput {
   name: String
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceUpdateManyWithoutCompaniesInput
+  specialties: SpecialtyUpdateManyWithoutCompaniesInput
+  regions: RegionUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
   bids: BidUpdateManyWithoutCompanyInput
+}
+
+input CompanyUpdateWithoutTherapeuticsDataInput {
+  name: String
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceUpdateManyWithoutCompaniesInput
+  specialties: SpecialtyUpdateManyWithoutCompaniesInput
+  regions: RegionUpdateManyWithoutCompaniesInput
+  studies: StudyUpdateManyWithoutCompanyInput
+  bids: BidUpdateManyWithoutCompanyInput
+}
+
+input CompanyUpdateWithWhereUniqueWithoutRegionsInput {
+  where: CompanyWhereUniqueInput!
+  data: CompanyUpdateWithoutRegionsDataInput!
+}
+
+input CompanyUpdateWithWhereUniqueWithoutServicesInput {
+  where: CompanyWhereUniqueInput!
+  data: CompanyUpdateWithoutServicesDataInput!
+}
+
+input CompanyUpdateWithWhereUniqueWithoutSpecialtiesInput {
+  where: CompanyWhereUniqueInput!
+  data: CompanyUpdateWithoutSpecialtiesDataInput!
+}
+
+input CompanyUpdateWithWhereUniqueWithoutTherapeuticsInput {
+  where: CompanyWhereUniqueInput!
+  data: CompanyUpdateWithoutTherapeuticsDataInput!
 }
 
 input CompanyUpsertWithoutBidsInput {
@@ -327,6 +784,30 @@ input CompanyUpsertWithoutBidsInput {
 input CompanyUpsertWithoutStudiesInput {
   update: CompanyUpdateWithoutStudiesDataInput!
   create: CompanyCreateWithoutStudiesInput!
+}
+
+input CompanyUpsertWithWhereUniqueWithoutRegionsInput {
+  where: CompanyWhereUniqueInput!
+  update: CompanyUpdateWithoutRegionsDataInput!
+  create: CompanyCreateWithoutRegionsInput!
+}
+
+input CompanyUpsertWithWhereUniqueWithoutServicesInput {
+  where: CompanyWhereUniqueInput!
+  update: CompanyUpdateWithoutServicesDataInput!
+  create: CompanyCreateWithoutServicesInput!
+}
+
+input CompanyUpsertWithWhereUniqueWithoutSpecialtiesInput {
+  where: CompanyWhereUniqueInput!
+  update: CompanyUpdateWithoutSpecialtiesDataInput!
+  create: CompanyCreateWithoutSpecialtiesInput!
+}
+
+input CompanyUpsertWithWhereUniqueWithoutTherapeuticsInput {
+  where: CompanyWhereUniqueInput!
+  update: CompanyUpdateWithoutTherapeuticsDataInput!
+  create: CompanyCreateWithoutTherapeuticsInput!
 }
 
 input CompanyWhereInput {
@@ -358,6 +839,92 @@ input CompanyWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  logoURL: String
+  logoURL_not: String
+  logoURL_in: [String!]
+  logoURL_not_in: [String!]
+  logoURL_lt: String
+  logoURL_lte: String
+  logoURL_gt: String
+  logoURL_gte: String
+  logoURL_contains: String
+  logoURL_not_contains: String
+  logoURL_starts_with: String
+  logoURL_not_starts_with: String
+  logoURL_ends_with: String
+  logoURL_not_ends_with: String
+  website: String
+  website_not: String
+  website_in: [String!]
+  website_not_in: [String!]
+  website_lt: String
+  website_lte: String
+  website_gt: String
+  website_gte: String
+  website_contains: String
+  website_not_contains: String
+  website_starts_with: String
+  website_not_starts_with: String
+  website_ends_with: String
+  website_not_ends_with: String
+  linkedin: String
+  linkedin_not: String
+  linkedin_in: [String!]
+  linkedin_not_in: [String!]
+  linkedin_lt: String
+  linkedin_lte: String
+  linkedin_gt: String
+  linkedin_gte: String
+  linkedin_contains: String
+  linkedin_not_contains: String
+  linkedin_starts_with: String
+  linkedin_not_starts_with: String
+  linkedin_ends_with: String
+  linkedin_not_ends_with: String
+  overview: String
+  overview_not: String
+  overview_in: [String!]
+  overview_not_in: [String!]
+  overview_lt: String
+  overview_lte: String
+  overview_gt: String
+  overview_gte: String
+  overview_contains: String
+  overview_not_contains: String
+  overview_starts_with: String
+  overview_not_starts_with: String
+  overview_ends_with: String
+  overview_not_ends_with: String
+  headquarters: String
+  headquarters_not: String
+  headquarters_in: [String!]
+  headquarters_not_in: [String!]
+  headquarters_lt: String
+  headquarters_lte: String
+  headquarters_gt: String
+  headquarters_gte: String
+  headquarters_contains: String
+  headquarters_not_contains: String
+  headquarters_starts_with: String
+  headquarters_not_starts_with: String
+  headquarters_ends_with: String
+  headquarters_not_ends_with: String
+  companySize: CompanySize
+  companySize_not: CompanySize
+  companySize_in: [CompanySize!]
+  companySize_not_in: [CompanySize!]
+  services_every: ServiceWhereInput
+  services_some: ServiceWhereInput
+  services_none: ServiceWhereInput
+  specialties_every: SpecialtyWhereInput
+  specialties_some: SpecialtyWhereInput
+  specialties_none: SpecialtyWhereInput
+  regions_every: RegionWhereInput
+  regions_some: RegionWhereInput
+  regions_none: RegionWhereInput
+  therapeutics_every: TherapeuticWhereInput
+  therapeutics_some: TherapeuticWhereInput
+  therapeutics_none: TherapeuticWhereInput
   studies_every: StudyWhereInput
   studies_some: StudyWhereInput
   studies_none: StudyWhereInput
@@ -391,12 +958,36 @@ type Mutation {
   upsertCompany(where: CompanyWhereUniqueInput!, create: CompanyCreateInput!, update: CompanyUpdateInput!): Company!
   deleteCompany(where: CompanyWhereUniqueInput!): Company
   deleteManyCompanies(where: CompanyWhereInput): BatchPayload!
+  createRegion(data: RegionCreateInput!): Region!
+  updateRegion(data: RegionUpdateInput!, where: RegionWhereUniqueInput!): Region
+  updateManyRegions(data: RegionUpdateManyMutationInput!, where: RegionWhereInput): BatchPayload!
+  upsertRegion(where: RegionWhereUniqueInput!, create: RegionCreateInput!, update: RegionUpdateInput!): Region!
+  deleteRegion(where: RegionWhereUniqueInput!): Region
+  deleteManyRegions(where: RegionWhereInput): BatchPayload!
+  createService(data: ServiceCreateInput!): Service!
+  updateService(data: ServiceUpdateInput!, where: ServiceWhereUniqueInput!): Service
+  updateManyServices(data: ServiceUpdateManyMutationInput!, where: ServiceWhereInput): BatchPayload!
+  upsertService(where: ServiceWhereUniqueInput!, create: ServiceCreateInput!, update: ServiceUpdateInput!): Service!
+  deleteService(where: ServiceWhereUniqueInput!): Service
+  deleteManyServices(where: ServiceWhereInput): BatchPayload!
+  createSpecialty(data: SpecialtyCreateInput!): Specialty!
+  updateSpecialty(data: SpecialtyUpdateInput!, where: SpecialtyWhereUniqueInput!): Specialty
+  updateManySpecialties(data: SpecialtyUpdateManyMutationInput!, where: SpecialtyWhereInput): BatchPayload!
+  upsertSpecialty(where: SpecialtyWhereUniqueInput!, create: SpecialtyCreateInput!, update: SpecialtyUpdateInput!): Specialty!
+  deleteSpecialty(where: SpecialtyWhereUniqueInput!): Specialty
+  deleteManySpecialties(where: SpecialtyWhereInput): BatchPayload!
   createStudy(data: StudyCreateInput!): Study!
   updateStudy(data: StudyUpdateInput!, where: StudyWhereUniqueInput!): Study
   updateManyStudies(data: StudyUpdateManyMutationInput!, where: StudyWhereInput): BatchPayload!
   upsertStudy(where: StudyWhereUniqueInput!, create: StudyCreateInput!, update: StudyUpdateInput!): Study!
   deleteStudy(where: StudyWhereUniqueInput!): Study
   deleteManyStudies(where: StudyWhereInput): BatchPayload!
+  createTherapeutic(data: TherapeuticCreateInput!): Therapeutic!
+  updateTherapeutic(data: TherapeuticUpdateInput!, where: TherapeuticWhereUniqueInput!): Therapeutic
+  updateManyTherapeutics(data: TherapeuticUpdateManyMutationInput!, where: TherapeuticWhereInput): BatchPayload!
+  upsertTherapeutic(where: TherapeuticWhereUniqueInput!, create: TherapeuticCreateInput!, update: TherapeuticUpdateInput!): Therapeutic!
+  deleteTherapeutic(where: TherapeuticWhereUniqueInput!): Therapeutic
+  deleteManyTherapeutics(where: TherapeuticWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -423,10 +1014,574 @@ type Query {
   company(where: CompanyWhereUniqueInput!): Company
   companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company]!
   companiesConnection(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyConnection!
+  region(where: RegionWhereUniqueInput!): Region
+  regions(where: RegionWhereInput, orderBy: RegionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Region]!
+  regionsConnection(where: RegionWhereInput, orderBy: RegionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RegionConnection!
+  service(where: ServiceWhereUniqueInput!): Service
+  services(where: ServiceWhereInput, orderBy: ServiceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Service]!
+  servicesConnection(where: ServiceWhereInput, orderBy: ServiceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ServiceConnection!
+  specialty(where: SpecialtyWhereUniqueInput!): Specialty
+  specialties(where: SpecialtyWhereInput, orderBy: SpecialtyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialty]!
+  specialtiesConnection(where: SpecialtyWhereInput, orderBy: SpecialtyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SpecialtyConnection!
   study(where: StudyWhereUniqueInput!): Study
   studies(where: StudyWhereInput, orderBy: StudyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Study]!
   studiesConnection(where: StudyWhereInput, orderBy: StudyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudyConnection!
+  therapeutic(where: TherapeuticWhereUniqueInput!): Therapeutic
+  therapeutics(where: TherapeuticWhereInput, orderBy: TherapeuticOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Therapeutic]!
+  therapeuticsConnection(where: TherapeuticWhereInput, orderBy: TherapeuticOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TherapeuticConnection!
   node(id: ID!): Node
+}
+
+type Region {
+  id: ID!
+  name: String!
+  companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company!]
+}
+
+type RegionConnection {
+  pageInfo: PageInfo!
+  edges: [RegionEdge]!
+  aggregate: AggregateRegion!
+}
+
+input RegionCreateInput {
+  id: ID
+  name: String!
+  companies: CompanyCreateManyWithoutRegionsInput
+}
+
+input RegionCreateManyWithoutCompaniesInput {
+  create: [RegionCreateWithoutCompaniesInput!]
+  connect: [RegionWhereUniqueInput!]
+}
+
+input RegionCreateWithoutCompaniesInput {
+  id: ID
+  name: String!
+}
+
+type RegionEdge {
+  node: Region!
+  cursor: String!
+}
+
+enum RegionOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type RegionPreviousValues {
+  id: ID!
+  name: String!
+}
+
+input RegionScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [RegionScalarWhereInput!]
+  OR: [RegionScalarWhereInput!]
+  NOT: [RegionScalarWhereInput!]
+}
+
+type RegionSubscriptionPayload {
+  mutation: MutationType!
+  node: Region
+  updatedFields: [String!]
+  previousValues: RegionPreviousValues
+}
+
+input RegionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RegionWhereInput
+  AND: [RegionSubscriptionWhereInput!]
+  OR: [RegionSubscriptionWhereInput!]
+  NOT: [RegionSubscriptionWhereInput!]
+}
+
+input RegionUpdateInput {
+  name: String
+  companies: CompanyUpdateManyWithoutRegionsInput
+}
+
+input RegionUpdateManyDataInput {
+  name: String
+}
+
+input RegionUpdateManyMutationInput {
+  name: String
+}
+
+input RegionUpdateManyWithoutCompaniesInput {
+  create: [RegionCreateWithoutCompaniesInput!]
+  delete: [RegionWhereUniqueInput!]
+  connect: [RegionWhereUniqueInput!]
+  set: [RegionWhereUniqueInput!]
+  disconnect: [RegionWhereUniqueInput!]
+  update: [RegionUpdateWithWhereUniqueWithoutCompaniesInput!]
+  upsert: [RegionUpsertWithWhereUniqueWithoutCompaniesInput!]
+  deleteMany: [RegionScalarWhereInput!]
+  updateMany: [RegionUpdateManyWithWhereNestedInput!]
+}
+
+input RegionUpdateManyWithWhereNestedInput {
+  where: RegionScalarWhereInput!
+  data: RegionUpdateManyDataInput!
+}
+
+input RegionUpdateWithoutCompaniesDataInput {
+  name: String
+}
+
+input RegionUpdateWithWhereUniqueWithoutCompaniesInput {
+  where: RegionWhereUniqueInput!
+  data: RegionUpdateWithoutCompaniesDataInput!
+}
+
+input RegionUpsertWithWhereUniqueWithoutCompaniesInput {
+  where: RegionWhereUniqueInput!
+  update: RegionUpdateWithoutCompaniesDataInput!
+  create: RegionCreateWithoutCompaniesInput!
+}
+
+input RegionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  companies_every: CompanyWhereInput
+  companies_some: CompanyWhereInput
+  companies_none: CompanyWhereInput
+  AND: [RegionWhereInput!]
+  OR: [RegionWhereInput!]
+  NOT: [RegionWhereInput!]
+}
+
+input RegionWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+type Service {
+  id: ID!
+  name: String!
+  companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company!]
+}
+
+type ServiceConnection {
+  pageInfo: PageInfo!
+  edges: [ServiceEdge]!
+  aggregate: AggregateService!
+}
+
+input ServiceCreateInput {
+  id: ID
+  name: String!
+  companies: CompanyCreateManyWithoutServicesInput
+}
+
+input ServiceCreateManyWithoutCompaniesInput {
+  create: [ServiceCreateWithoutCompaniesInput!]
+  connect: [ServiceWhereUniqueInput!]
+}
+
+input ServiceCreateWithoutCompaniesInput {
+  id: ID
+  name: String!
+}
+
+type ServiceEdge {
+  node: Service!
+  cursor: String!
+}
+
+enum ServiceOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type ServicePreviousValues {
+  id: ID!
+  name: String!
+}
+
+input ServiceScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [ServiceScalarWhereInput!]
+  OR: [ServiceScalarWhereInput!]
+  NOT: [ServiceScalarWhereInput!]
+}
+
+type ServiceSubscriptionPayload {
+  mutation: MutationType!
+  node: Service
+  updatedFields: [String!]
+  previousValues: ServicePreviousValues
+}
+
+input ServiceSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ServiceWhereInput
+  AND: [ServiceSubscriptionWhereInput!]
+  OR: [ServiceSubscriptionWhereInput!]
+  NOT: [ServiceSubscriptionWhereInput!]
+}
+
+input ServiceUpdateInput {
+  name: String
+  companies: CompanyUpdateManyWithoutServicesInput
+}
+
+input ServiceUpdateManyDataInput {
+  name: String
+}
+
+input ServiceUpdateManyMutationInput {
+  name: String
+}
+
+input ServiceUpdateManyWithoutCompaniesInput {
+  create: [ServiceCreateWithoutCompaniesInput!]
+  delete: [ServiceWhereUniqueInput!]
+  connect: [ServiceWhereUniqueInput!]
+  set: [ServiceWhereUniqueInput!]
+  disconnect: [ServiceWhereUniqueInput!]
+  update: [ServiceUpdateWithWhereUniqueWithoutCompaniesInput!]
+  upsert: [ServiceUpsertWithWhereUniqueWithoutCompaniesInput!]
+  deleteMany: [ServiceScalarWhereInput!]
+  updateMany: [ServiceUpdateManyWithWhereNestedInput!]
+}
+
+input ServiceUpdateManyWithWhereNestedInput {
+  where: ServiceScalarWhereInput!
+  data: ServiceUpdateManyDataInput!
+}
+
+input ServiceUpdateWithoutCompaniesDataInput {
+  name: String
+}
+
+input ServiceUpdateWithWhereUniqueWithoutCompaniesInput {
+  where: ServiceWhereUniqueInput!
+  data: ServiceUpdateWithoutCompaniesDataInput!
+}
+
+input ServiceUpsertWithWhereUniqueWithoutCompaniesInput {
+  where: ServiceWhereUniqueInput!
+  update: ServiceUpdateWithoutCompaniesDataInput!
+  create: ServiceCreateWithoutCompaniesInput!
+}
+
+input ServiceWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  companies_every: CompanyWhereInput
+  companies_some: CompanyWhereInput
+  companies_none: CompanyWhereInput
+  AND: [ServiceWhereInput!]
+  OR: [ServiceWhereInput!]
+  NOT: [ServiceWhereInput!]
+}
+
+input ServiceWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+type Specialty {
+  id: ID!
+  name: String!
+  companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company!]
+}
+
+type SpecialtyConnection {
+  pageInfo: PageInfo!
+  edges: [SpecialtyEdge]!
+  aggregate: AggregateSpecialty!
+}
+
+input SpecialtyCreateInput {
+  id: ID
+  name: String!
+  companies: CompanyCreateManyWithoutSpecialtiesInput
+}
+
+input SpecialtyCreateManyWithoutCompaniesInput {
+  create: [SpecialtyCreateWithoutCompaniesInput!]
+  connect: [SpecialtyWhereUniqueInput!]
+}
+
+input SpecialtyCreateWithoutCompaniesInput {
+  id: ID
+  name: String!
+}
+
+type SpecialtyEdge {
+  node: Specialty!
+  cursor: String!
+}
+
+enum SpecialtyOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type SpecialtyPreviousValues {
+  id: ID!
+  name: String!
+}
+
+input SpecialtyScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [SpecialtyScalarWhereInput!]
+  OR: [SpecialtyScalarWhereInput!]
+  NOT: [SpecialtyScalarWhereInput!]
+}
+
+type SpecialtySubscriptionPayload {
+  mutation: MutationType!
+  node: Specialty
+  updatedFields: [String!]
+  previousValues: SpecialtyPreviousValues
+}
+
+input SpecialtySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SpecialtyWhereInput
+  AND: [SpecialtySubscriptionWhereInput!]
+  OR: [SpecialtySubscriptionWhereInput!]
+  NOT: [SpecialtySubscriptionWhereInput!]
+}
+
+input SpecialtyUpdateInput {
+  name: String
+  companies: CompanyUpdateManyWithoutSpecialtiesInput
+}
+
+input SpecialtyUpdateManyDataInput {
+  name: String
+}
+
+input SpecialtyUpdateManyMutationInput {
+  name: String
+}
+
+input SpecialtyUpdateManyWithoutCompaniesInput {
+  create: [SpecialtyCreateWithoutCompaniesInput!]
+  delete: [SpecialtyWhereUniqueInput!]
+  connect: [SpecialtyWhereUniqueInput!]
+  set: [SpecialtyWhereUniqueInput!]
+  disconnect: [SpecialtyWhereUniqueInput!]
+  update: [SpecialtyUpdateWithWhereUniqueWithoutCompaniesInput!]
+  upsert: [SpecialtyUpsertWithWhereUniqueWithoutCompaniesInput!]
+  deleteMany: [SpecialtyScalarWhereInput!]
+  updateMany: [SpecialtyUpdateManyWithWhereNestedInput!]
+}
+
+input SpecialtyUpdateManyWithWhereNestedInput {
+  where: SpecialtyScalarWhereInput!
+  data: SpecialtyUpdateManyDataInput!
+}
+
+input SpecialtyUpdateWithoutCompaniesDataInput {
+  name: String
+}
+
+input SpecialtyUpdateWithWhereUniqueWithoutCompaniesInput {
+  where: SpecialtyWhereUniqueInput!
+  data: SpecialtyUpdateWithoutCompaniesDataInput!
+}
+
+input SpecialtyUpsertWithWhereUniqueWithoutCompaniesInput {
+  where: SpecialtyWhereUniqueInput!
+  update: SpecialtyUpdateWithoutCompaniesDataInput!
+  create: SpecialtyCreateWithoutCompaniesInput!
+}
+
+input SpecialtyWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  companies_every: CompanyWhereInput
+  companies_some: CompanyWhereInput
+  companies_none: CompanyWhereInput
+  AND: [SpecialtyWhereInput!]
+  OR: [SpecialtyWhereInput!]
+  NOT: [SpecialtyWhereInput!]
+}
+
+input SpecialtyWhereUniqueInput {
+  id: ID
+  name: String
 }
 
 type Study {
@@ -873,7 +2028,195 @@ input StudyWhereUniqueInput {
 type Subscription {
   bid(where: BidSubscriptionWhereInput): BidSubscriptionPayload
   company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
+  region(where: RegionSubscriptionWhereInput): RegionSubscriptionPayload
+  service(where: ServiceSubscriptionWhereInput): ServiceSubscriptionPayload
+  specialty(where: SpecialtySubscriptionWhereInput): SpecialtySubscriptionPayload
   study(where: StudySubscriptionWhereInput): StudySubscriptionPayload
+  therapeutic(where: TherapeuticSubscriptionWhereInput): TherapeuticSubscriptionPayload
+}
+
+type Therapeutic {
+  id: ID!
+  name: String!
+  companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company!]
+}
+
+type TherapeuticConnection {
+  pageInfo: PageInfo!
+  edges: [TherapeuticEdge]!
+  aggregate: AggregateTherapeutic!
+}
+
+input TherapeuticCreateInput {
+  id: ID
+  name: String!
+  companies: CompanyCreateManyWithoutTherapeuticsInput
+}
+
+input TherapeuticCreateManyWithoutCompaniesInput {
+  create: [TherapeuticCreateWithoutCompaniesInput!]
+  connect: [TherapeuticWhereUniqueInput!]
+}
+
+input TherapeuticCreateWithoutCompaniesInput {
+  id: ID
+  name: String!
+}
+
+type TherapeuticEdge {
+  node: Therapeutic!
+  cursor: String!
+}
+
+enum TherapeuticOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type TherapeuticPreviousValues {
+  id: ID!
+  name: String!
+}
+
+input TherapeuticScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [TherapeuticScalarWhereInput!]
+  OR: [TherapeuticScalarWhereInput!]
+  NOT: [TherapeuticScalarWhereInput!]
+}
+
+type TherapeuticSubscriptionPayload {
+  mutation: MutationType!
+  node: Therapeutic
+  updatedFields: [String!]
+  previousValues: TherapeuticPreviousValues
+}
+
+input TherapeuticSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TherapeuticWhereInput
+  AND: [TherapeuticSubscriptionWhereInput!]
+  OR: [TherapeuticSubscriptionWhereInput!]
+  NOT: [TherapeuticSubscriptionWhereInput!]
+}
+
+input TherapeuticUpdateInput {
+  name: String
+  companies: CompanyUpdateManyWithoutTherapeuticsInput
+}
+
+input TherapeuticUpdateManyDataInput {
+  name: String
+}
+
+input TherapeuticUpdateManyMutationInput {
+  name: String
+}
+
+input TherapeuticUpdateManyWithoutCompaniesInput {
+  create: [TherapeuticCreateWithoutCompaniesInput!]
+  delete: [TherapeuticWhereUniqueInput!]
+  connect: [TherapeuticWhereUniqueInput!]
+  set: [TherapeuticWhereUniqueInput!]
+  disconnect: [TherapeuticWhereUniqueInput!]
+  update: [TherapeuticUpdateWithWhereUniqueWithoutCompaniesInput!]
+  upsert: [TherapeuticUpsertWithWhereUniqueWithoutCompaniesInput!]
+  deleteMany: [TherapeuticScalarWhereInput!]
+  updateMany: [TherapeuticUpdateManyWithWhereNestedInput!]
+}
+
+input TherapeuticUpdateManyWithWhereNestedInput {
+  where: TherapeuticScalarWhereInput!
+  data: TherapeuticUpdateManyDataInput!
+}
+
+input TherapeuticUpdateWithoutCompaniesDataInput {
+  name: String
+}
+
+input TherapeuticUpdateWithWhereUniqueWithoutCompaniesInput {
+  where: TherapeuticWhereUniqueInput!
+  data: TherapeuticUpdateWithoutCompaniesDataInput!
+}
+
+input TherapeuticUpsertWithWhereUniqueWithoutCompaniesInput {
+  where: TherapeuticWhereUniqueInput!
+  update: TherapeuticUpdateWithoutCompaniesDataInput!
+  create: TherapeuticCreateWithoutCompaniesInput!
+}
+
+input TherapeuticWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  companies_every: CompanyWhereInput
+  companies_some: CompanyWhereInput
+  companies_none: CompanyWhereInput
+  AND: [TherapeuticWhereInput!]
+  OR: [TherapeuticWhereInput!]
+  NOT: [TherapeuticWhereInput!]
+}
+
+input TherapeuticWhereUniqueInput {
+  id: ID
+  name: String
 }
 `
       }
