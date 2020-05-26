@@ -6,6 +6,7 @@ const companyTypeDef = require("./company");
 const serviceTypeDef = require("./service");
 const regionTypeDef = require("./region");
 const therapeuticTypeDef = require("./therapeuticArea");
+const specialtyTypeDef = require("./specialty");
 
 const typeDefs = gql`
   type Query {
@@ -24,4 +25,5 @@ module.exports = [
   serviceTypeDef,
   regionTypeDef,
   therapeuticTypeDef
+  specialtyTypeDef,
 ];

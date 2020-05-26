@@ -4,6 +4,8 @@ const studyResolver = require("./studyResolver");
 const serviceResolver = require("./serviceResolver");
 const regionResolver = require("./regionResolver");
 const therapeuticResolver = require("./therapeuticResolver");
+const specialtyResolver = require("./specialtyResolver");
+
 
 module.exports = [
   bidResolver,
@@ -12,4 +14,5 @@ module.exports = [
   serviceResolver,
   regionResolver,
   therapeuticResolver
+  specialtyResolver,
 ];
