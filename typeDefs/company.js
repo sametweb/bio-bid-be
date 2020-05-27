@@ -22,7 +22,7 @@ module.exports = gql`
     ): Company!
 
     updateCompany(
-      name: String! # FILTER
+      id: String! # FILTER
       updated_name: String
       updated_logoURL: String
       updated_website: String

@@ -77,7 +77,7 @@ module.exports = {
         updated_specialties,
         updated_regions,
         updated_therapeutics,
-        name,
+        id,
       } = args;
 
       // If front-end provides updated_services, we remove the old services, thinking
@@ -166,7 +166,7 @@ module.exports = {
           regions: { connect: updated_regions },
           therapeutics: { connect: updated_therapeutics },
         },
-        where: { name },
+        where: { id },
       });
     },
     deleteCompany: (parent, { name }, { prisma }, info) => {
