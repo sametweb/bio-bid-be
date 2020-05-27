@@ -86,9 +86,9 @@ module.exports = {
       // If user does not provide updated_services array, nothing happens.
       if (updated_services) {
         await oldItemRemover(
-          name, // Company Name
+          id, // Company id
           "services", // What table to remove items from
-          prisma.company({ name }).services, // Function for listing old items
+          prisma.company({ id }).services, // Function for listing old items
           prisma.updateCompany // Function to update company and disconnect old records
         );
       }
@@ -96,9 +96,9 @@ module.exports = {
       // Same process for updated_specialties
       if (updated_specialties) {
         await oldItemRemover(
-          name,
+          id,
           "specialties",
-          prisma.company({ name }).specialties,
+          prisma.company({ id }).specialties,
           prisma.updateCompany
         );
       }
@@ -106,9 +106,9 @@ module.exports = {
       // Same process for updated_regions
       if (updated_regions) {
         await oldItemRemover(
-          name,
+          id,
           "regions",
-          prisma.company({ name }).regions,
+          prisma.company({ id }).regions,
           prisma.updateCompany
         );
       }
@@ -116,9 +116,9 @@ module.exports = {
       // Same process for updated_therapeutics
       if (updated_therapeutics) {
         await oldItemRemover(
-          name,
+          id,
           "therapeutics",
-          prisma.company({ name }).therapeutics,
+          prisma.company({ id }).therapeutics,
           prisma.updateCompany
         );
       }
