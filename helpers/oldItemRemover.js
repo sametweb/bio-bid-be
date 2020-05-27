@@ -1,4 +1,4 @@
-module.exports = async (companyName, tableName, finder, updater) => {
+module.exports = async (id, tableName, finder, updater) => {
   let old_items = await finder();
   old_items = old_items.map(({ id }) => ({ id }));
   await updater({
@@ -7,6 +7,6 @@ module.exports = async (companyName, tableName, finder, updater) => {
         disconnect: old_items,
       },
     },
-    where: { name: companyName },
+    where: { id },
   });
 };
