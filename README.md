@@ -57,8 +57,20 @@ We chose Apollo GraphQL because:
 | Mutation Name | Access Control | Description                                                       |
 | ------------- | -------------- | ----------------------------------------------------------------- |
 | createCompany | all users      | Creates a new company                                             |
-| updateCompany | all users      | Updates the company details                                       |
+| updateCompany | all users      | Updates the company details. Requires the company id              |
 | deleteCompany | all users      | Deletes a company from the database. Requires the company name    |
+| createService | all users      | Creates a new service                                             |
+| updateService | all users      | Updates the service details. Requires the service name            |
+| deleteService | all users      | Deletes a service from the database. Requires the service name    |
+| createRegion  | all users      | Creates a new region                                              |
+| updateRegion  | all users      | Updates the region details. Requires the region name              |
+| deleteRegion  | all users      | Deletes a region from the database. Requires the region name      |
+| createTherapeutic  | all users      | Creates a new therapeutic                                              |
+| updateTherapeutic  | all users      | Updates the therapeutic details. Requires the therapeutic name              |
+| deleteTherapeutic  | all users      | Deletes a therapeutic from the database. Requires the therapeutic name      |
+| createSpecialty  | all users      | Creates a new specialty                                            |
+| updateSpecialty  | all users      | Updates the specialty details. Requires the specialty name              |
+| deleteSpecialty  | all users      | Deletes a specialty from the database. Requires the specialty name      |
 | createBid     | all users      | Creates a new bid                                                 |
 | updateBid     | all users      | Updates the bid details                                           |
 | deleteBid     | all users      | Deletes a bid from the database. Requires the ID of the bid       |
