@@ -75,13 +75,86 @@ We chose Apollo GraphQL because:
 ---
 
 ```
-{
-  id: ID!
-  name: String!
+type Company {
+  id: ID! @id
+  name: String! @unique
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: [Service]! @relation
+  specialties: [Specialty]! @relation
+  regions: [Region]! @relation
+  therapeutics: [Therapeutic]! @relation
   studies: [Study!]
   bids: [Bid!]
 }
 ```
+#### Service
+
+---
+
+```
+type Service {
+  id: ID! @id
+  name: String! @unique
+  companies: [Company]! @relation
+}
+```
+#### Specialty
+
+---
+
+```
+type Specialty {
+  id: ID! @id
+  name: String! @unique
+  companies: [Company]! @relation
+}
+```
+
+#### Region
+
+---
+
+```
+type Region {
+  id: ID! @id
+  name: String! @unique
+  companies: [Company]! @relation
+}
+```
+#### Therapeutic
+
+---
+
+```
+type Therapeutic {
+  id: ID! @id
+  name: String! @unique
+  companies: [Company]! @relation
+}
+```
+#### CompanySize
+
+---
+
+```
+enum CompanySize { # https://developer.linkedin.com/docs/reference/company-size-codes
+  A # Self-employed
+  B # 1-10 employees
+  C # 11-50 employees
+  D # 51-200 employees
+  E # 201-500 employees
+  F # 501-1000 employees
+  G # 1001-5000 employees
+  H # 5001-10,000 employees
+  I # 10,001+ employees
+}
+```
+
 
 #### Bid
 
