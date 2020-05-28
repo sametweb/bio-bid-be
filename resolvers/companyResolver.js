@@ -5,7 +5,19 @@ module.exports = {
     companies: (parent, args, { prisma }, info) => {
       return prisma.companies();
     },
-    company: (parent, { id, name }, { prisma }, info) => {
+    company: async (parent, { id, name }, { prisma }, info) => {
+      if (!id) {
+        throw new Error("id is required");
+      }
+
+      const findUser = id
+        ? await prisma.$exists.company({ id })
+        : await prisma.$exists.company({ name });
+
+      if (!findUser) {
+        throw new Error("Company with that id/name does not exist...");
+      }
+
       return id ? prisma.company({ id }) : prisma.company({ name });
     },
   },
