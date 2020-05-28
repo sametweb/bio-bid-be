@@ -1,11 +1,18 @@
 const companyResolver = require("../resolvers/companyResolver");
 
-const fakeCompanyData = { name: "CompanyName", companySize: "A" };
+const dummyCompany = {
+  data: { company: { name: "Company", companySize: "A" } },
+};
+
+const dummyCompanies = {
+  data: { companies: [{ name: "Company", companySize: "A" }] },
+};
+
 // We don't need to test actual Prisma, hence this.
 const prisma = {
   $exists: { company: jest.fn(() => true) },
-  companies: jest.fn(() => ({ data: { companies: [fakeCompanyData] } })),
-  company: jest.fn(() => ({ data: { company: fakeCompanyData } })),
+  companies: jest.fn(() => dummyCompanies),
+  company: jest.fn(() => dummyCompany),
 };
 
 describe("Company endpoints", () => {
@@ -21,17 +28,12 @@ describe("Company endpoints", () => {
       expect(prisma.company).not.toHaveBeenCalled();
     });
 
-    it("returns company object when args.id provided", async () => {
+    it("returns company object when args.id is truthy (provided)", async () => {
       const params = [{}, { id: 1 }, { prisma }, {}];
       const request = async () => await company(...params);
       const companyData = await request();
 
-      await expect(companyData).toEqual(
-        expect.objectContaining({
-          data: { company: fakeCompanyData },
-        })
-      );
-
+      await expect(companyData).toEqual(expect.objectContaining(dummyCompany));
       expect(prisma.$exists.company).toHaveBeenCalledTimes(1);
       expect(prisma.company).toHaveBeenCalledTimes(1);
     });
