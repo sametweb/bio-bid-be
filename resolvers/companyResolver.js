@@ -5,8 +5,13 @@ module.exports = {
     companies: (parent, args, { prisma }, info) => {
       return prisma.companies();
     },
-    company: (parent, { id, name }, { prisma }, info) => {
-      return id ? prisma.company({ id }) : prisma.company({ name });
+    company: async (parent, { id }, { prisma }, info) => {
+      if (!id) throw new Error("id is required");
+
+      const findUser = await prisma.$exists.company({ id });
+      if (!findUser) throw new Error("Company with that id does not exist...");
+
+      return prisma.company({ id });
     },
   },
   Mutation: {
@@ -169,8 +174,8 @@ module.exports = {
         where: { id },
       });
     },
-    deleteCompany: (parent, { name }, { prisma }, info) => {
-      return prisma.deleteCompany({ name });
+    deleteCompany: (parent, { id }, { prisma }, info) => {
+      return prisma.deleteCompany({ id });
     },
   },
   Company: {
