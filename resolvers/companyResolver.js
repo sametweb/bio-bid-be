@@ -5,20 +5,13 @@ module.exports = {
     companies: (parent, args, { prisma }, info) => {
       return prisma.companies();
     },
-    company: async (parent, { id, name }, { prisma }, info) => {
-      if (!id) {
-        throw new Error("id is required");
-      }
+    company: async (parent, { id }, { prisma }, info) => {
+      if (!id) throw new Error("id is required");
 
-      const findUser = id
-        ? await prisma.$exists.company({ id })
-        : await prisma.$exists.company({ name });
+      const findUser = await prisma.$exists.company({ id });
+      if (!findUser) throw new Error("Company with that id does not exist...");
 
-      if (!findUser) {
-        throw new Error("Company with that id/name does not exist...");
-      }
-
-      return id ? prisma.company({ id }) : prisma.company({ name });
+      return prisma.company({ id });
     },
   },
   Mutation: {
@@ -181,8 +174,8 @@ module.exports = {
         where: { id },
       });
     },
-    deleteCompany: (parent, { name }, { prisma }, info) => {
-      return prisma.deleteCompany({ name });
+    deleteCompany: (parent, { id }, { prisma }, info) => {
+      return prisma.deleteCompany({ id });
     },
   },
   Company: {
