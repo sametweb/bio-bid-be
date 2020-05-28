@@ -37,5 +37,17 @@ describe("Company endpoints", () => {
       expect(prisma.$exists.company).toHaveBeenCalledTimes(1);
       expect(prisma.company).toHaveBeenCalledTimes(1);
     });
+
+    it("throws error when company not found", async () => {
+      jest.spyOn(prisma.$exists, "company").mockImplementation(() => false);
+
+      const params = [{}, { id: 1 }, { prisma }, {}];
+      const request = async () => await company(...params);
+
+      expect(prisma.$exists.company).toHaveBeenCalledTimes(1);
+      await expect(() => request()).rejects.toThrow(
+        "Company with that id does not exist..."
+      );
+    });
   });
 });
