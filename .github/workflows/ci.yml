@@ -8,7 +8,6 @@ on:
   push:
     branches:
       - master
-      - "FEATURE/companyResolver-tests"
 
 # The jobs that will be run, usually in parallel
 jobs:
@@ -23,10 +22,10 @@ jobs:
     # The steps for the job, executed in sequence
     steps:
       # A GitHub action for checking out the current branch
-      - uses: actions/checkout@FEATURE/companyResolver-tests
+      - uses: actions/checkout@master
 
       # A GitHub action to setup Node.js
-      - uses: actions/setup-node@FEATURE/companyResolver-tests
+      - uses: actions/setup-node@master
         with:
           node-version: "12"
 
