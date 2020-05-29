@@ -1,5 +1,3 @@
-const { asyncForEach, oldItemRemover } = require("../helpers");
-
 module.exports = {
   Query: {
     companies: (parent, args, { prisma }, info) => {
@@ -15,7 +13,7 @@ module.exports = {
     },
   },
   Mutation: {
-    createCompany: async (parent, args, { prisma }, info) => {
+    createCompany: async (parent, args, { prisma, asyncForEach }, info) => {
       const {
         name,
         logoURL,
@@ -69,7 +67,12 @@ module.exports = {
         therapeutics: { connect: therapeutics },
       });
     },
-    updateCompany: async (parent, args, { prisma }, info) => {
+    updateCompany: async (
+      parent,
+      args,
+      { prisma, asyncForEach, oldItemRemover },
+      info
+    ) => {
       const {
         updated_name,
         updated_logoURL,
