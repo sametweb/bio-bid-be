@@ -13,10 +13,14 @@ const prisma = {
   $exists: { company: jest.fn(() => true) },
   companies: jest.fn(() => dummyCompanies),
   company: jest.fn(() => dummyCompany),
+  createCompany: jest.fn(),
 };
 
-describe("Company endpoints", () => {
-  describe("company() -> single company endpoint", () => {
+const helpers = require("../helpers");
+jest.spyOn(helpers, "asyncForEach");
+jest.spyOn(helpers, "oldItemRemover");
+describe("Company queries and mutations", () => {
+  describe("company() -> single company query", () => {
     const company = jest.spyOn(companyResolver.Query, "company");
 
     it("throws error when args.id is falsy (not provided)", async () => {
@@ -47,6 +51,52 @@ describe("Company endpoints", () => {
       await expect(() => request()).rejects.toThrow(
         "Company with that id does not exist..."
       );
+    });
+  });
+
+  describe("companies() query", () => {
+    const companies = jest.spyOn(companyResolver.Query, "companies");
+
+    it("returns an array of companies", async () => {
+      const params = [{}, {}, { prisma }, {}];
+      const companiesData = await companies(...params);
+
+      await expect(companiesData).toHaveProperty("data");
+    });
+  });
+
+  describe("createCompany() mutation", () => {
+    const createCompany = jest.spyOn(companyResolver.Mutation, "createCompany");
+
+    it("calls prisma.createCompany() with params", async () => {
+      const { asyncForEach } = helpers;
+      const params = [{}, { name: "" }, { prisma, asyncForEach }, {}];
+      await createCompany(...params);
+
+      expect(prisma.createCompany).toHaveBeenCalledTimes(1);
+      expect(prisma.createCompany).toHaveBeenCalledWith(
+        expect.objectContaining({ name: "" })
+      );
+      expect(asyncForEach).not.toHaveBeenCalled();
+    });
+
+    it("calls asyncForEach() if services, specialties, regions, therapeutics provided", async () => {
+      const { asyncForEach } = helpers;
+      const params = [
+        {},
+        {
+          name: "",
+          services: [],
+          specialties: [],
+          regions: [],
+          therapeutics: [],
+        },
+        { prisma, asyncForEach },
+        {},
+      ];
+      await createCompany(...params);
+
+      expect(asyncForEach).toHaveBeenCalledTimes(4);
     });
   });
 });
