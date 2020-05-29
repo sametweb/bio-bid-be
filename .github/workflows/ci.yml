@@ -8,7 +8,7 @@ on:
   push:
     branches:
       - master
-      - FEATURE/companyResolver-tests
+      - "FEATURE/companyResolver-tests"
 
 # The jobs that will be run, usually in parallel
 jobs:
