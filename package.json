@@ -9,19 +9,14 @@
     "start": "node index.js",
     "coverage": "jest --coverage --detectOpenHandles --forceExit || true"
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "**/*.js",
-      "!**/node_modules/**",
-      "!**/prisma/**",
-      "!**/vendor/**",
-      "!**/database/**",
-      "!**/tests/**",
-      "!**/spec/**",
-      "!**/*.spec.{js,jsx}",
-      "!**/coverage/**"
-    ]
-  },
+  "collectCoverageFrom": [
+    "**/*.{js,jsx}",
+    "!**/node_modules/**",
+    "!**/prisma/**",
+    "!**/tests/**",
+    "!**/*.test.{js,jsx}",
+    "!**/coverage/**"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lambda-School-Labs/bio-bid-be.git"
