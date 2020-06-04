@@ -29,6 +29,10 @@ var models = [
     embedded: false
   },
   {
+    name: "PhasesOffered",
+    embedded: false
+  },
+  {
     name: "Bid",
     embedded: false
   },
@@ -40,6 +44,6 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://us1.prisma.sh/biobid-team/production/prod`
+  endpoint: `http://localhost:4466`
 });
 exports.prisma = new exports.Prisma();
