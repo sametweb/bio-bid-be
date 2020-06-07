@@ -228,7 +228,7 @@ type Company {
   id: ID!
   name: String!
   email: String
-  phase: [PhasesOffered!]!
+  phases: [Phase!]!
   logoURL: String
   website: String
   linkedin: String
@@ -252,7 +252,7 @@ input CompanyCreateInput {
   id: ID
   name: String!
   email: String
-  phase: CompanyCreatephaseInput
+  phases: CompanyCreatephasesInput
   logoURL: String
   website: String
   linkedin: String
@@ -264,6 +264,11 @@ input CompanyCreateInput {
   therapeutics: TherapeuticCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
   bids: BidCreateManyWithoutCompanyInput
+}
+
+input CompanyCreateManyInput {
+  create: [CompanyCreateInput!]
+  connect: [CompanyWhereUniqueInput!]
 }
 
 input CompanyCreateManyWithoutRegionsInput {
@@ -291,15 +296,15 @@ input CompanyCreateOneWithoutStudiesInput {
   connect: CompanyWhereUniqueInput
 }
 
-input CompanyCreatephaseInput {
-  set: [PhasesOffered!]
+input CompanyCreatephasesInput {
+  set: [Phase!]
 }
 
 input CompanyCreateWithoutBidsInput {
   id: ID
   name: String!
   email: String
-  phase: CompanyCreatephaseInput
+  phases: CompanyCreatephasesInput
   logoURL: String
   website: String
   linkedin: String
@@ -316,7 +321,7 @@ input CompanyCreateWithoutRegionsInput {
   id: ID
   name: String!
   email: String
-  phase: CompanyCreatephaseInput
+  phases: CompanyCreatephasesInput
   logoURL: String
   website: String
   linkedin: String
@@ -333,7 +338,7 @@ input CompanyCreateWithoutServicesInput {
   id: ID
   name: String!
   email: String
-  phase: CompanyCreatephaseInput
+  phases: CompanyCreatephasesInput
   logoURL: String
   website: String
   linkedin: String
@@ -350,7 +355,7 @@ input CompanyCreateWithoutStudiesInput {
   id: ID
   name: String!
   email: String
-  phase: CompanyCreatephaseInput
+  phases: CompanyCreatephasesInput
   logoURL: String
   website: String
   linkedin: String
@@ -367,7 +372,7 @@ input CompanyCreateWithoutTherapeuticsInput {
   id: ID
   name: String!
   email: String
-  phase: CompanyCreatephaseInput
+  phases: CompanyCreatephasesInput
   logoURL: String
   website: String
   linkedin: String
@@ -410,7 +415,7 @@ type CompanyPreviousValues {
   id: ID!
   name: String!
   email: String
-  phase: [PhasesOffered!]!
+  phases: [Phase!]!
   logoURL: String
   website: String
   linkedin: String
@@ -571,10 +576,27 @@ input CompanySubscriptionWhereInput {
   NOT: [CompanySubscriptionWhereInput!]
 }
 
+input CompanyUpdateDataInput {
+  name: String
+  email: String
+  phases: CompanyUpdatephasesInput
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceUpdateManyWithoutCompaniesInput
+  regions: RegionUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
+  studies: StudyUpdateManyWithoutCompanyInput
+  bids: BidUpdateManyWithoutCompanyInput
+}
+
 input CompanyUpdateInput {
   name: String
   email: String
-  phase: CompanyUpdatephaseInput
+  phases: CompanyUpdatephasesInput
   logoURL: String
   website: String
   linkedin: String
@@ -591,7 +613,7 @@ input CompanyUpdateInput {
 input CompanyUpdateManyDataInput {
   name: String
   email: String
-  phase: CompanyUpdatephaseInput
+  phases: CompanyUpdatephasesInput
   logoURL: String
   website: String
   linkedin: String
@@ -600,10 +622,22 @@ input CompanyUpdateManyDataInput {
   companySize: CompanySize
 }
 
+input CompanyUpdateManyInput {
+  create: [CompanyCreateInput!]
+  update: [CompanyUpdateWithWhereUniqueNestedInput!]
+  upsert: [CompanyUpsertWithWhereUniqueNestedInput!]
+  delete: [CompanyWhereUniqueInput!]
+  connect: [CompanyWhereUniqueInput!]
+  set: [CompanyWhereUniqueInput!]
+  disconnect: [CompanyWhereUniqueInput!]
+  deleteMany: [CompanyScalarWhereInput!]
+  updateMany: [CompanyUpdateManyWithWhereNestedInput!]
+}
+
 input CompanyUpdateManyMutationInput {
   name: String
   email: String
-  phase: CompanyUpdatephaseInput
+  phases: CompanyUpdatephasesInput
   logoURL: String
   website: String
   linkedin: String
@@ -667,14 +701,14 @@ input CompanyUpdateOneRequiredWithoutStudiesInput {
   connect: CompanyWhereUniqueInput
 }
 
-input CompanyUpdatephaseInput {
-  set: [PhasesOffered!]
+input CompanyUpdatephasesInput {
+  set: [Phase!]
 }
 
 input CompanyUpdateWithoutBidsDataInput {
   name: String
   email: String
-  phase: CompanyUpdatephaseInput
+  phases: CompanyUpdatephasesInput
   logoURL: String
   website: String
   linkedin: String
@@ -690,7 +724,7 @@ input CompanyUpdateWithoutBidsDataInput {
 input CompanyUpdateWithoutRegionsDataInput {
   name: String
   email: String
-  phase: CompanyUpdatephaseInput
+  phases: CompanyUpdatephasesInput
   logoURL: String
   website: String
   linkedin: String
@@ -706,7 +740,7 @@ input CompanyUpdateWithoutRegionsDataInput {
 input CompanyUpdateWithoutServicesDataInput {
   name: String
   email: String
-  phase: CompanyUpdatephaseInput
+  phases: CompanyUpdatephasesInput
   logoURL: String
   website: String
   linkedin: String
@@ -722,7 +756,7 @@ input CompanyUpdateWithoutServicesDataInput {
 input CompanyUpdateWithoutStudiesDataInput {
   name: String
   email: String
-  phase: CompanyUpdatephaseInput
+  phases: CompanyUpdatephasesInput
   logoURL: String
   website: String
   linkedin: String
@@ -738,7 +772,7 @@ input CompanyUpdateWithoutStudiesDataInput {
 input CompanyUpdateWithoutTherapeuticsDataInput {
   name: String
   email: String
-  phase: CompanyUpdatephaseInput
+  phases: CompanyUpdatephasesInput
   logoURL: String
   website: String
   linkedin: String
@@ -749,6 +783,11 @@ input CompanyUpdateWithoutTherapeuticsDataInput {
   regions: RegionUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
   bids: BidUpdateManyWithoutCompanyInput
+}
+
+input CompanyUpdateWithWhereUniqueNestedInput {
+  where: CompanyWhereUniqueInput!
+  data: CompanyUpdateDataInput!
 }
 
 input CompanyUpdateWithWhereUniqueWithoutRegionsInput {
@@ -774,6 +813,12 @@ input CompanyUpsertWithoutBidsInput {
 input CompanyUpsertWithoutStudiesInput {
   update: CompanyUpdateWithoutStudiesDataInput!
   create: CompanyCreateWithoutStudiesInput!
+}
+
+input CompanyUpsertWithWhereUniqueNestedInput {
+  where: CompanyWhereUniqueInput!
+  update: CompanyUpdateDataInput!
+  create: CompanyCreateInput!
 }
 
 input CompanyUpsertWithWhereUniqueWithoutRegionsInput {
@@ -1002,7 +1047,7 @@ type PageInfo {
   endCursor: String
 }
 
-enum PhasesOffered {
+enum Phase {
   I
   II
   III
@@ -1235,7 +1280,7 @@ input ServiceCreateInput {
   id: ID
   name: String!
   companies: CompanyCreateManyWithoutServicesInput
-  specialties: SpecialtyCreateManyWithoutServiceInput
+  specialties: SpecialtyCreateManyWithoutServicesInput
 }
 
 input ServiceCreateManyWithoutCompaniesInput {
@@ -1243,15 +1288,15 @@ input ServiceCreateManyWithoutCompaniesInput {
   connect: [ServiceWhereUniqueInput!]
 }
 
-input ServiceCreateOneWithoutSpecialtiesInput {
-  create: ServiceCreateWithoutSpecialtiesInput
-  connect: ServiceWhereUniqueInput
+input ServiceCreateManyWithoutSpecialtiesInput {
+  create: [ServiceCreateWithoutSpecialtiesInput!]
+  connect: [ServiceWhereUniqueInput!]
 }
 
 input ServiceCreateWithoutCompaniesInput {
   id: ID
   name: String!
-  specialties: SpecialtyCreateManyWithoutServiceInput
+  specialties: SpecialtyCreateManyWithoutServicesInput
 }
 
 input ServiceCreateWithoutSpecialtiesInput {
@@ -1332,7 +1377,7 @@ input ServiceSubscriptionWhereInput {
 input ServiceUpdateInput {
   name: String
   companies: CompanyUpdateManyWithoutServicesInput
-  specialties: SpecialtyUpdateManyWithoutServiceInput
+  specialties: SpecialtyUpdateManyWithoutServicesInput
 }
 
 input ServiceUpdateManyDataInput {
@@ -1355,23 +1400,26 @@ input ServiceUpdateManyWithoutCompaniesInput {
   updateMany: [ServiceUpdateManyWithWhereNestedInput!]
 }
 
+input ServiceUpdateManyWithoutSpecialtiesInput {
+  create: [ServiceCreateWithoutSpecialtiesInput!]
+  delete: [ServiceWhereUniqueInput!]
+  connect: [ServiceWhereUniqueInput!]
+  set: [ServiceWhereUniqueInput!]
+  disconnect: [ServiceWhereUniqueInput!]
+  update: [ServiceUpdateWithWhereUniqueWithoutSpecialtiesInput!]
+  upsert: [ServiceUpsertWithWhereUniqueWithoutSpecialtiesInput!]
+  deleteMany: [ServiceScalarWhereInput!]
+  updateMany: [ServiceUpdateManyWithWhereNestedInput!]
+}
+
 input ServiceUpdateManyWithWhereNestedInput {
   where: ServiceScalarWhereInput!
   data: ServiceUpdateManyDataInput!
 }
 
-input ServiceUpdateOneWithoutSpecialtiesInput {
-  create: ServiceCreateWithoutSpecialtiesInput
-  update: ServiceUpdateWithoutSpecialtiesDataInput
-  upsert: ServiceUpsertWithoutSpecialtiesInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: ServiceWhereUniqueInput
-}
-
 input ServiceUpdateWithoutCompaniesDataInput {
   name: String
-  specialties: SpecialtyUpdateManyWithoutServiceInput
+  specialties: SpecialtyUpdateManyWithoutServicesInput
 }
 
 input ServiceUpdateWithoutSpecialtiesDataInput {
@@ -1384,15 +1432,21 @@ input ServiceUpdateWithWhereUniqueWithoutCompaniesInput {
   data: ServiceUpdateWithoutCompaniesDataInput!
 }
 
-input ServiceUpsertWithoutSpecialtiesInput {
-  update: ServiceUpdateWithoutSpecialtiesDataInput!
-  create: ServiceCreateWithoutSpecialtiesInput!
+input ServiceUpdateWithWhereUniqueWithoutSpecialtiesInput {
+  where: ServiceWhereUniqueInput!
+  data: ServiceUpdateWithoutSpecialtiesDataInput!
 }
 
 input ServiceUpsertWithWhereUniqueWithoutCompaniesInput {
   where: ServiceWhereUniqueInput!
   update: ServiceUpdateWithoutCompaniesDataInput!
   create: ServiceCreateWithoutCompaniesInput!
+}
+
+input ServiceUpsertWithWhereUniqueWithoutSpecialtiesInput {
+  where: ServiceWhereUniqueInput!
+  update: ServiceUpdateWithoutSpecialtiesDataInput!
+  create: ServiceCreateWithoutSpecialtiesInput!
 }
 
 input ServiceWhereInput {
@@ -1442,9 +1496,10 @@ input ServiceWhereUniqueInput {
 
 type Specialty {
   id: ID!
-  name: String
-  service: Service
-  sub_specialties(where: SpecialtyWhereInput, orderBy: SpecialtyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialty!]
+  name: String!
+  companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company!]
+  services(where: ServiceWhereInput, orderBy: ServiceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Service!]
+  specialties(where: SpecialtyWhereInput, orderBy: SpecialtyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialty!]
 }
 
 type SpecialtyConnection {
@@ -1455,9 +1510,10 @@ type SpecialtyConnection {
 
 input SpecialtyCreateInput {
   id: ID
-  name: String
-  service: ServiceCreateOneWithoutSpecialtiesInput
-  sub_specialties: SpecialtyCreateManyInput
+  name: String!
+  companies: CompanyCreateManyInput
+  services: ServiceCreateManyWithoutSpecialtiesInput
+  specialties: SpecialtyCreateManyInput
 }
 
 input SpecialtyCreateManyInput {
@@ -1465,15 +1521,16 @@ input SpecialtyCreateManyInput {
   connect: [SpecialtyWhereUniqueInput!]
 }
 
-input SpecialtyCreateManyWithoutServiceInput {
-  create: [SpecialtyCreateWithoutServiceInput!]
+input SpecialtyCreateManyWithoutServicesInput {
+  create: [SpecialtyCreateWithoutServicesInput!]
   connect: [SpecialtyWhereUniqueInput!]
 }
 
-input SpecialtyCreateWithoutServiceInput {
+input SpecialtyCreateWithoutServicesInput {
   id: ID
-  name: String
-  sub_specialties: SpecialtyCreateManyInput
+  name: String!
+  companies: CompanyCreateManyInput
+  specialties: SpecialtyCreateManyInput
 }
 
 type SpecialtyEdge {
@@ -1490,7 +1547,7 @@ enum SpecialtyOrderByInput {
 
 type SpecialtyPreviousValues {
   id: ID!
-  name: String
+  name: String!
 }
 
 input SpecialtyScalarWhereInput {
@@ -1547,14 +1604,16 @@ input SpecialtySubscriptionWhereInput {
 
 input SpecialtyUpdateDataInput {
   name: String
-  service: ServiceUpdateOneWithoutSpecialtiesInput
-  sub_specialties: SpecialtyUpdateManyInput
+  companies: CompanyUpdateManyInput
+  services: ServiceUpdateManyWithoutSpecialtiesInput
+  specialties: SpecialtyUpdateManyInput
 }
 
 input SpecialtyUpdateInput {
   name: String
-  service: ServiceUpdateOneWithoutSpecialtiesInput
-  sub_specialties: SpecialtyUpdateManyInput
+  companies: CompanyUpdateManyInput
+  services: ServiceUpdateManyWithoutSpecialtiesInput
+  specialties: SpecialtyUpdateManyInput
 }
 
 input SpecialtyUpdateManyDataInput {
@@ -1577,14 +1636,14 @@ input SpecialtyUpdateManyMutationInput {
   name: String
 }
 
-input SpecialtyUpdateManyWithoutServiceInput {
-  create: [SpecialtyCreateWithoutServiceInput!]
+input SpecialtyUpdateManyWithoutServicesInput {
+  create: [SpecialtyCreateWithoutServicesInput!]
   delete: [SpecialtyWhereUniqueInput!]
   connect: [SpecialtyWhereUniqueInput!]
   set: [SpecialtyWhereUniqueInput!]
   disconnect: [SpecialtyWhereUniqueInput!]
-  update: [SpecialtyUpdateWithWhereUniqueWithoutServiceInput!]
-  upsert: [SpecialtyUpsertWithWhereUniqueWithoutServiceInput!]
+  update: [SpecialtyUpdateWithWhereUniqueWithoutServicesInput!]
+  upsert: [SpecialtyUpsertWithWhereUniqueWithoutServicesInput!]
   deleteMany: [SpecialtyScalarWhereInput!]
   updateMany: [SpecialtyUpdateManyWithWhereNestedInput!]
 }
@@ -1594,9 +1653,10 @@ input SpecialtyUpdateManyWithWhereNestedInput {
   data: SpecialtyUpdateManyDataInput!
 }
 
-input SpecialtyUpdateWithoutServiceDataInput {
+input SpecialtyUpdateWithoutServicesDataInput {
   name: String
-  sub_specialties: SpecialtyUpdateManyInput
+  companies: CompanyUpdateManyInput
+  specialties: SpecialtyUpdateManyInput
 }
 
 input SpecialtyUpdateWithWhereUniqueNestedInput {
@@ -1604,9 +1664,9 @@ input SpecialtyUpdateWithWhereUniqueNestedInput {
   data: SpecialtyUpdateDataInput!
 }
 
-input SpecialtyUpdateWithWhereUniqueWithoutServiceInput {
+input SpecialtyUpdateWithWhereUniqueWithoutServicesInput {
   where: SpecialtyWhereUniqueInput!
-  data: SpecialtyUpdateWithoutServiceDataInput!
+  data: SpecialtyUpdateWithoutServicesDataInput!
 }
 
 input SpecialtyUpsertWithWhereUniqueNestedInput {
@@ -1615,10 +1675,10 @@ input SpecialtyUpsertWithWhereUniqueNestedInput {
   create: SpecialtyCreateInput!
 }
 
-input SpecialtyUpsertWithWhereUniqueWithoutServiceInput {
+input SpecialtyUpsertWithWhereUniqueWithoutServicesInput {
   where: SpecialtyWhereUniqueInput!
-  update: SpecialtyUpdateWithoutServiceDataInput!
-  create: SpecialtyCreateWithoutServiceInput!
+  update: SpecialtyUpdateWithoutServicesDataInput!
+  create: SpecialtyCreateWithoutServicesInput!
 }
 
 input SpecialtyWhereInput {
@@ -1650,10 +1710,15 @@ input SpecialtyWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  service: ServiceWhereInput
-  sub_specialties_every: SpecialtyWhereInput
-  sub_specialties_some: SpecialtyWhereInput
-  sub_specialties_none: SpecialtyWhereInput
+  companies_every: CompanyWhereInput
+  companies_some: CompanyWhereInput
+  companies_none: CompanyWhereInput
+  services_every: ServiceWhereInput
+  services_some: ServiceWhereInput
+  services_none: ServiceWhereInput
+  specialties_every: SpecialtyWhereInput
+  specialties_some: SpecialtyWhereInput
+  specialties_none: SpecialtyWhereInput
   AND: [SpecialtyWhereInput!]
   OR: [SpecialtyWhereInput!]
   NOT: [SpecialtyWhereInput!]
@@ -1661,6 +1726,7 @@ input SpecialtyWhereInput {
 
 input SpecialtyWhereUniqueInput {
   id: ID
+  name: String
 }
 
 type Study {

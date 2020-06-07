@@ -31,8 +31,8 @@ module.exports = {
     },
   },
   Specialty: {
-    companies: ({ name }, args, { prisma }, info) => {
-      return prisma.specialty({ name }).companies();
+    specialties: ({ id }, args, { prisma }, info) => {
+      return prisma.specialty({ id }).specialties();
     },
   },
 };

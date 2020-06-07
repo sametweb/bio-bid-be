@@ -17,5 +17,6 @@ module.exports = gql`
     id: ID
     name: String!
     companies: [Company]!
+    specialties: [Specialty]
   }
 `;

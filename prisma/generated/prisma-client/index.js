@@ -29,7 +29,7 @@ var models = [
     embedded: false
   },
   {
-    name: "PhasesOffered",
+    name: "Phase",
     embedded: false
   },
   {

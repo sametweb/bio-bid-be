@@ -2,7 +2,7 @@ type Company {
   id: ID! @id
   name: String! @unique
   email: String
-  phase: [PhasesOffered]! @scalarList(strategy: RELATION)
+  phases: [Phase]! @scalarList(strategy: RELATION)
   logoURL: String
   website: String
   linkedin: String
@@ -20,14 +20,15 @@ type Service {
   id: ID! @id
   name: String! @unique
   companies: [Company]! @relation
-  specialties: [Specialty]! @relation
+  specialties: [Specialty] @relation
 }
 
 type Specialty {
   id: ID! @id
-  name: String
-  service: Service @relation(link: INLINE)
-  sub_specialties: [Specialty]! @relation(link: TABLE)
+  name: String! @unique
+  companies: [Company]! @relation
+  services: [Service] @relation
+  specialties: [Specialty] @relation
 }
 
 type Region {
@@ -54,7 +55,7 @@ enum CompanySize { # https://developer.linkedin.com/docs/reference/company-size-
   I # 10,001+ employees
 }
 
-enum PhasesOffered {
+enum Phase {
   I
   II
   III

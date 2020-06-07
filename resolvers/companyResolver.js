@@ -16,6 +16,8 @@ module.exports = {
     createCompany: async (parent, args, { prisma, asyncForEach }, info) => {
       const {
         name,
+        email,
+        phases,
         logoURL,
         website,
         linkedin,
@@ -23,38 +25,14 @@ module.exports = {
         headquarters,
         companySize,
         services,
-        specialties,
         regions,
         therapeutics,
       } = args;
 
-      // If the service is not in DB, add it
-      if (services) {
-        await asyncForEach(services, prisma.service, prisma.createService);
-      }
-      // If the specialty is not in DB, add it
-      if (specialties) {
-        await asyncForEach(
-          specialties,
-          prisma.specialty,
-          prisma.createSpecialty
-        );
-      }
-
-      if (regions) {
-        await asyncForEach(regions, prisma.region, prisma.createRegion);
-      }
-
-      if (therapeutics) {
-        await asyncForEach(
-          therapeutics,
-          prisma.therapeutic,
-          prisma.createTherapeutic
-        );
-      }
-
       return await prisma.createCompany({
         name,
+        email,
+        phases: { set: phases },
         logoURL,
         website,
         linkedin,
@@ -62,7 +40,6 @@ module.exports = {
         headquarters,
         companySize,
         services: { connect: services },
-        specialties: { connect: specialties },
         regions: { connect: regions },
         therapeutics: { connect: therapeutics },
       });
@@ -185,11 +162,9 @@ module.exports = {
     studies: ({ id }, args, { prisma }, info) => {
       return prisma.company({ id }).studies();
     },
-    services: ({ id }, args, { prisma }, info) => {
-      return prisma.company({ id }).services();
-    },
-    specialties: ({ id }, args, { prisma }, info) => {
-      return prisma.company({ id }).specialties();
+    services: (parent, args, { prisma }, info) => {
+      console.log({ parent });
+      return prisma.company({ id: parent.id }).services();
     },
     regions: ({ id }, args, { prisma }, info) => {
       return prisma.company({ id }).regions();
