@@ -1499,7 +1499,7 @@ type Specialty {
   name: String!
   companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company!]
   services(where: ServiceWhereInput, orderBy: ServiceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Service!]
-  specialties(where: SpecialtyWhereInput, orderBy: SpecialtyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialty!]
+  sub_specialties(where: SpecialtyWhereInput, orderBy: SpecialtyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialty!]
 }
 
 type SpecialtyConnection {
@@ -1513,7 +1513,7 @@ input SpecialtyCreateInput {
   name: String!
   companies: CompanyCreateManyInput
   services: ServiceCreateManyWithoutSpecialtiesInput
-  specialties: SpecialtyCreateManyInput
+  sub_specialties: SpecialtyCreateManyInput
 }
 
 input SpecialtyCreateManyInput {
@@ -1530,7 +1530,7 @@ input SpecialtyCreateWithoutServicesInput {
   id: ID
   name: String!
   companies: CompanyCreateManyInput
-  specialties: SpecialtyCreateManyInput
+  sub_specialties: SpecialtyCreateManyInput
 }
 
 type SpecialtyEdge {
@@ -1606,14 +1606,14 @@ input SpecialtyUpdateDataInput {
   name: String
   companies: CompanyUpdateManyInput
   services: ServiceUpdateManyWithoutSpecialtiesInput
-  specialties: SpecialtyUpdateManyInput
+  sub_specialties: SpecialtyUpdateManyInput
 }
 
 input SpecialtyUpdateInput {
   name: String
   companies: CompanyUpdateManyInput
   services: ServiceUpdateManyWithoutSpecialtiesInput
-  specialties: SpecialtyUpdateManyInput
+  sub_specialties: SpecialtyUpdateManyInput
 }
 
 input SpecialtyUpdateManyDataInput {
@@ -1656,7 +1656,7 @@ input SpecialtyUpdateManyWithWhereNestedInput {
 input SpecialtyUpdateWithoutServicesDataInput {
   name: String
   companies: CompanyUpdateManyInput
-  specialties: SpecialtyUpdateManyInput
+  sub_specialties: SpecialtyUpdateManyInput
 }
 
 input SpecialtyUpdateWithWhereUniqueNestedInput {
@@ -1716,9 +1716,9 @@ input SpecialtyWhereInput {
   services_every: ServiceWhereInput
   services_some: ServiceWhereInput
   services_none: ServiceWhereInput
-  specialties_every: SpecialtyWhereInput
-  specialties_some: SpecialtyWhereInput
-  specialties_none: SpecialtyWhereInput
+  sub_specialties_every: SpecialtyWhereInput
+  sub_specialties_some: SpecialtyWhereInput
+  sub_specialties_none: SpecialtyWhereInput
   AND: [SpecialtyWhereInput!]
   OR: [SpecialtyWhereInput!]
   NOT: [SpecialtyWhereInput!]

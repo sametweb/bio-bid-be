@@ -854,9 +854,9 @@ export interface SpecialtyWhereInput {
   services_every?: Maybe<ServiceWhereInput>;
   services_some?: Maybe<ServiceWhereInput>;
   services_none?: Maybe<ServiceWhereInput>;
-  specialties_every?: Maybe<SpecialtyWhereInput>;
-  specialties_some?: Maybe<SpecialtyWhereInput>;
-  specialties_none?: Maybe<SpecialtyWhereInput>;
+  sub_specialties_every?: Maybe<SpecialtyWhereInput>;
+  sub_specialties_some?: Maybe<SpecialtyWhereInput>;
+  sub_specialties_none?: Maybe<SpecialtyWhereInput>;
   AND?: Maybe<SpecialtyWhereInput[] | SpecialtyWhereInput>;
   OR?: Maybe<SpecialtyWhereInput[] | SpecialtyWhereInput>;
   NOT?: Maybe<SpecialtyWhereInput[] | SpecialtyWhereInput>;
@@ -950,7 +950,7 @@ export interface SpecialtyCreateWithoutServicesInput {
   id?: Maybe<ID_Input>;
   name: String;
   companies?: Maybe<CompanyCreateManyInput>;
-  specialties?: Maybe<SpecialtyCreateManyInput>;
+  sub_specialties?: Maybe<SpecialtyCreateManyInput>;
 }
 
 export interface CompanyCreateManyInput {
@@ -1082,7 +1082,7 @@ export interface SpecialtyCreateInput {
   name: String;
   companies?: Maybe<CompanyCreateManyInput>;
   services?: Maybe<ServiceCreateManyWithoutSpecialtiesInput>;
-  specialties?: Maybe<SpecialtyCreateManyInput>;
+  sub_specialties?: Maybe<SpecialtyCreateManyInput>;
 }
 
 export interface ServiceCreateManyWithoutSpecialtiesInput {
@@ -1221,7 +1221,7 @@ export interface SpecialtyUpdateWithWhereUniqueWithoutServicesInput {
 export interface SpecialtyUpdateWithoutServicesDataInput {
   name?: Maybe<String>;
   companies?: Maybe<CompanyUpdateManyInput>;
-  specialties?: Maybe<SpecialtyUpdateManyInput>;
+  sub_specialties?: Maybe<SpecialtyUpdateManyInput>;
 }
 
 export interface CompanyUpdateManyInput {
@@ -1912,7 +1912,7 @@ export interface SpecialtyUpdateDataInput {
   name?: Maybe<String>;
   companies?: Maybe<CompanyUpdateManyInput>;
   services?: Maybe<ServiceUpdateManyWithoutSpecialtiesInput>;
-  specialties?: Maybe<SpecialtyUpdateManyInput>;
+  sub_specialties?: Maybe<SpecialtyUpdateManyInput>;
 }
 
 export interface ServiceUpdateManyWithoutSpecialtiesInput {
@@ -2258,7 +2258,7 @@ export interface SpecialtyUpdateInput {
   name?: Maybe<String>;
   companies?: Maybe<CompanyUpdateManyInput>;
   services?: Maybe<ServiceUpdateManyWithoutSpecialtiesInput>;
-  specialties?: Maybe<SpecialtyUpdateManyInput>;
+  sub_specialties?: Maybe<SpecialtyUpdateManyInput>;
 }
 
 export interface SpecialtyUpdateManyMutationInput {
@@ -2799,7 +2799,7 @@ export interface SpecialtyPromise extends Promise<Specialty>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  specialties: <T = FragmentableArray<Specialty>>(args?: {
+  sub_specialties: <T = FragmentableArray<Specialty>>(args?: {
     where?: SpecialtyWhereInput;
     orderBy?: SpecialtyOrderByInput;
     skip?: Int;
@@ -2833,7 +2833,7 @@ export interface SpecialtySubscription
     first?: Int;
     last?: Int;
   }) => T;
-  specialties: <T = Promise<AsyncIterator<SpecialtySubscription>>>(args?: {
+  sub_specialties: <T = Promise<AsyncIterator<SpecialtySubscription>>>(args?: {
     where?: SpecialtyWhereInput;
     orderBy?: SpecialtyOrderByInput;
     skip?: Int;
@@ -2867,7 +2867,7 @@ export interface SpecialtyNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  specialties: <T = FragmentableArray<Specialty>>(args?: {
+  sub_specialties: <T = FragmentableArray<Specialty>>(args?: {
     where?: SpecialtyWhereInput;
     orderBy?: SpecialtyOrderByInput;
     skip?: Int;

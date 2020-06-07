@@ -9,7 +9,7 @@ type Company {
   overview: String
   headquarters: String
   companySize: CompanySize
-  services: [Service]! @relation
+  services: [Service]!
   regions: [Region]! @relation
   therapeutics: [Therapeutic]! @relation
   studies: [Study!]
@@ -19,16 +19,16 @@ type Company {
 type Service {
   id: ID! @id
   name: String! @unique
-  companies: [Company]! @relation
-  specialties: [Specialty] @relation
+  companies: [Company]! @relation(link: TABLE)
+  specialties: [Specialty]
 }
 
 type Specialty {
   id: ID! @id
   name: String! @unique
-  companies: [Company]! @relation
-  services: [Service] @relation
-  specialties: [Specialty] @relation
+  companies: [Company]! @relation(link: TABLE)
+  services: [Service] @relation(link: TABLE)
+  sub_specialties: [Specialty] @relation(link: TABLE)
 }
 
 type Region {
