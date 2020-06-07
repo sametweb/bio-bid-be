@@ -30,10 +30,11 @@ module.exports = {
     },
   },
   Service: {
-    specialties: (parent, args, { prisma }, info) => {
-      return prisma
-        .service({ id: parent.id })
-        .specialties({ where: { services_some: { id: parent.id } } });
+    specialties: async (parent, args, { prisma }, info) => {
+      return prisma.service({ id: parent.id }).specialties();
+    },
+    companies: (parent, args, { prisma }, info) => {
+      return prisma.service({ id: parent.id }).companies();
     },
   },
 };

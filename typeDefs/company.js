@@ -62,18 +62,12 @@ module.exports = gql`
 
   input ServiceInput {
     name: String!
-    company: [CompanyInput]
     specialties: [SpecialtyInput]
   }
 
   input SpecialtyInput {
     name: String!
-    company: [CompanyInput]
-    specialties: [SpecialtyInput]
-  }
-
-  input CompanyInput {
-    name: String!
+    sub_specialties: [SpecialtyInput]
   }
 
   input RegionInput {

@@ -39,7 +39,7 @@ module.exports = {
         overview,
         headquarters,
         companySize,
-        services: { connect: services },
+        services: { connect: services.map(({ name }) => ({ name })) },
         regions: { connect: regions },
         therapeutics: { connect: therapeutics },
       });
@@ -163,7 +163,6 @@ module.exports = {
       return prisma.company({ id }).studies();
     },
     services: (parent, args, { prisma }, info) => {
-      console.log({ parent });
       return prisma.company({ id: parent.id }).services();
     },
     regions: ({ id }, args, { prisma }, info) => {

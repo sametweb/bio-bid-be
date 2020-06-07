@@ -349,6 +349,18 @@ export type ServiceOrderByInput =
   | "name_ASC"
   | "name_DESC";
 
+export type SpecialtyOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC";
+
+export type RegionOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC";
+
 export type CompanyOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -368,18 +380,6 @@ export type CompanyOrderByInput =
   | "headquarters_DESC"
   | "companySize_ASC"
   | "companySize_DESC";
-
-export type SpecialtyOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC";
-
-export type RegionOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC";
 
 export type TherapeuticOrderByInput =
   | "id_ASC"
@@ -450,9 +450,7 @@ export interface ServiceWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  companies_every?: Maybe<CompanyWhereInput>;
-  companies_some?: Maybe<CompanyWhereInput>;
-  companies_none?: Maybe<CompanyWhereInput>;
+  company?: Maybe<CompanyWhereInput>;
   specialties_every?: Maybe<SpecialtyWhereInput>;
   specialties_some?: Maybe<SpecialtyWhereInput>;
   specialties_none?: Maybe<SpecialtyWhereInput>;
@@ -848,12 +846,7 @@ export interface SpecialtyWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  companies_every?: Maybe<CompanyWhereInput>;
-  companies_some?: Maybe<CompanyWhereInput>;
-  companies_none?: Maybe<CompanyWhereInput>;
-  services_every?: Maybe<ServiceWhereInput>;
-  services_some?: Maybe<ServiceWhereInput>;
-  services_none?: Maybe<ServiceWhereInput>;
+  service?: Maybe<ServiceWhereInput>;
   sub_specialties_every?: Maybe<SpecialtyWhereInput>;
   sub_specialties_some?: Maybe<SpecialtyWhereInput>;
   sub_specialties_none?: Maybe<SpecialtyWhereInput>;
@@ -874,12 +867,10 @@ export type RegionWhereUniqueInput = AtLeastOne<{
 
 export type ServiceWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
-  name?: Maybe<String>;
 }>;
 
 export type SpecialtyWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
-  name?: Maybe<String>;
 }>;
 
 export type StudyWhereUniqueInput = AtLeastOne<{
@@ -916,7 +907,7 @@ export interface CompanyCreateWithoutBidsInput {
   overview?: Maybe<String>;
   headquarters?: Maybe<String>;
   companySize?: Maybe<CompanySize>;
-  services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
+  services?: Maybe<ServiceCreateManyWithoutCompanyInput>;
   regions?: Maybe<RegionCreateManyWithoutCompaniesInput>;
   therapeutics?: Maybe<TherapeuticCreateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
@@ -926,39 +917,63 @@ export interface CompanyCreatephasesInput {
   set?: Maybe<Phase[] | Phase>;
 }
 
-export interface ServiceCreateManyWithoutCompaniesInput {
+export interface ServiceCreateManyWithoutCompanyInput {
   create?: Maybe<
-    ServiceCreateWithoutCompaniesInput[] | ServiceCreateWithoutCompaniesInput
+    ServiceCreateWithoutCompanyInput[] | ServiceCreateWithoutCompanyInput
   >;
   connect?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
 }
 
-export interface ServiceCreateWithoutCompaniesInput {
+export interface ServiceCreateWithoutCompanyInput {
   id?: Maybe<ID_Input>;
   name: String;
-  specialties?: Maybe<SpecialtyCreateManyWithoutServicesInput>;
+  specialties?: Maybe<SpecialtyCreateManyWithoutServiceInput>;
 }
 
-export interface SpecialtyCreateManyWithoutServicesInput {
+export interface SpecialtyCreateManyWithoutServiceInput {
   create?: Maybe<
-    SpecialtyCreateWithoutServicesInput[] | SpecialtyCreateWithoutServicesInput
+    SpecialtyCreateWithoutServiceInput[] | SpecialtyCreateWithoutServiceInput
   >;
   connect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
 }
 
-export interface SpecialtyCreateWithoutServicesInput {
+export interface SpecialtyCreateWithoutServiceInput {
   id?: Maybe<ID_Input>;
   name: String;
-  companies?: Maybe<CompanyCreateManyInput>;
-  sub_specialties?: Maybe<SpecialtyCreateManyInput>;
+  sub_specialties?: Maybe<SpecialtyCreateManyWithoutSub_specialtiesInput>;
 }
 
-export interface CompanyCreateManyInput {
-  create?: Maybe<CompanyCreateInput[] | CompanyCreateInput>;
-  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+export interface SpecialtyCreateManyWithoutSub_specialtiesInput {
+  create?: Maybe<
+    | SpecialtyCreateWithoutSub_specialtiesInput[]
+    | SpecialtyCreateWithoutSub_specialtiesInput
+  >;
+  connect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
 }
 
-export interface CompanyCreateInput {
+export interface SpecialtyCreateWithoutSub_specialtiesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  service?: Maybe<ServiceCreateOneWithoutSpecialtiesInput>;
+}
+
+export interface ServiceCreateOneWithoutSpecialtiesInput {
+  create?: Maybe<ServiceCreateWithoutSpecialtiesInput>;
+  connect?: Maybe<ServiceWhereUniqueInput>;
+}
+
+export interface ServiceCreateWithoutSpecialtiesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  company: CompanyCreateOneWithoutServicesInput;
+}
+
+export interface CompanyCreateOneWithoutServicesInput {
+  create?: Maybe<CompanyCreateWithoutServicesInput>;
+  connect?: Maybe<CompanyWhereUniqueInput>;
+}
+
+export interface CompanyCreateWithoutServicesInput {
   id?: Maybe<ID_Input>;
   name: String;
   email?: Maybe<String>;
@@ -969,7 +984,6 @@ export interface CompanyCreateInput {
   overview?: Maybe<String>;
   headquarters?: Maybe<String>;
   companySize?: Maybe<CompanySize>;
-  services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
   regions?: Maybe<RegionCreateManyWithoutCompaniesInput>;
   therapeutics?: Maybe<TherapeuticCreateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
@@ -1066,60 +1080,9 @@ export interface CompanyCreateWithoutStudiesInput {
   overview?: Maybe<String>;
   headquarters?: Maybe<String>;
   companySize?: Maybe<CompanySize>;
-  services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
+  services?: Maybe<ServiceCreateManyWithoutCompanyInput>;
   regions?: Maybe<RegionCreateManyWithoutCompaniesInput>;
   therapeutics?: Maybe<TherapeuticCreateManyWithoutCompaniesInput>;
-  bids?: Maybe<BidCreateManyWithoutCompanyInput>;
-}
-
-export interface SpecialtyCreateManyInput {
-  create?: Maybe<SpecialtyCreateInput[] | SpecialtyCreateInput>;
-  connect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
-}
-
-export interface SpecialtyCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  companies?: Maybe<CompanyCreateManyInput>;
-  services?: Maybe<ServiceCreateManyWithoutSpecialtiesInput>;
-  sub_specialties?: Maybe<SpecialtyCreateManyInput>;
-}
-
-export interface ServiceCreateManyWithoutSpecialtiesInput {
-  create?: Maybe<
-    | ServiceCreateWithoutSpecialtiesInput[]
-    | ServiceCreateWithoutSpecialtiesInput
-  >;
-  connect?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
-}
-
-export interface ServiceCreateWithoutSpecialtiesInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  companies?: Maybe<CompanyCreateManyWithoutServicesInput>;
-}
-
-export interface CompanyCreateManyWithoutServicesInput {
-  create?: Maybe<
-    CompanyCreateWithoutServicesInput[] | CompanyCreateWithoutServicesInput
-  >;
-  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
-}
-
-export interface CompanyCreateWithoutServicesInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email?: Maybe<String>;
-  phases?: Maybe<CompanyCreatephasesInput>;
-  logoURL?: Maybe<String>;
-  website?: Maybe<String>;
-  linkedin?: Maybe<String>;
-  overview?: Maybe<String>;
-  headquarters?: Maybe<String>;
-  companySize?: Maybe<CompanySize>;
-  regions?: Maybe<RegionCreateManyWithoutCompaniesInput>;
-  therapeutics?: Maybe<TherapeuticCreateManyWithoutCompaniesInput>;
-  studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
   bids?: Maybe<BidCreateManyWithoutCompanyInput>;
 }
 
@@ -1147,7 +1110,7 @@ export interface CompanyUpdateWithoutBidsDataInput {
   overview?: Maybe<String>;
   headquarters?: Maybe<String>;
   companySize?: Maybe<CompanySize>;
-  services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
+  services?: Maybe<ServiceUpdateManyWithoutCompanyInput>;
   regions?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
   therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
@@ -1157,21 +1120,21 @@ export interface CompanyUpdatephasesInput {
   set?: Maybe<Phase[] | Phase>;
 }
 
-export interface ServiceUpdateManyWithoutCompaniesInput {
+export interface ServiceUpdateManyWithoutCompanyInput {
   create?: Maybe<
-    ServiceCreateWithoutCompaniesInput[] | ServiceCreateWithoutCompaniesInput
+    ServiceCreateWithoutCompanyInput[] | ServiceCreateWithoutCompanyInput
   >;
   delete?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
   connect?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
   set?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
   disconnect?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
   update?: Maybe<
-    | ServiceUpdateWithWhereUniqueWithoutCompaniesInput[]
-    | ServiceUpdateWithWhereUniqueWithoutCompaniesInput
+    | ServiceUpdateWithWhereUniqueWithoutCompanyInput[]
+    | ServiceUpdateWithWhereUniqueWithoutCompanyInput
   >;
   upsert?: Maybe<
-    | ServiceUpsertWithWhereUniqueWithoutCompaniesInput[]
-    | ServiceUpsertWithWhereUniqueWithoutCompaniesInput
+    | ServiceUpsertWithWhereUniqueWithoutCompanyInput[]
+    | ServiceUpsertWithWhereUniqueWithoutCompanyInput
   >;
   deleteMany?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
   updateMany?: Maybe<
@@ -1180,31 +1143,31 @@ export interface ServiceUpdateManyWithoutCompaniesInput {
   >;
 }
 
-export interface ServiceUpdateWithWhereUniqueWithoutCompaniesInput {
+export interface ServiceUpdateWithWhereUniqueWithoutCompanyInput {
   where: ServiceWhereUniqueInput;
-  data: ServiceUpdateWithoutCompaniesDataInput;
+  data: ServiceUpdateWithoutCompanyDataInput;
 }
 
-export interface ServiceUpdateWithoutCompaniesDataInput {
+export interface ServiceUpdateWithoutCompanyDataInput {
   name?: Maybe<String>;
-  specialties?: Maybe<SpecialtyUpdateManyWithoutServicesInput>;
+  specialties?: Maybe<SpecialtyUpdateManyWithoutServiceInput>;
 }
 
-export interface SpecialtyUpdateManyWithoutServicesInput {
+export interface SpecialtyUpdateManyWithoutServiceInput {
   create?: Maybe<
-    SpecialtyCreateWithoutServicesInput[] | SpecialtyCreateWithoutServicesInput
+    SpecialtyCreateWithoutServiceInput[] | SpecialtyCreateWithoutServiceInput
   >;
   delete?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
   connect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
   set?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
   disconnect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
   update?: Maybe<
-    | SpecialtyUpdateWithWhereUniqueWithoutServicesInput[]
-    | SpecialtyUpdateWithWhereUniqueWithoutServicesInput
+    | SpecialtyUpdateWithWhereUniqueWithoutServiceInput[]
+    | SpecialtyUpdateWithWhereUniqueWithoutServiceInput
   >;
   upsert?: Maybe<
-    | SpecialtyUpsertWithWhereUniqueWithoutServicesInput[]
-    | SpecialtyUpsertWithWhereUniqueWithoutServicesInput
+    | SpecialtyUpsertWithWhereUniqueWithoutServiceInput[]
+    | SpecialtyUpsertWithWhereUniqueWithoutServiceInput
   >;
   deleteMany?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
   updateMany?: Maybe<
@@ -1213,44 +1176,72 @@ export interface SpecialtyUpdateManyWithoutServicesInput {
   >;
 }
 
-export interface SpecialtyUpdateWithWhereUniqueWithoutServicesInput {
+export interface SpecialtyUpdateWithWhereUniqueWithoutServiceInput {
   where: SpecialtyWhereUniqueInput;
-  data: SpecialtyUpdateWithoutServicesDataInput;
+  data: SpecialtyUpdateWithoutServiceDataInput;
 }
 
-export interface SpecialtyUpdateWithoutServicesDataInput {
+export interface SpecialtyUpdateWithoutServiceDataInput {
   name?: Maybe<String>;
-  companies?: Maybe<CompanyUpdateManyInput>;
-  sub_specialties?: Maybe<SpecialtyUpdateManyInput>;
+  sub_specialties?: Maybe<SpecialtyUpdateManyWithoutSub_specialtiesInput>;
 }
 
-export interface CompanyUpdateManyInput {
-  create?: Maybe<CompanyCreateInput[] | CompanyCreateInput>;
+export interface SpecialtyUpdateManyWithoutSub_specialtiesInput {
+  create?: Maybe<
+    | SpecialtyCreateWithoutSub_specialtiesInput[]
+    | SpecialtyCreateWithoutSub_specialtiesInput
+  >;
+  delete?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
+  connect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
+  set?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
+  disconnect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
   update?: Maybe<
-    | CompanyUpdateWithWhereUniqueNestedInput[]
-    | CompanyUpdateWithWhereUniqueNestedInput
+    | SpecialtyUpdateWithWhereUniqueWithoutSub_specialtiesInput[]
+    | SpecialtyUpdateWithWhereUniqueWithoutSub_specialtiesInput
   >;
   upsert?: Maybe<
-    | CompanyUpsertWithWhereUniqueNestedInput[]
-    | CompanyUpsertWithWhereUniqueNestedInput
+    | SpecialtyUpsertWithWhereUniqueWithoutSub_specialtiesInput[]
+    | SpecialtyUpsertWithWhereUniqueWithoutSub_specialtiesInput
   >;
-  delete?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
-  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
-  set?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
-  disconnect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
-  deleteMany?: Maybe<CompanyScalarWhereInput[] | CompanyScalarWhereInput>;
+  deleteMany?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
   updateMany?: Maybe<
-    | CompanyUpdateManyWithWhereNestedInput[]
-    | CompanyUpdateManyWithWhereNestedInput
+    | SpecialtyUpdateManyWithWhereNestedInput[]
+    | SpecialtyUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface CompanyUpdateWithWhereUniqueNestedInput {
-  where: CompanyWhereUniqueInput;
-  data: CompanyUpdateDataInput;
+export interface SpecialtyUpdateWithWhereUniqueWithoutSub_specialtiesInput {
+  where: SpecialtyWhereUniqueInput;
+  data: SpecialtyUpdateWithoutSub_specialtiesDataInput;
 }
 
-export interface CompanyUpdateDataInput {
+export interface SpecialtyUpdateWithoutSub_specialtiesDataInput {
+  name?: Maybe<String>;
+  service?: Maybe<ServiceUpdateOneWithoutSpecialtiesInput>;
+}
+
+export interface ServiceUpdateOneWithoutSpecialtiesInput {
+  create?: Maybe<ServiceCreateWithoutSpecialtiesInput>;
+  update?: Maybe<ServiceUpdateWithoutSpecialtiesDataInput>;
+  upsert?: Maybe<ServiceUpsertWithoutSpecialtiesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ServiceWhereUniqueInput>;
+}
+
+export interface ServiceUpdateWithoutSpecialtiesDataInput {
+  name?: Maybe<String>;
+  company?: Maybe<CompanyUpdateOneRequiredWithoutServicesInput>;
+}
+
+export interface CompanyUpdateOneRequiredWithoutServicesInput {
+  create?: Maybe<CompanyCreateWithoutServicesInput>;
+  update?: Maybe<CompanyUpdateWithoutServicesDataInput>;
+  upsert?: Maybe<CompanyUpsertWithoutServicesInput>;
+  connect?: Maybe<CompanyWhereUniqueInput>;
+}
+
+export interface CompanyUpdateWithoutServicesDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   phases?: Maybe<CompanyUpdatephasesInput>;
@@ -1260,7 +1251,6 @@ export interface CompanyUpdateDataInput {
   overview?: Maybe<String>;
   headquarters?: Maybe<String>;
   companySize?: Maybe<CompanySize>;
-  services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
   regions?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
   therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
@@ -1675,7 +1665,7 @@ export interface CompanyUpdateWithoutStudiesDataInput {
   overview?: Maybe<String>;
   headquarters?: Maybe<String>;
   companySize?: Maybe<CompanySize>;
-  services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
+  services?: Maybe<ServiceUpdateManyWithoutCompanyInput>;
   regions?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
   therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
   bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
@@ -1737,10 +1727,260 @@ export interface BidUpdateManyDataInput {
   is_approved?: Maybe<Boolean>;
 }
 
-export interface CompanyUpsertWithWhereUniqueNestedInput {
+export interface CompanyUpsertWithoutServicesInput {
+  update: CompanyUpdateWithoutServicesDataInput;
+  create: CompanyCreateWithoutServicesInput;
+}
+
+export interface ServiceUpsertWithoutSpecialtiesInput {
+  update: ServiceUpdateWithoutSpecialtiesDataInput;
+  create: ServiceCreateWithoutSpecialtiesInput;
+}
+
+export interface SpecialtyUpsertWithWhereUniqueWithoutSub_specialtiesInput {
+  where: SpecialtyWhereUniqueInput;
+  update: SpecialtyUpdateWithoutSub_specialtiesDataInput;
+  create: SpecialtyCreateWithoutSub_specialtiesInput;
+}
+
+export interface SpecialtyScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
+  OR?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
+  NOT?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
+}
+
+export interface SpecialtyUpdateManyWithWhereNestedInput {
+  where: SpecialtyScalarWhereInput;
+  data: SpecialtyUpdateManyDataInput;
+}
+
+export interface SpecialtyUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface SpecialtyUpsertWithWhereUniqueWithoutServiceInput {
+  where: SpecialtyWhereUniqueInput;
+  update: SpecialtyUpdateWithoutServiceDataInput;
+  create: SpecialtyCreateWithoutServiceInput;
+}
+
+export interface ServiceUpsertWithWhereUniqueWithoutCompanyInput {
+  where: ServiceWhereUniqueInput;
+  update: ServiceUpdateWithoutCompanyDataInput;
+  create: ServiceCreateWithoutCompanyInput;
+}
+
+export interface ServiceScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
+  OR?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
+  NOT?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
+}
+
+export interface ServiceUpdateManyWithWhereNestedInput {
+  where: ServiceScalarWhereInput;
+  data: ServiceUpdateManyDataInput;
+}
+
+export interface ServiceUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface CompanyUpsertWithoutBidsInput {
+  update: CompanyUpdateWithoutBidsDataInput;
+  create: CompanyCreateWithoutBidsInput;
+}
+
+export interface BidUpdateManyMutationInput {
+  bid_amount?: Maybe<Float>;
+  is_approved?: Maybe<Boolean>;
+}
+
+export interface CompanyCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email?: Maybe<String>;
+  phases?: Maybe<CompanyCreatephasesInput>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceCreateManyWithoutCompanyInput>;
+  regions?: Maybe<RegionCreateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticCreateManyWithoutCompaniesInput>;
+  studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
+  bids?: Maybe<BidCreateManyWithoutCompanyInput>;
+}
+
+export interface CompanyUpdateInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  phases?: Maybe<CompanyUpdatephasesInput>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceUpdateManyWithoutCompanyInput>;
+  regions?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
+  studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
+  bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
+}
+
+export interface CompanyUpdateManyMutationInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  phases?: Maybe<CompanyUpdatephasesInput>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+}
+
+export interface RegionCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  companies?: Maybe<CompanyCreateManyWithoutRegionsInput>;
+}
+
+export interface CompanyCreateManyWithoutRegionsInput {
+  create?: Maybe<
+    CompanyCreateWithoutRegionsInput[] | CompanyCreateWithoutRegionsInput
+  >;
+  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+}
+
+export interface CompanyCreateWithoutRegionsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email?: Maybe<String>;
+  phases?: Maybe<CompanyCreatephasesInput>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceCreateManyWithoutCompanyInput>;
+  therapeutics?: Maybe<TherapeuticCreateManyWithoutCompaniesInput>;
+  studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
+  bids?: Maybe<BidCreateManyWithoutCompanyInput>;
+}
+
+export interface RegionUpdateInput {
+  name?: Maybe<String>;
+  companies?: Maybe<CompanyUpdateManyWithoutRegionsInput>;
+}
+
+export interface CompanyUpdateManyWithoutRegionsInput {
+  create?: Maybe<
+    CompanyCreateWithoutRegionsInput[] | CompanyCreateWithoutRegionsInput
+  >;
+  delete?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  set?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  disconnect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
+  update?: Maybe<
+    | CompanyUpdateWithWhereUniqueWithoutRegionsInput[]
+    | CompanyUpdateWithWhereUniqueWithoutRegionsInput
+  >;
+  upsert?: Maybe<
+    | CompanyUpsertWithWhereUniqueWithoutRegionsInput[]
+    | CompanyUpsertWithWhereUniqueWithoutRegionsInput
+  >;
+  deleteMany?: Maybe<CompanyScalarWhereInput[] | CompanyScalarWhereInput>;
+  updateMany?: Maybe<
+    | CompanyUpdateManyWithWhereNestedInput[]
+    | CompanyUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface CompanyUpdateWithWhereUniqueWithoutRegionsInput {
   where: CompanyWhereUniqueInput;
-  update: CompanyUpdateDataInput;
-  create: CompanyCreateInput;
+  data: CompanyUpdateWithoutRegionsDataInput;
+}
+
+export interface CompanyUpdateWithoutRegionsDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  phases?: Maybe<CompanyUpdatephasesInput>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceUpdateManyWithoutCompanyInput>;
+  therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
+  studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
+  bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
+}
+
+export interface CompanyUpsertWithWhereUniqueWithoutRegionsInput {
+  where: CompanyWhereUniqueInput;
+  update: CompanyUpdateWithoutRegionsDataInput;
+  create: CompanyCreateWithoutRegionsInput;
 }
 
 export interface CompanyScalarWhereInput {
@@ -1882,357 +2122,6 @@ export interface CompanyUpdateManyDataInput {
   companySize?: Maybe<CompanySize>;
 }
 
-export interface SpecialtyUpdateManyInput {
-  create?: Maybe<SpecialtyCreateInput[] | SpecialtyCreateInput>;
-  update?: Maybe<
-    | SpecialtyUpdateWithWhereUniqueNestedInput[]
-    | SpecialtyUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | SpecialtyUpsertWithWhereUniqueNestedInput[]
-    | SpecialtyUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
-  connect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
-  set?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
-  disconnect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
-  deleteMany?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
-  updateMany?: Maybe<
-    | SpecialtyUpdateManyWithWhereNestedInput[]
-    | SpecialtyUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SpecialtyUpdateWithWhereUniqueNestedInput {
-  where: SpecialtyWhereUniqueInput;
-  data: SpecialtyUpdateDataInput;
-}
-
-export interface SpecialtyUpdateDataInput {
-  name?: Maybe<String>;
-  companies?: Maybe<CompanyUpdateManyInput>;
-  services?: Maybe<ServiceUpdateManyWithoutSpecialtiesInput>;
-  sub_specialties?: Maybe<SpecialtyUpdateManyInput>;
-}
-
-export interface ServiceUpdateManyWithoutSpecialtiesInput {
-  create?: Maybe<
-    | ServiceCreateWithoutSpecialtiesInput[]
-    | ServiceCreateWithoutSpecialtiesInput
-  >;
-  delete?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
-  connect?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
-  set?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
-  disconnect?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
-  update?: Maybe<
-    | ServiceUpdateWithWhereUniqueWithoutSpecialtiesInput[]
-    | ServiceUpdateWithWhereUniqueWithoutSpecialtiesInput
-  >;
-  upsert?: Maybe<
-    | ServiceUpsertWithWhereUniqueWithoutSpecialtiesInput[]
-    | ServiceUpsertWithWhereUniqueWithoutSpecialtiesInput
-  >;
-  deleteMany?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
-  updateMany?: Maybe<
-    | ServiceUpdateManyWithWhereNestedInput[]
-    | ServiceUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface ServiceUpdateWithWhereUniqueWithoutSpecialtiesInput {
-  where: ServiceWhereUniqueInput;
-  data: ServiceUpdateWithoutSpecialtiesDataInput;
-}
-
-export interface ServiceUpdateWithoutSpecialtiesDataInput {
-  name?: Maybe<String>;
-  companies?: Maybe<CompanyUpdateManyWithoutServicesInput>;
-}
-
-export interface CompanyUpdateManyWithoutServicesInput {
-  create?: Maybe<
-    CompanyCreateWithoutServicesInput[] | CompanyCreateWithoutServicesInput
-  >;
-  delete?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
-  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
-  set?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
-  disconnect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
-  update?: Maybe<
-    | CompanyUpdateWithWhereUniqueWithoutServicesInput[]
-    | CompanyUpdateWithWhereUniqueWithoutServicesInput
-  >;
-  upsert?: Maybe<
-    | CompanyUpsertWithWhereUniqueWithoutServicesInput[]
-    | CompanyUpsertWithWhereUniqueWithoutServicesInput
-  >;
-  deleteMany?: Maybe<CompanyScalarWhereInput[] | CompanyScalarWhereInput>;
-  updateMany?: Maybe<
-    | CompanyUpdateManyWithWhereNestedInput[]
-    | CompanyUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface CompanyUpdateWithWhereUniqueWithoutServicesInput {
-  where: CompanyWhereUniqueInput;
-  data: CompanyUpdateWithoutServicesDataInput;
-}
-
-export interface CompanyUpdateWithoutServicesDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  phases?: Maybe<CompanyUpdatephasesInput>;
-  logoURL?: Maybe<String>;
-  website?: Maybe<String>;
-  linkedin?: Maybe<String>;
-  overview?: Maybe<String>;
-  headquarters?: Maybe<String>;
-  companySize?: Maybe<CompanySize>;
-  regions?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
-  therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
-  studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
-  bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
-}
-
-export interface CompanyUpsertWithWhereUniqueWithoutServicesInput {
-  where: CompanyWhereUniqueInput;
-  update: CompanyUpdateWithoutServicesDataInput;
-  create: CompanyCreateWithoutServicesInput;
-}
-
-export interface ServiceUpsertWithWhereUniqueWithoutSpecialtiesInput {
-  where: ServiceWhereUniqueInput;
-  update: ServiceUpdateWithoutSpecialtiesDataInput;
-  create: ServiceCreateWithoutSpecialtiesInput;
-}
-
-export interface ServiceScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
-  OR?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
-  NOT?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
-}
-
-export interface ServiceUpdateManyWithWhereNestedInput {
-  where: ServiceScalarWhereInput;
-  data: ServiceUpdateManyDataInput;
-}
-
-export interface ServiceUpdateManyDataInput {
-  name?: Maybe<String>;
-}
-
-export interface SpecialtyUpsertWithWhereUniqueNestedInput {
-  where: SpecialtyWhereUniqueInput;
-  update: SpecialtyUpdateDataInput;
-  create: SpecialtyCreateInput;
-}
-
-export interface SpecialtyScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
-  OR?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
-  NOT?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
-}
-
-export interface SpecialtyUpdateManyWithWhereNestedInput {
-  where: SpecialtyScalarWhereInput;
-  data: SpecialtyUpdateManyDataInput;
-}
-
-export interface SpecialtyUpdateManyDataInput {
-  name?: Maybe<String>;
-}
-
-export interface SpecialtyUpsertWithWhereUniqueWithoutServicesInput {
-  where: SpecialtyWhereUniqueInput;
-  update: SpecialtyUpdateWithoutServicesDataInput;
-  create: SpecialtyCreateWithoutServicesInput;
-}
-
-export interface ServiceUpsertWithWhereUniqueWithoutCompaniesInput {
-  where: ServiceWhereUniqueInput;
-  update: ServiceUpdateWithoutCompaniesDataInput;
-  create: ServiceCreateWithoutCompaniesInput;
-}
-
-export interface CompanyUpsertWithoutBidsInput {
-  update: CompanyUpdateWithoutBidsDataInput;
-  create: CompanyCreateWithoutBidsInput;
-}
-
-export interface BidUpdateManyMutationInput {
-  bid_amount?: Maybe<Float>;
-  is_approved?: Maybe<Boolean>;
-}
-
-export interface CompanyUpdateInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  phases?: Maybe<CompanyUpdatephasesInput>;
-  logoURL?: Maybe<String>;
-  website?: Maybe<String>;
-  linkedin?: Maybe<String>;
-  overview?: Maybe<String>;
-  headquarters?: Maybe<String>;
-  companySize?: Maybe<CompanySize>;
-  services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
-  regions?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
-  therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
-  studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
-  bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
-}
-
-export interface CompanyUpdateManyMutationInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  phases?: Maybe<CompanyUpdatephasesInput>;
-  logoURL?: Maybe<String>;
-  website?: Maybe<String>;
-  linkedin?: Maybe<String>;
-  overview?: Maybe<String>;
-  headquarters?: Maybe<String>;
-  companySize?: Maybe<CompanySize>;
-}
-
-export interface RegionCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  companies?: Maybe<CompanyCreateManyWithoutRegionsInput>;
-}
-
-export interface CompanyCreateManyWithoutRegionsInput {
-  create?: Maybe<
-    CompanyCreateWithoutRegionsInput[] | CompanyCreateWithoutRegionsInput
-  >;
-  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
-}
-
-export interface CompanyCreateWithoutRegionsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email?: Maybe<String>;
-  phases?: Maybe<CompanyCreatephasesInput>;
-  logoURL?: Maybe<String>;
-  website?: Maybe<String>;
-  linkedin?: Maybe<String>;
-  overview?: Maybe<String>;
-  headquarters?: Maybe<String>;
-  companySize?: Maybe<CompanySize>;
-  services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
-  therapeutics?: Maybe<TherapeuticCreateManyWithoutCompaniesInput>;
-  studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
-  bids?: Maybe<BidCreateManyWithoutCompanyInput>;
-}
-
-export interface RegionUpdateInput {
-  name?: Maybe<String>;
-  companies?: Maybe<CompanyUpdateManyWithoutRegionsInput>;
-}
-
-export interface CompanyUpdateManyWithoutRegionsInput {
-  create?: Maybe<
-    CompanyCreateWithoutRegionsInput[] | CompanyCreateWithoutRegionsInput
-  >;
-  delete?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
-  connect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
-  set?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
-  disconnect?: Maybe<CompanyWhereUniqueInput[] | CompanyWhereUniqueInput>;
-  update?: Maybe<
-    | CompanyUpdateWithWhereUniqueWithoutRegionsInput[]
-    | CompanyUpdateWithWhereUniqueWithoutRegionsInput
-  >;
-  upsert?: Maybe<
-    | CompanyUpsertWithWhereUniqueWithoutRegionsInput[]
-    | CompanyUpsertWithWhereUniqueWithoutRegionsInput
-  >;
-  deleteMany?: Maybe<CompanyScalarWhereInput[] | CompanyScalarWhereInput>;
-  updateMany?: Maybe<
-    | CompanyUpdateManyWithWhereNestedInput[]
-    | CompanyUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface CompanyUpdateWithWhereUniqueWithoutRegionsInput {
-  where: CompanyWhereUniqueInput;
-  data: CompanyUpdateWithoutRegionsDataInput;
-}
-
-export interface CompanyUpdateWithoutRegionsDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  phases?: Maybe<CompanyUpdatephasesInput>;
-  logoURL?: Maybe<String>;
-  website?: Maybe<String>;
-  linkedin?: Maybe<String>;
-  overview?: Maybe<String>;
-  headquarters?: Maybe<String>;
-  companySize?: Maybe<CompanySize>;
-  services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
-  therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
-  studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
-  bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
-}
-
-export interface CompanyUpsertWithWhereUniqueWithoutRegionsInput {
-  where: CompanyWhereUniqueInput;
-  update: CompanyUpdateWithoutRegionsDataInput;
-  create: CompanyCreateWithoutRegionsInput;
-}
-
 export interface RegionUpdateManyMutationInput {
   name?: Maybe<String>;
 }
@@ -2240,25 +2129,31 @@ export interface RegionUpdateManyMutationInput {
 export interface ServiceCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
-  companies?: Maybe<CompanyCreateManyWithoutServicesInput>;
-  specialties?: Maybe<SpecialtyCreateManyWithoutServicesInput>;
+  company: CompanyCreateOneWithoutServicesInput;
+  specialties?: Maybe<SpecialtyCreateManyWithoutServiceInput>;
 }
 
 export interface ServiceUpdateInput {
   name?: Maybe<String>;
-  companies?: Maybe<CompanyUpdateManyWithoutServicesInput>;
-  specialties?: Maybe<SpecialtyUpdateManyWithoutServicesInput>;
+  company?: Maybe<CompanyUpdateOneRequiredWithoutServicesInput>;
+  specialties?: Maybe<SpecialtyUpdateManyWithoutServiceInput>;
 }
 
 export interface ServiceUpdateManyMutationInput {
   name?: Maybe<String>;
 }
 
+export interface SpecialtyCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  service?: Maybe<ServiceCreateOneWithoutSpecialtiesInput>;
+  sub_specialties?: Maybe<SpecialtyCreateManyWithoutSub_specialtiesInput>;
+}
+
 export interface SpecialtyUpdateInput {
   name?: Maybe<String>;
-  companies?: Maybe<CompanyUpdateManyInput>;
-  services?: Maybe<ServiceUpdateManyWithoutSpecialtiesInput>;
-  sub_specialties?: Maybe<SpecialtyUpdateManyInput>;
+  service?: Maybe<ServiceUpdateOneWithoutSpecialtiesInput>;
+  sub_specialties?: Maybe<SpecialtyUpdateManyWithoutSub_specialtiesInput>;
 }
 
 export interface SpecialtyUpdateManyMutationInput {
@@ -2313,7 +2208,7 @@ export interface CompanyCreateWithoutTherapeuticsInput {
   overview?: Maybe<String>;
   headquarters?: Maybe<String>;
   companySize?: Maybe<CompanySize>;
-  services?: Maybe<ServiceCreateManyWithoutCompaniesInput>;
+  services?: Maybe<ServiceCreateManyWithoutCompanyInput>;
   regions?: Maybe<RegionCreateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyCreateManyWithoutCompanyInput>;
   bids?: Maybe<BidCreateManyWithoutCompanyInput>;
@@ -2363,7 +2258,7 @@ export interface CompanyUpdateWithoutTherapeuticsDataInput {
   overview?: Maybe<String>;
   headquarters?: Maybe<String>;
   companySize?: Maybe<CompanySize>;
-  services?: Maybe<ServiceUpdateManyWithoutCompaniesInput>;
+  services?: Maybe<ServiceUpdateManyWithoutCompanyInput>;
   regions?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
   studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
   bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
@@ -2703,15 +2598,7 @@ export interface Service {
 export interface ServicePromise extends Promise<Service>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  companies: <T = FragmentableArray<Company>>(args?: {
-    where?: CompanyWhereInput;
-    orderBy?: CompanyOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  company: <T = CompanyPromise>() => T;
   specialties: <T = FragmentableArray<Specialty>>(args?: {
     where?: SpecialtyWhereInput;
     orderBy?: SpecialtyOrderByInput;
@@ -2728,15 +2615,7 @@ export interface ServiceSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
-  companies: <T = Promise<AsyncIterator<CompanySubscription>>>(args?: {
-    where?: CompanyWhereInput;
-    orderBy?: CompanyOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  company: <T = CompanySubscription>() => T;
   specialties: <T = Promise<AsyncIterator<SpecialtySubscription>>>(args?: {
     where?: SpecialtyWhereInput;
     orderBy?: SpecialtyOrderByInput;
@@ -2753,15 +2632,7 @@ export interface ServiceNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  companies: <T = FragmentableArray<Company>>(args?: {
-    where?: CompanyWhereInput;
-    orderBy?: CompanyOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  company: <T = CompanyPromise>() => T;
   specialties: <T = FragmentableArray<Specialty>>(args?: {
     where?: SpecialtyWhereInput;
     orderBy?: SpecialtyOrderByInput;
@@ -2781,24 +2652,7 @@ export interface Specialty {
 export interface SpecialtyPromise extends Promise<Specialty>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  companies: <T = FragmentableArray<Company>>(args?: {
-    where?: CompanyWhereInput;
-    orderBy?: CompanyOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  services: <T = FragmentableArray<Service>>(args?: {
-    where?: ServiceWhereInput;
-    orderBy?: ServiceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  service: <T = ServicePromise>() => T;
   sub_specialties: <T = FragmentableArray<Specialty>>(args?: {
     where?: SpecialtyWhereInput;
     orderBy?: SpecialtyOrderByInput;
@@ -2815,24 +2669,7 @@ export interface SpecialtySubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
-  companies: <T = Promise<AsyncIterator<CompanySubscription>>>(args?: {
-    where?: CompanyWhereInput;
-    orderBy?: CompanyOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  services: <T = Promise<AsyncIterator<ServiceSubscription>>>(args?: {
-    where?: ServiceWhereInput;
-    orderBy?: ServiceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  service: <T = ServiceSubscription>() => T;
   sub_specialties: <T = Promise<AsyncIterator<SpecialtySubscription>>>(args?: {
     where?: SpecialtyWhereInput;
     orderBy?: SpecialtyOrderByInput;
@@ -2849,24 +2686,7 @@ export interface SpecialtyNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  companies: <T = FragmentableArray<Company>>(args?: {
-    where?: CompanyWhereInput;
-    orderBy?: CompanyOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  services: <T = FragmentableArray<Service>>(args?: {
-    where?: ServiceWhereInput;
-    orderBy?: ServiceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  service: <T = ServicePromise>() => T;
   sub_specialties: <T = FragmentableArray<Specialty>>(args?: {
     where?: SpecialtyWhereInput;
     orderBy?: SpecialtyOrderByInput;

@@ -9,11 +9,6 @@ module.exports = {
         throw new Error("Specialty with that name does not exist...");
       return await prisma.specialty({ name });
     },
-    searchSpecialty: (parent, { search }, { prisma }, info) => {
-      return prisma.specialties({
-        where: { name_contains: search },
-      });
-    },
   },
   Mutation: {
     createSpecialty: (parent, { name }, { prisma }, info) => {
@@ -31,8 +26,8 @@ module.exports = {
     },
   },
   Specialty: {
-    specialties: ({ id }, args, { prisma }, info) => {
-      return prisma.specialty({ id }).specialties();
+    sub_specialties: ({ id }, args, { prisma }, info) => {
+      return prisma.specialty({ id }).sub_specialties();
     },
   },
 };
