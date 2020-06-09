@@ -4,6 +4,7 @@ module.exports = gql`
   extend type Query {
     companies: [Company!]!
     company(id: ID): Company!
+    searchCompany(search: String!): [Company]
   }
 
   extend type Mutation {
@@ -57,23 +58,16 @@ module.exports = gql`
     therapeutics: [Therapeutic!]
     studies: [Study!]
     bids: [Bid!]
-    Service: [Service]
   }
 
   input ServiceInput {
     name: String!
-    company: [CompanyInput]
     specialties: [SpecialtyInput]
   }
 
   input SpecialtyInput {
     name: String!
-    company: [CompanyInput]
-    specialties: [SpecialtyInput]
-  }
-
-  input CompanyInput {
-    name: String!
+    sub_specialties: [SpecialtyInput]
   }
 
   input RegionInput {

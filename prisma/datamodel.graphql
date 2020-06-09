@@ -9,38 +9,48 @@ type Company {
   overview: String
   headquarters: String
   companySize: CompanySize
-  services: [Service]! @relation
-  regions: [Region]! @relation
-  therapeutics: [Therapeutic]! @relation
+  services: [Service]! @relation(onDelete: CASCADE)
+  regions: [Region]!
+  therapeutics: [Therapeutic]!
   studies: [Study!]
   bids: [Bid!]
 }
 
-type Service {
+type ServiceItem {
   id: ID! @id
   name: String! @unique
-  companies: [Company]! @relation
-  specialties: [Specialty] @relation
+}
+
+type Service {
+  id: ID! @id
+  info: ServiceItem! @relation(link: INLINE)
+  company: Company! @relation(link: INLINE)
+  specialties: [Specialty] @relation(onDelete: CASCADE)
+}
+
+type SpecialtyItem {
+  id: ID! @id
+  name: String! @unique
 }
 
 type Specialty {
   id: ID! @id
-  name: String! @unique
-  companies: [Company]! @relation
-  services: [Service] @relation
-  specialties: [Specialty] @relation
+  info: SpecialtyItem! @relation(link: INLINE)
+  service: Service @relation(link: INLINE)
+  sub_specialties: [Specialty]
+    @relation(name: "SubSpecialties", onDelete: CASCADE)
 }
 
 type Region {
   id: ID! @id
   name: String! @unique
-  companies: [Company]! @relation
+  companies: [Company]! @relation(link: TABLE)
 }
 
 type Therapeutic {
   id: ID! @id
   name: String! @unique
-  companies: [Company]! @relation
+  companies: [Company]! @relation(link: TABLE)
 }
 
 enum CompanySize { # https://developer.linkedin.com/docs/reference/company-size-codes

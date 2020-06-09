@@ -14,26 +14,20 @@ module.exports = {
       });
     },
   },
-  Mutation: {
-    createService: (parent, { name }, { prisma }, info) => {
-      return prisma.createService({ name });
-    },
-    updateService: (parent, args, { prisma }, info) => {
-      const { name, updated_name } = args;
-      return prisma.updateService({
-        data: { name: updated_name },
-        where: { name },
-      });
-    },
-    deleteService: (parent, { name }, { prisma }, info) => {
-      return prisma.deleteService({ name });
-    },
-  },
   Service: {
+    id: async (service, args, { prisma }) => {
+      const { id } = await prisma.service({ id: service.id }).info();
+      return id;
+    },
+    name: async ({ id }, args, { prisma }) => {
+      const { name } = await prisma.service({ id }).info();
+      return name;
+    },
     specialties: (parent, args, { prisma }, info) => {
-      return prisma
-        .service({ id: parent.id })
-        .specialties({ where: { services_some: { id: parent.id } } });
+      return prisma.service({ id: parent.id }).specialties();
+    },
+    companies: (parent, args, { prisma }, info) => {
+      return prisma.service({ id: parent.id }).companies();
     },
   },
 };

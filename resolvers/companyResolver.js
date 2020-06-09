@@ -6,14 +6,19 @@ module.exports = {
     company: async (parent, { id }, { prisma }, info) => {
       if (!id) throw new Error("id is required");
 
-      const findUser = await prisma.$exists.company({ id });
-      if (!findUser) throw new Error("Company with that id does not exist...");
+      const found = await prisma.$exists.company({ id });
+      if (!found) throw new Error("Company with that id does not exist...");
 
       return prisma.company({ id });
     },
+    searchCompany: (parent, { search }, { prisma }, info) => {
+      return prisma.companies({
+        where: { name_contains: search },
+      });
+    },
   },
   Mutation: {
-    createCompany: async (parent, args, { prisma, asyncForEach }, info) => {
+    createCompany: async (parent, args, { prisma }, info) => {
       const {
         name,
         email,
@@ -24,12 +29,58 @@ module.exports = {
         overview,
         headquarters,
         companySize,
-        services,
         regions,
         therapeutics,
       } = args;
 
-      return await prisma.createCompany({
+      const found = await prisma.$exists.company({ name });
+      if (found) {
+        throw new Error(
+          `There is a company named '${name}' already, please enter a different name.`
+        );
+      }
+
+      // Add specialties to SpecialtyItem table if they don't already exist
+      await args.services?.forEach((service) => {
+        service.specialties?.forEach(async (specialty) => {
+          await prisma.upsertSpecialtyItem({
+            where: { name: specialty.name },
+            create: { name: specialty.name },
+            update: { name: specialty.name },
+          });
+
+          specialty.sub_specialties?.forEach(async (sub) => {
+            await prisma.upsertSpecialtyItem({
+              where: { name: sub.name },
+              create: { name: sub.name },
+              update: { name: sub.name },
+            });
+          });
+        });
+      });
+
+      // Create "services" object with all nested specialty/sub-specialty relations
+      const services = {
+        create: args.services?.map((service) => {
+          return {
+            info: { connect: { name: service.name } },
+            specialties: {
+              create: service.specialties?.map((specialty) => {
+                return {
+                  info: { connect: { name: specialty.name } },
+                  sub_specialties: {
+                    create: specialty.sub_specialties?.map((sub) => {
+                      return { info: { connect: { name: sub.name } } };
+                    }),
+                  },
+                };
+              }),
+            },
+          };
+        }),
+      };
+
+      return prisma.createCompany({
         name,
         email,
         phases: { set: phases },
@@ -39,115 +90,77 @@ module.exports = {
         overview,
         headquarters,
         companySize,
-        services: { connect: services },
+        services,
         regions: { connect: regions },
         therapeutics: { connect: therapeutics },
       });
     },
-    updateCompany: async (
-      parent,
-      args,
-      { prisma, asyncForEach, oldItemRemover },
-      info
-    ) => {
+    updateCompany: async (parent, args, { prisma }, info) => {
       const {
         updated_name,
+        updated_email,
+        updated_phases,
         updated_logoURL,
         updated_website,
         updated_linkedin,
         updated_overview,
         updated_headquarters,
         updated_companySize,
-        updated_services,
-        updated_specialties,
         updated_regions,
         updated_therapeutics,
         id,
       } = args;
 
-      // If front-end provides updated_services, we remove the old services, thinking
-      // that the user is providing a new list to replace the old one.
-      // If user provides and empty array, all current services will be removed.
-      // If user does not provide updated_services array, nothing happens.
-      if (updated_services) {
-        await oldItemRemover(
-          id, // Company id
-          "services", // What table to remove items from
-          prisma.company({ id }).services, // Function for listing old items
-          prisma.updateCompany // Function to update company and disconnect old records
+      // Make sure there is no other company with "updated_name"
+      const found = await prisma.company({ name: updated_name });
+      if (found?.name && found.id !== id) {
+        throw new Error(
+          `There is a company named '${
+            found.name
+          }' already, please enter a different name.`
         );
       }
 
-      // Same process for updated_specialties
-      if (updated_specialties) {
-        await oldItemRemover(
-          id,
-          "specialties",
-          prisma.company({ id }).specialties,
-          prisma.updateCompany
-        );
-      }
+      // Deleting old tree of services, onDelete makes sure when service is deleted, all related fields are deleted.
+      let servicesToBeDeleted = await prisma.company({ id }).services();
+      servicesToBeDeleted = servicesToBeDeleted.map(({ id }) => id);
+      await prisma.deleteManyServices({
+        id_in: servicesToBeDeleted,
+      });
 
-      // Same process for updated_regions
-      if (updated_regions) {
-        await oldItemRemover(
-          id,
-          "regions",
-          prisma.company({ id }).regions,
-          prisma.updateCompany
-        );
-      }
-
-      // Same process for updated_therapeutics
-      if (updated_therapeutics) {
-        await oldItemRemover(
-          id,
-          "therapeutics",
-          prisma.company({ id }).therapeutics,
-          prisma.updateCompany
-        );
-      }
-
-      // If the service is not in DB, add it
-      if (updated_services) {
-        await asyncForEach(
-          updated_services,
-          prisma.service,
-          prisma.createService
-        );
-      }
-
-      if (updated_specialties) {
-        await asyncForEach(
-          updated_specialties,
-          prisma.specialty,
-          prisma.createSpecialty
-        );
-      }
-
-      if (updated_regions) {
-        await asyncForEach(updated_regions, prisma.region, prisma.createRegion);
-      }
-
-      if (updated_therapeutics) {
-        await asyncForEach(
-          updated_therapeutics,
-          prisma.therapeutic,
-          prisma.createTherapeutic
-        );
-      }
+      // Re-connecting the services, specialties, and sub_specialties to the company
+      const services = {
+        create: args.updated_services?.map((service) => {
+          return {
+            info: { connect: { name: service.name } },
+            specialties: {
+              create: service.specialties?.map((specialty) => {
+                return {
+                  info: { connect: { name: specialty.name } },
+                  sub_specialties: {
+                    create: specialty.sub_specialties?.map((sub) => {
+                      return { info: { connect: { name: sub.name } } };
+                    }),
+                  },
+                };
+              }),
+            },
+          };
+        }),
+      };
 
       return await prisma.updateCompany({
         data: {
           name: updated_name,
+          email: updated_email,
+          phases: { set: updated_phases },
           logoURL: updated_logoURL,
           website: updated_website,
           linkedin: updated_linkedin,
           overview: updated_overview,
           headquarters: updated_headquarters,
           companySize: updated_companySize,
-          services: { connect: updated_services },
-          specialties: { connect: updated_specialties },
+          services,
           regions: { connect: updated_regions },
           therapeutics: { connect: updated_therapeutics },
         },
@@ -163,7 +176,6 @@ module.exports = {
       return prisma.company({ id }).studies();
     },
     services: (parent, args, { prisma }, info) => {
-      console.log({ parent });
       return prisma.company({ id: parent.id }).services();
     },
     regions: ({ id }, args, { prisma }, info) => {

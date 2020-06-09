@@ -9,30 +9,18 @@ module.exports = {
         throw new Error("Specialty with that name does not exist...");
       return await prisma.specialty({ name });
     },
-    searchSpecialty: (parent, { search }, { prisma }, info) => {
-      return prisma.specialties({
-        where: { name_contains: search },
-      });
-    },
-  },
-  Mutation: {
-    createSpecialty: (parent, { name }, { prisma }, info) => {
-      return prisma.createSpecialty({ name });
-    },
-    updateSpecialty: (parent, args, { prisma }, info) => {
-      const { name, updated_name } = args;
-      return prisma.updateSpecialty({
-        data: { name: updated_name },
-        where: { name },
-      });
-    },
-    deleteSpecialty: (parent, { name }, { prisma }, info) => {
-      return prisma.deleteSpecialty({ name });
-    },
   },
   Specialty: {
-    specialties: ({ id }, args, { prisma }, info) => {
-      return prisma.specialty({ id }).specialties();
+    id: async (specialty, args, { prisma }, info) => {
+      const { id } = await prisma.specialty({ id: specialty.id }).info();
+      return id;
+    },
+    name: async ({ id }, args, { prisma }, info) => {
+      const { name } = await prisma.specialty({ id }).info();
+      return name;
+    },
+    sub_specialties: ({ id }, args, { prisma }, info) => {
+      return prisma.specialty({ id }).sub_specialties();
     },
   },
 };
