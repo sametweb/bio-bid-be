@@ -17,8 +17,6 @@ const prisma = {
 };
 
 const helpers = require("../helpers");
-jest.spyOn(helpers, "asyncForEach");
-jest.spyOn(helpers, "oldItemRemover");
 describe("Company queries and mutations", () => {
   describe("company() -> single company query", () => {
     const company = jest.spyOn(companyResolver.Query, "company");
@@ -69,34 +67,13 @@ describe("Company queries and mutations", () => {
     const createCompany = jest.spyOn(companyResolver.Mutation, "createCompany");
 
     it("calls prisma.createCompany() with params", async () => {
-      const { asyncForEach } = helpers;
-      const params = [{}, { name: "" }, { prisma, asyncForEach }, {}];
+      const params = [{}, { name: "" }, { prisma }, {}];
       await createCompany(...params);
 
       expect(prisma.createCompany).toHaveBeenCalledTimes(1);
       expect(prisma.createCompany).toHaveBeenCalledWith(
         expect.objectContaining({ name: "" })
       );
-      expect(asyncForEach).not.toHaveBeenCalled();
-    });
-
-    it("calls asyncForEach() if services, specialties, regions, therapeutics provided", async () => {
-      const { asyncForEach } = helpers;
-      const params = [
-        {},
-        {
-          name: "",
-          services: [],
-          specialties: [],
-          regions: [],
-          therapeutics: [],
-        },
-        { prisma, asyncForEach },
-        {},
-      ];
-      await createCompany(...params);
-
-      expect(asyncForEach).toHaveBeenCalledTimes(4);
     });
   });
 });
