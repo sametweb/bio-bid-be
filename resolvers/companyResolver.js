@@ -41,43 +41,52 @@ module.exports = {
       }
 
       // Add specialties to SpecialtyItem table if they don't already exist
-      await args.services?.forEach((service) => {
-        service.specialties?.forEach(async (specialty) => {
-          await prisma.upsertSpecialtyItem({
-            where: { name: specialty.name },
-            create: { name: specialty.name },
-            update: { name: specialty.name },
-          });
+      args.services &&
+        args.services.forEach((service) => {
+          service.specialties &&
+            service.specialties.forEach(async (specialty) => {
+              await prisma.upsertSpecialtyItem({
+                where: { name: specialty.name },
+                create: { name: specialty.name },
+                update: { name: specialty.name },
+              });
 
-          specialty.sub_specialties?.forEach(async (sub) => {
-            await prisma.upsertSpecialtyItem({
-              where: { name: sub.name },
-              create: { name: sub.name },
-              update: { name: sub.name },
+              specialty.sub_specialties &&
+                specialty.sub_specialties.forEach(async (sub) => {
+                  await prisma.upsertSpecialtyItem({
+                    where: { name: sub.name },
+                    create: { name: sub.name },
+                    update: { name: sub.name },
+                  });
+                });
             });
-          });
         });
-      });
 
       // Create "services" object with all nested specialty/sub-specialty relations
       const services = {
-        create: args.services?.map((service) => {
-          return {
-            info: { connect: { name: service.name } },
-            specialties: {
-              create: service.specialties?.map((specialty) => {
-                return {
-                  info: { connect: { name: specialty.name } },
-                  sub_specialties: {
-                    create: specialty.sub_specialties?.map((sub) => {
-                      return { info: { connect: { name: sub.name } } };
-                    }),
-                  },
-                };
-              }),
-            },
-          };
-        }),
+        create:
+          args.services &&
+          args.services.map((service) => {
+            return {
+              info: { connect: { name: service.name } },
+              specialties: {
+                create:
+                  service.specialties &&
+                  service.specialties.map((specialty) => {
+                    return {
+                      info: { connect: { name: specialty.name } },
+                      sub_specialties: {
+                        create:
+                          specialty.sub_specialties &&
+                          specialty.sub_specialties.map((sub) => {
+                            return { info: { connect: { name: sub.name } } };
+                          }),
+                      },
+                    };
+                  }),
+              },
+            };
+          }),
       };
 
       return prisma.createCompany({
@@ -113,7 +122,7 @@ module.exports = {
 
       // Make sure there is no other company with "updated_name"
       const found = await prisma.company({ name: updated_name });
-      if (found?.name && found.id !== id) {
+      if (found.name && found.id !== id) {
         throw new Error(
           `There is a company named '${
             found.name
@@ -130,23 +139,26 @@ module.exports = {
 
       // Re-connecting the services, specialties, and sub_specialties to the company
       const services = {
-        create: args.updated_services?.map((service) => {
-          return {
-            info: { connect: { name: service.name } },
-            specialties: {
-              create: service.specialties?.map((specialty) => {
-                return {
-                  info: { connect: { name: specialty.name } },
-                  sub_specialties: {
-                    create: specialty.sub_specialties?.map((sub) => {
-                      return { info: { connect: { name: sub.name } } };
-                    }),
-                  },
-                };
-              }),
-            },
-          };
-        }),
+        create:
+          args.updated_services.map((service) => {
+            return {
+              info: { connect: { name: service.name } },
+              specialties: {
+                create:
+                  service.specialties.map((specialty) => {
+                    return {
+                      info: { connect: { name: specialty.name } },
+                      sub_specialties: {
+                        create:
+                          specialty.sub_specialties.map((sub) => {
+                            return { info: { connect: { name: sub.name } } };
+                          }) || [],
+                      },
+                    };
+                  }) || [],
+              },
+            };
+          }) || [],
       };
 
       return await prisma.updateCompany({
