@@ -33,6 +33,10 @@ module.exports = {
         therapeutics,
       } = args;
 
+      if (!name) {
+        throw new Error("You must provide a name to create a company");
+      }
+
       const found = await prisma.$exists.company({ name });
       if (found) {
         throw new Error(
@@ -120,6 +124,15 @@ module.exports = {
         id,
       } = args;
 
+      if (!id) {
+        throw new Error("You must provide id");
+      }
+
+      // Make sure updated_name is not empty
+      if (!updated_name) {
+        throw new Error("You must enter a company name");
+      }
+
       // Make sure there is no other company with "updated_name"
       const found = await prisma.company({ name: updated_name });
       if (found.name && found.id !== id) {
@@ -132,33 +145,39 @@ module.exports = {
 
       // Deleting old tree of services, onDelete makes sure when service is deleted, all related fields are deleted.
       let servicesToBeDeleted = await prisma.company({ id }).services();
-      servicesToBeDeleted = servicesToBeDeleted.map(({ id }) => id);
-      await prisma.deleteManyServices({
-        id_in: servicesToBeDeleted,
-      });
+      if (Array.isArray(servicesToBeDeleted)) {
+        await prisma.deleteManyServices({
+          id_in: servicesToBeDeleted.map(({ id }) => id),
+        });
+      }
 
       // Re-connecting the services, specialties, and sub_specialties to the company
       const services = {
         create:
+          args.updated_services &&
           args.updated_services.map((service) => {
             return {
               info: { connect: { name: service.name } },
               specialties: {
                 create:
+                  service.specialties &&
                   service.specialties.map((specialty) => {
                     return {
                       info: { connect: { name: specialty.name } },
                       sub_specialties: {
                         create:
+                          specialty.sub_specialties &&
                           specialty.sub_specialties.map((sub) => {
-                            return { info: { connect: { name: sub.name } } };
-                          }) || [],
+                            return {
+                              info: { connect: { name: sub.name } },
+                            };
+                          }),
                       },
                     };
-                  }) || [],
+                  }),
               },
             };
-          }) || [],
+          }),
       };
 
       return await prisma.updateCompany({
