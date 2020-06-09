@@ -4,10 +4,11 @@ const bidTypeDef = require("./bid");
 const studyTypeDef = require("./study");
 const companyTypeDef = require("./company");
 const serviceTypeDef = require("./service");
+const serviceItemTypeDef = require("./serviceItem");
 const regionTypeDef = require("./region");
 const therapeuticTypeDef = require("./therapeutic");
 const specialtyTypeDef = require("./specialty");
-const subSpecialtyTypeDef = require("./subSpecialty");
+const specialtyItemTypeDef = require("./specialtyItem");
 
 const typeDefs = gql`
   type Query {
@@ -24,8 +25,9 @@ module.exports = [
   studyTypeDef,
   companyTypeDef,
   serviceTypeDef,
+  serviceItemTypeDef,
   regionTypeDef,
   therapeuticTypeDef,
   specialtyTypeDef,
-  subSpecialtyTypeDef,
+  specialtyItemTypeDef,
 ];

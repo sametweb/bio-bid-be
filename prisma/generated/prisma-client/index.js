@@ -9,7 +9,15 @@ var models = [
     embedded: false
   },
   {
+    name: "ServiceItem",
+    embedded: false
+  },
+  {
     name: "Service",
+    embedded: false
+  },
+  {
+    name: "SpecialtyItem",
     embedded: false
   },
   {

@@ -20,7 +20,9 @@ export interface Exists {
   company: (where?: CompanyWhereInput) => Promise<boolean>;
   region: (where?: RegionWhereInput) => Promise<boolean>;
   service: (where?: ServiceWhereInput) => Promise<boolean>;
+  serviceItem: (where?: ServiceItemWhereInput) => Promise<boolean>;
   specialty: (where?: SpecialtyWhereInput) => Promise<boolean>;
+  specialtyItem: (where?: SpecialtyItemWhereInput) => Promise<boolean>;
   study: (where?: StudyWhereInput) => Promise<boolean>;
   therapeutic: (where?: TherapeuticWhereInput) => Promise<boolean>;
 }
@@ -120,6 +122,27 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => ServiceConnectionPromise;
+  serviceItem: (
+    where: ServiceItemWhereUniqueInput
+  ) => ServiceItemNullablePromise;
+  serviceItems: (args?: {
+    where?: ServiceItemWhereInput;
+    orderBy?: ServiceItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<ServiceItem>;
+  serviceItemsConnection: (args?: {
+    where?: ServiceItemWhereInput;
+    orderBy?: ServiceItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => ServiceItemConnectionPromise;
   specialty: (where: SpecialtyWhereUniqueInput) => SpecialtyNullablePromise;
   specialties: (args?: {
     where?: SpecialtyWhereInput;
@@ -139,6 +162,27 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => SpecialtyConnectionPromise;
+  specialtyItem: (
+    where: SpecialtyItemWhereUniqueInput
+  ) => SpecialtyItemNullablePromise;
+  specialtyItems: (args?: {
+    where?: SpecialtyItemWhereInput;
+    orderBy?: SpecialtyItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<SpecialtyItem>;
+  specialtyItemsConnection: (args?: {
+    where?: SpecialtyItemWhereInput;
+    orderBy?: SpecialtyItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => SpecialtyItemConnectionPromise;
   study: (where: StudyWhereUniqueInput) => StudyNullablePromise;
   studies: (args?: {
     where?: StudyWhereInput;
@@ -238,10 +282,6 @@ export interface Prisma {
     data: ServiceUpdateInput;
     where: ServiceWhereUniqueInput;
   }) => ServicePromise;
-  updateManyServices: (args: {
-    data: ServiceUpdateManyMutationInput;
-    where?: ServiceWhereInput;
-  }) => BatchPayloadPromise;
   upsertService: (args: {
     where: ServiceWhereUniqueInput;
     create: ServiceCreateInput;
@@ -249,15 +289,29 @@ export interface Prisma {
   }) => ServicePromise;
   deleteService: (where: ServiceWhereUniqueInput) => ServicePromise;
   deleteManyServices: (where?: ServiceWhereInput) => BatchPayloadPromise;
+  createServiceItem: (data: ServiceItemCreateInput) => ServiceItemPromise;
+  updateServiceItem: (args: {
+    data: ServiceItemUpdateInput;
+    where: ServiceItemWhereUniqueInput;
+  }) => ServiceItemPromise;
+  updateManyServiceItems: (args: {
+    data: ServiceItemUpdateManyMutationInput;
+    where?: ServiceItemWhereInput;
+  }) => BatchPayloadPromise;
+  upsertServiceItem: (args: {
+    where: ServiceItemWhereUniqueInput;
+    create: ServiceItemCreateInput;
+    update: ServiceItemUpdateInput;
+  }) => ServiceItemPromise;
+  deleteServiceItem: (where: ServiceItemWhereUniqueInput) => ServiceItemPromise;
+  deleteManyServiceItems: (
+    where?: ServiceItemWhereInput
+  ) => BatchPayloadPromise;
   createSpecialty: (data: SpecialtyCreateInput) => SpecialtyPromise;
   updateSpecialty: (args: {
     data: SpecialtyUpdateInput;
     where: SpecialtyWhereUniqueInput;
   }) => SpecialtyPromise;
-  updateManySpecialties: (args: {
-    data: SpecialtyUpdateManyMutationInput;
-    where?: SpecialtyWhereInput;
-  }) => BatchPayloadPromise;
   upsertSpecialty: (args: {
     where: SpecialtyWhereUniqueInput;
     create: SpecialtyCreateInput;
@@ -265,6 +319,26 @@ export interface Prisma {
   }) => SpecialtyPromise;
   deleteSpecialty: (where: SpecialtyWhereUniqueInput) => SpecialtyPromise;
   deleteManySpecialties: (where?: SpecialtyWhereInput) => BatchPayloadPromise;
+  createSpecialtyItem: (data: SpecialtyItemCreateInput) => SpecialtyItemPromise;
+  updateSpecialtyItem: (args: {
+    data: SpecialtyItemUpdateInput;
+    where: SpecialtyItemWhereUniqueInput;
+  }) => SpecialtyItemPromise;
+  updateManySpecialtyItems: (args: {
+    data: SpecialtyItemUpdateManyMutationInput;
+    where?: SpecialtyItemWhereInput;
+  }) => BatchPayloadPromise;
+  upsertSpecialtyItem: (args: {
+    where: SpecialtyItemWhereUniqueInput;
+    create: SpecialtyItemCreateInput;
+    update: SpecialtyItemUpdateInput;
+  }) => SpecialtyItemPromise;
+  deleteSpecialtyItem: (
+    where: SpecialtyItemWhereUniqueInput
+  ) => SpecialtyItemPromise;
+  deleteManySpecialtyItems: (
+    where?: SpecialtyItemWhereInput
+  ) => BatchPayloadPromise;
   createStudy: (data: StudyCreateInput) => StudyPromise;
   updateStudy: (args: {
     data: StudyUpdateInput;
@@ -320,9 +394,15 @@ export interface Subscription {
   service: (
     where?: ServiceSubscriptionWhereInput
   ) => ServiceSubscriptionPayloadSubscription;
+  serviceItem: (
+    where?: ServiceItemSubscriptionWhereInput
+  ) => ServiceItemSubscriptionPayloadSubscription;
   specialty: (
     where?: SpecialtySubscriptionWhereInput
   ) => SpecialtySubscriptionPayloadSubscription;
+  specialtyItem: (
+    where?: SpecialtyItemSubscriptionWhereInput
+  ) => SpecialtyItemSubscriptionPayloadSubscription;
   study: (
     where?: StudySubscriptionWhereInput
   ) => StudySubscriptionPayloadSubscription;
@@ -343,17 +423,9 @@ export type Phase = "I" | "II" | "III" | "IV";
 
 export type CompanySize = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I";
 
-export type ServiceOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC";
+export type ServiceOrderByInput = "id_ASC" | "id_DESC";
 
-export type SpecialtyOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC";
+export type SpecialtyOrderByInput = "id_ASC" | "id_DESC";
 
 export type RegionOrderByInput =
   | "id_ASC"
@@ -415,6 +487,18 @@ export type BidOrderByInput =
   | "is_approved_ASC"
   | "is_approved_DESC";
 
+export type ServiceItemOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC";
+
+export type SpecialtyItemOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC";
+
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type BidWhereUniqueInput = AtLeastOne<{
@@ -422,6 +506,31 @@ export type BidWhereUniqueInput = AtLeastOne<{
 }>;
 
 export interface ServiceWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  info?: Maybe<ServiceItemWhereInput>;
+  company?: Maybe<CompanyWhereInput>;
+  specialties_every?: Maybe<SpecialtyWhereInput>;
+  specialties_some?: Maybe<SpecialtyWhereInput>;
+  specialties_none?: Maybe<SpecialtyWhereInput>;
+  AND?: Maybe<ServiceWhereInput[] | ServiceWhereInput>;
+  OR?: Maybe<ServiceWhereInput[] | ServiceWhereInput>;
+  NOT?: Maybe<ServiceWhereInput[] | ServiceWhereInput>;
+}
+
+export interface ServiceItemWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -450,13 +559,9 @@ export interface ServiceWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  company?: Maybe<CompanyWhereInput>;
-  specialties_every?: Maybe<SpecialtyWhereInput>;
-  specialties_some?: Maybe<SpecialtyWhereInput>;
-  specialties_none?: Maybe<SpecialtyWhereInput>;
-  AND?: Maybe<ServiceWhereInput[] | ServiceWhereInput>;
-  OR?: Maybe<ServiceWhereInput[] | ServiceWhereInput>;
-  NOT?: Maybe<ServiceWhereInput[] | ServiceWhereInput>;
+  AND?: Maybe<ServiceItemWhereInput[] | ServiceItemWhereInput>;
+  OR?: Maybe<ServiceItemWhereInput[] | ServiceItemWhereInput>;
+  NOT?: Maybe<ServiceItemWhereInput[] | ServiceItemWhereInput>;
 }
 
 export interface CompanyWhereInput {
@@ -832,6 +937,31 @@ export interface SpecialtyWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  info?: Maybe<SpecialtyItemWhereInput>;
+  service?: Maybe<ServiceWhereInput>;
+  sub_specialties_every?: Maybe<SpecialtyWhereInput>;
+  sub_specialties_some?: Maybe<SpecialtyWhereInput>;
+  sub_specialties_none?: Maybe<SpecialtyWhereInput>;
+  AND?: Maybe<SpecialtyWhereInput[] | SpecialtyWhereInput>;
+  OR?: Maybe<SpecialtyWhereInput[] | SpecialtyWhereInput>;
+  NOT?: Maybe<SpecialtyWhereInput[] | SpecialtyWhereInput>;
+}
+
+export interface SpecialtyItemWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
   name?: Maybe<String>;
   name_not?: Maybe<String>;
   name_in?: Maybe<String[] | String>;
@@ -846,13 +976,9 @@ export interface SpecialtyWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  service?: Maybe<ServiceWhereInput>;
-  sub_specialties_every?: Maybe<SpecialtyWhereInput>;
-  sub_specialties_some?: Maybe<SpecialtyWhereInput>;
-  sub_specialties_none?: Maybe<SpecialtyWhereInput>;
-  AND?: Maybe<SpecialtyWhereInput[] | SpecialtyWhereInput>;
-  OR?: Maybe<SpecialtyWhereInput[] | SpecialtyWhereInput>;
-  NOT?: Maybe<SpecialtyWhereInput[] | SpecialtyWhereInput>;
+  AND?: Maybe<SpecialtyItemWhereInput[] | SpecialtyItemWhereInput>;
+  OR?: Maybe<SpecialtyItemWhereInput[] | SpecialtyItemWhereInput>;
+  NOT?: Maybe<SpecialtyItemWhereInput[] | SpecialtyItemWhereInput>;
 }
 
 export type CompanyWhereUniqueInput = AtLeastOne<{
@@ -869,8 +995,18 @@ export type ServiceWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
+export type ServiceItemWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+}>;
+
 export type SpecialtyWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+}>;
+
+export type SpecialtyItemWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
 }>;
 
 export type StudyWhereUniqueInput = AtLeastOne<{
@@ -926,8 +1062,18 @@ export interface ServiceCreateManyWithoutCompanyInput {
 
 export interface ServiceCreateWithoutCompanyInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  info: ServiceItemCreateOneInput;
   specialties?: Maybe<SpecialtyCreateManyWithoutServiceInput>;
+}
+
+export interface ServiceItemCreateOneInput {
+  create?: Maybe<ServiceItemCreateInput>;
+  connect?: Maybe<ServiceItemWhereUniqueInput>;
+}
+
+export interface ServiceItemCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
 }
 
 export interface SpecialtyCreateManyWithoutServiceInput {
@@ -939,8 +1085,18 @@ export interface SpecialtyCreateManyWithoutServiceInput {
 
 export interface SpecialtyCreateWithoutServiceInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  info: SpecialtyItemCreateOneInput;
   sub_specialties?: Maybe<SpecialtyCreateManyWithoutSub_specialtiesInput>;
+}
+
+export interface SpecialtyItemCreateOneInput {
+  create?: Maybe<SpecialtyItemCreateInput>;
+  connect?: Maybe<SpecialtyItemWhereUniqueInput>;
+}
+
+export interface SpecialtyItemCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
 }
 
 export interface SpecialtyCreateManyWithoutSub_specialtiesInput {
@@ -953,7 +1109,7 @@ export interface SpecialtyCreateManyWithoutSub_specialtiesInput {
 
 export interface SpecialtyCreateWithoutSub_specialtiesInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  info: SpecialtyItemCreateOneInput;
   service?: Maybe<ServiceCreateOneWithoutSpecialtiesInput>;
 }
 
@@ -964,7 +1120,7 @@ export interface ServiceCreateOneWithoutSpecialtiesInput {
 
 export interface ServiceCreateWithoutSpecialtiesInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  info: ServiceItemCreateOneInput;
   company: CompanyCreateOneWithoutServicesInput;
 }
 
@@ -1137,10 +1293,6 @@ export interface ServiceUpdateManyWithoutCompanyInput {
     | ServiceUpsertWithWhereUniqueWithoutCompanyInput
   >;
   deleteMany?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
-  updateMany?: Maybe<
-    | ServiceUpdateManyWithWhereNestedInput[]
-    | ServiceUpdateManyWithWhereNestedInput
-  >;
 }
 
 export interface ServiceUpdateWithWhereUniqueWithoutCompanyInput {
@@ -1149,8 +1301,24 @@ export interface ServiceUpdateWithWhereUniqueWithoutCompanyInput {
 }
 
 export interface ServiceUpdateWithoutCompanyDataInput {
-  name?: Maybe<String>;
+  info?: Maybe<ServiceItemUpdateOneRequiredInput>;
   specialties?: Maybe<SpecialtyUpdateManyWithoutServiceInput>;
+}
+
+export interface ServiceItemUpdateOneRequiredInput {
+  create?: Maybe<ServiceItemCreateInput>;
+  update?: Maybe<ServiceItemUpdateDataInput>;
+  upsert?: Maybe<ServiceItemUpsertNestedInput>;
+  connect?: Maybe<ServiceItemWhereUniqueInput>;
+}
+
+export interface ServiceItemUpdateDataInput {
+  name?: Maybe<String>;
+}
+
+export interface ServiceItemUpsertNestedInput {
+  update: ServiceItemUpdateDataInput;
+  create: ServiceItemCreateInput;
 }
 
 export interface SpecialtyUpdateManyWithoutServiceInput {
@@ -1170,10 +1338,6 @@ export interface SpecialtyUpdateManyWithoutServiceInput {
     | SpecialtyUpsertWithWhereUniqueWithoutServiceInput
   >;
   deleteMany?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
-  updateMany?: Maybe<
-    | SpecialtyUpdateManyWithWhereNestedInput[]
-    | SpecialtyUpdateManyWithWhereNestedInput
-  >;
 }
 
 export interface SpecialtyUpdateWithWhereUniqueWithoutServiceInput {
@@ -1182,8 +1346,24 @@ export interface SpecialtyUpdateWithWhereUniqueWithoutServiceInput {
 }
 
 export interface SpecialtyUpdateWithoutServiceDataInput {
-  name?: Maybe<String>;
+  info?: Maybe<SpecialtyItemUpdateOneRequiredInput>;
   sub_specialties?: Maybe<SpecialtyUpdateManyWithoutSub_specialtiesInput>;
+}
+
+export interface SpecialtyItemUpdateOneRequiredInput {
+  create?: Maybe<SpecialtyItemCreateInput>;
+  update?: Maybe<SpecialtyItemUpdateDataInput>;
+  upsert?: Maybe<SpecialtyItemUpsertNestedInput>;
+  connect?: Maybe<SpecialtyItemWhereUniqueInput>;
+}
+
+export interface SpecialtyItemUpdateDataInput {
+  name?: Maybe<String>;
+}
+
+export interface SpecialtyItemUpsertNestedInput {
+  update: SpecialtyItemUpdateDataInput;
+  create: SpecialtyItemCreateInput;
 }
 
 export interface SpecialtyUpdateManyWithoutSub_specialtiesInput {
@@ -1204,10 +1384,6 @@ export interface SpecialtyUpdateManyWithoutSub_specialtiesInput {
     | SpecialtyUpsertWithWhereUniqueWithoutSub_specialtiesInput
   >;
   deleteMany?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
-  updateMany?: Maybe<
-    | SpecialtyUpdateManyWithWhereNestedInput[]
-    | SpecialtyUpdateManyWithWhereNestedInput
-  >;
 }
 
 export interface SpecialtyUpdateWithWhereUniqueWithoutSub_specialtiesInput {
@@ -1216,7 +1392,7 @@ export interface SpecialtyUpdateWithWhereUniqueWithoutSub_specialtiesInput {
 }
 
 export interface SpecialtyUpdateWithoutSub_specialtiesDataInput {
-  name?: Maybe<String>;
+  info?: Maybe<SpecialtyItemUpdateOneRequiredInput>;
   service?: Maybe<ServiceUpdateOneWithoutSpecialtiesInput>;
 }
 
@@ -1230,7 +1406,7 @@ export interface ServiceUpdateOneWithoutSpecialtiesInput {
 }
 
 export interface ServiceUpdateWithoutSpecialtiesDataInput {
-  name?: Maybe<String>;
+  info?: Maybe<ServiceItemUpdateOneRequiredInput>;
   company?: Maybe<CompanyUpdateOneRequiredWithoutServicesInput>;
 }
 
@@ -1758,32 +1934,9 @@ export interface SpecialtyScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
   AND?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
   OR?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
   NOT?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
-}
-
-export interface SpecialtyUpdateManyWithWhereNestedInput {
-  where: SpecialtyScalarWhereInput;
-  data: SpecialtyUpdateManyDataInput;
-}
-
-export interface SpecialtyUpdateManyDataInput {
-  name?: Maybe<String>;
 }
 
 export interface SpecialtyUpsertWithWhereUniqueWithoutServiceInput {
@@ -1813,32 +1966,9 @@ export interface ServiceScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
   AND?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
   OR?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
   NOT?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
-}
-
-export interface ServiceUpdateManyWithWhereNestedInput {
-  where: ServiceScalarWhereInput;
-  data: ServiceUpdateManyDataInput;
-}
-
-export interface ServiceUpdateManyDataInput {
-  name?: Maybe<String>;
 }
 
 export interface CompanyUpsertWithoutBidsInput {
@@ -2128,35 +2258,43 @@ export interface RegionUpdateManyMutationInput {
 
 export interface ServiceCreateInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  info: ServiceItemCreateOneInput;
   company: CompanyCreateOneWithoutServicesInput;
   specialties?: Maybe<SpecialtyCreateManyWithoutServiceInput>;
 }
 
 export interface ServiceUpdateInput {
-  name?: Maybe<String>;
+  info?: Maybe<ServiceItemUpdateOneRequiredInput>;
   company?: Maybe<CompanyUpdateOneRequiredWithoutServicesInput>;
   specialties?: Maybe<SpecialtyUpdateManyWithoutServiceInput>;
 }
 
-export interface ServiceUpdateManyMutationInput {
+export interface ServiceItemUpdateInput {
+  name?: Maybe<String>;
+}
+
+export interface ServiceItemUpdateManyMutationInput {
   name?: Maybe<String>;
 }
 
 export interface SpecialtyCreateInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  info: SpecialtyItemCreateOneInput;
   service?: Maybe<ServiceCreateOneWithoutSpecialtiesInput>;
   sub_specialties?: Maybe<SpecialtyCreateManyWithoutSub_specialtiesInput>;
 }
 
 export interface SpecialtyUpdateInput {
-  name?: Maybe<String>;
+  info?: Maybe<SpecialtyItemUpdateOneRequiredInput>;
   service?: Maybe<ServiceUpdateOneWithoutSpecialtiesInput>;
   sub_specialties?: Maybe<SpecialtyUpdateManyWithoutSub_specialtiesInput>;
 }
 
-export interface SpecialtyUpdateManyMutationInput {
+export interface SpecialtyItemUpdateInput {
+  name?: Maybe<String>;
+}
+
+export interface SpecialtyItemUpdateManyMutationInput {
   name?: Maybe<String>;
 }
 
@@ -2318,6 +2456,23 @@ export interface ServiceSubscriptionWhereInput {
   NOT?: Maybe<ServiceSubscriptionWhereInput[] | ServiceSubscriptionWhereInput>;
 }
 
+export interface ServiceItemSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ServiceItemWhereInput>;
+  AND?: Maybe<
+    ServiceItemSubscriptionWhereInput[] | ServiceItemSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    ServiceItemSubscriptionWhereInput[] | ServiceItemSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    ServiceItemSubscriptionWhereInput[] | ServiceItemSubscriptionWhereInput
+  >;
+}
+
 export interface SpecialtySubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -2332,6 +2487,23 @@ export interface SpecialtySubscriptionWhereInput {
   >;
   NOT?: Maybe<
     SpecialtySubscriptionWhereInput[] | SpecialtySubscriptionWhereInput
+  >;
+}
+
+export interface SpecialtyItemSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<SpecialtyItemWhereInput>;
+  AND?: Maybe<
+    SpecialtyItemSubscriptionWhereInput[] | SpecialtyItemSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    SpecialtyItemSubscriptionWhereInput[] | SpecialtyItemSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    SpecialtyItemSubscriptionWhereInput[] | SpecialtyItemSubscriptionWhereInput
   >;
 }
 
@@ -2592,12 +2764,11 @@ export interface CompanyNullablePromise
 
 export interface Service {
   id: ID_Output;
-  name: String;
 }
 
 export interface ServicePromise extends Promise<Service>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  info: <T = ServiceItemPromise>() => T;
   company: <T = CompanyPromise>() => T;
   specialties: <T = FragmentableArray<Specialty>>(args?: {
     where?: SpecialtyWhereInput;
@@ -2614,7 +2785,7 @@ export interface ServiceSubscription
   extends Promise<AsyncIterator<Service>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  info: <T = ServiceItemSubscription>() => T;
   company: <T = CompanySubscription>() => T;
   specialties: <T = Promise<AsyncIterator<SpecialtySubscription>>>(args?: {
     where?: SpecialtyWhereInput;
@@ -2631,7 +2802,7 @@ export interface ServiceNullablePromise
   extends Promise<Service | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  info: <T = ServiceItemPromise>() => T;
   company: <T = CompanyPromise>() => T;
   specialties: <T = FragmentableArray<Specialty>>(args?: {
     where?: SpecialtyWhereInput;
@@ -2644,14 +2815,37 @@ export interface ServiceNullablePromise
   }) => T;
 }
 
-export interface Specialty {
+export interface ServiceItem {
   id: ID_Output;
   name: String;
 }
 
-export interface SpecialtyPromise extends Promise<Specialty>, Fragmentable {
+export interface ServiceItemPromise extends Promise<ServiceItem>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+}
+
+export interface ServiceItemSubscription
+  extends Promise<AsyncIterator<ServiceItem>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ServiceItemNullablePromise
+  extends Promise<ServiceItem | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface Specialty {
+  id: ID_Output;
+}
+
+export interface SpecialtyPromise extends Promise<Specialty>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  info: <T = SpecialtyItemPromise>() => T;
   service: <T = ServicePromise>() => T;
   sub_specialties: <T = FragmentableArray<Specialty>>(args?: {
     where?: SpecialtyWhereInput;
@@ -2668,7 +2862,7 @@ export interface SpecialtySubscription
   extends Promise<AsyncIterator<Specialty>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  info: <T = SpecialtyItemSubscription>() => T;
   service: <T = ServiceSubscription>() => T;
   sub_specialties: <T = Promise<AsyncIterator<SpecialtySubscription>>>(args?: {
     where?: SpecialtyWhereInput;
@@ -2685,7 +2879,7 @@ export interface SpecialtyNullablePromise
   extends Promise<Specialty | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  info: <T = SpecialtyItemPromise>() => T;
   service: <T = ServicePromise>() => T;
   sub_specialties: <T = FragmentableArray<Specialty>>(args?: {
     where?: SpecialtyWhereInput;
@@ -2696,6 +2890,32 @@ export interface SpecialtyNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+}
+
+export interface SpecialtyItem {
+  id: ID_Output;
+  name: String;
+}
+
+export interface SpecialtyItemPromise
+  extends Promise<SpecialtyItem>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface SpecialtyItemSubscription
+  extends Promise<AsyncIterator<SpecialtyItem>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface SpecialtyItemNullablePromise
+  extends Promise<SpecialtyItem | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
 }
 
 export interface Region {
@@ -3094,6 +3314,62 @@ export interface AggregateServiceSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface ServiceItemConnection {
+  pageInfo: PageInfo;
+  edges: ServiceItemEdge[];
+}
+
+export interface ServiceItemConnectionPromise
+  extends Promise<ServiceItemConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ServiceItemEdge>>() => T;
+  aggregate: <T = AggregateServiceItemPromise>() => T;
+}
+
+export interface ServiceItemConnectionSubscription
+  extends Promise<AsyncIterator<ServiceItemConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ServiceItemEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateServiceItemSubscription>() => T;
+}
+
+export interface ServiceItemEdge {
+  node: ServiceItem;
+  cursor: String;
+}
+
+export interface ServiceItemEdgePromise
+  extends Promise<ServiceItemEdge>,
+    Fragmentable {
+  node: <T = ServiceItemPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ServiceItemEdgeSubscription
+  extends Promise<AsyncIterator<ServiceItemEdge>>,
+    Fragmentable {
+  node: <T = ServiceItemSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateServiceItem {
+  count: Int;
+}
+
+export interface AggregateServiceItemPromise
+  extends Promise<AggregateServiceItem>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateServiceItemSubscription
+  extends Promise<AsyncIterator<AggregateServiceItem>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface SpecialtyConnection {
   pageInfo: PageInfo;
   edges: SpecialtyEdge[];
@@ -3146,6 +3422,62 @@ export interface AggregateSpecialtyPromise
 
 export interface AggregateSpecialtySubscription
   extends Promise<AsyncIterator<AggregateSpecialty>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface SpecialtyItemConnection {
+  pageInfo: PageInfo;
+  edges: SpecialtyItemEdge[];
+}
+
+export interface SpecialtyItemConnectionPromise
+  extends Promise<SpecialtyItemConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<SpecialtyItemEdge>>() => T;
+  aggregate: <T = AggregateSpecialtyItemPromise>() => T;
+}
+
+export interface SpecialtyItemConnectionSubscription
+  extends Promise<AsyncIterator<SpecialtyItemConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<SpecialtyItemEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSpecialtyItemSubscription>() => T;
+}
+
+export interface SpecialtyItemEdge {
+  node: SpecialtyItem;
+  cursor: String;
+}
+
+export interface SpecialtyItemEdgePromise
+  extends Promise<SpecialtyItemEdge>,
+    Fragmentable {
+  node: <T = SpecialtyItemPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface SpecialtyItemEdgeSubscription
+  extends Promise<AsyncIterator<SpecialtyItemEdge>>,
+    Fragmentable {
+  node: <T = SpecialtyItemSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateSpecialtyItem {
+  count: Int;
+}
+
+export interface AggregateSpecialtyItemPromise
+  extends Promise<AggregateSpecialtyItem>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateSpecialtyItemSubscription
+  extends Promise<AsyncIterator<AggregateSpecialtyItem>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -3462,18 +3794,59 @@ export interface ServiceSubscriptionPayloadSubscription
 
 export interface ServicePreviousValues {
   id: ID_Output;
-  name: String;
 }
 
 export interface ServicePreviousValuesPromise
   extends Promise<ServicePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
 }
 
 export interface ServicePreviousValuesSubscription
   extends Promise<AsyncIterator<ServicePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+}
+
+export interface ServiceItemSubscriptionPayload {
+  mutation: MutationType;
+  node: ServiceItem;
+  updatedFields: String[];
+  previousValues: ServiceItemPreviousValues;
+}
+
+export interface ServiceItemSubscriptionPayloadPromise
+  extends Promise<ServiceItemSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ServiceItemPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ServiceItemPreviousValuesPromise>() => T;
+}
+
+export interface ServiceItemSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ServiceItemSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ServiceItemSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ServiceItemPreviousValuesSubscription>() => T;
+}
+
+export interface ServiceItemPreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface ServiceItemPreviousValuesPromise
+  extends Promise<ServiceItemPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface ServiceItemPreviousValuesSubscription
+  extends Promise<AsyncIterator<ServiceItemPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
@@ -3506,18 +3879,59 @@ export interface SpecialtySubscriptionPayloadSubscription
 
 export interface SpecialtyPreviousValues {
   id: ID_Output;
-  name: String;
 }
 
 export interface SpecialtyPreviousValuesPromise
   extends Promise<SpecialtyPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
 }
 
 export interface SpecialtyPreviousValuesSubscription
   extends Promise<AsyncIterator<SpecialtyPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+}
+
+export interface SpecialtyItemSubscriptionPayload {
+  mutation: MutationType;
+  node: SpecialtyItem;
+  updatedFields: String[];
+  previousValues: SpecialtyItemPreviousValues;
+}
+
+export interface SpecialtyItemSubscriptionPayloadPromise
+  extends Promise<SpecialtyItemSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = SpecialtyItemPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = SpecialtyItemPreviousValuesPromise>() => T;
+}
+
+export interface SpecialtyItemSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<SpecialtyItemSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = SpecialtyItemSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = SpecialtyItemPreviousValuesSubscription>() => T;
+}
+
+export interface SpecialtyItemPreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface SpecialtyItemPreviousValuesPromise
+  extends Promise<SpecialtyItemPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface SpecialtyItemPreviousValuesSubscription
+  extends Promise<AsyncIterator<SpecialtyItemPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
@@ -3680,7 +4094,15 @@ export const models: Model[] = [
     embedded: false
   },
   {
+    name: "ServiceItem",
+    embedded: false
+  },
+  {
     name: "Service",
+    embedded: false
+  },
+  {
+    name: "SpecialtyItem",
     embedded: false
   },
   {

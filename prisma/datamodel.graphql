@@ -9,25 +9,36 @@ type Company {
   overview: String
   headquarters: String
   companySize: CompanySize
-  services: [Service]!
+  services: [Service]! @relation(onDelete: CASCADE)
   regions: [Region]!
   therapeutics: [Therapeutic]!
   studies: [Study!]
   bids: [Bid!]
 }
 
+type ServiceItem {
+  id: ID! @id
+  name: String! @unique
+}
+
 type Service {
   id: ID! @id
-  name: String!
+  info: ServiceItem! @relation(link: INLINE)
   company: Company! @relation(link: INLINE)
-  specialties: [Specialty]
+  specialties: [Specialty] @relation(onDelete: CASCADE)
+}
+
+type SpecialtyItem {
+  id: ID! @id
+  name: String! @unique
 }
 
 type Specialty {
   id: ID! @id
-  name: String!
+  info: SpecialtyItem! @relation(link: INLINE)
   service: Service @relation(link: INLINE)
-  sub_specialties: [Specialty] @relation(name: "SubSpecialties")
+  sub_specialties: [Specialty]
+    @relation(name: "SubSpecialties", onDelete: CASCADE)
 }
 
 type Region {
