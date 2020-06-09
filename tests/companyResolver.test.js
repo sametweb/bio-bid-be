@@ -1,11 +1,11 @@
 const companyResolver = require("../resolvers/companyResolver");
 
 const dummyCompany = {
-  data: { company: { name: "Company", companySize: "A" } },
+  data: { company: { name: "Company", companySize: "A", services: [] } },
 };
 
 const dummyCompanies = {
-  data: { companies: [{ name: "Company", companySize: "A" }] },
+  data: { companies: [{ name: "Company", companySize: "A", services: [] }] },
 };
 
 // We don't need to test actual Prisma, hence this.
@@ -16,7 +16,6 @@ const prisma = {
   createCompany: jest.fn(),
 };
 
-const helpers = require("../helpers");
 describe("Company queries and mutations", () => {
   describe("company() -> single company query", () => {
     const company = jest.spyOn(companyResolver.Query, "company");
