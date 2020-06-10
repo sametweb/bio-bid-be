@@ -56,6 +56,6 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `http://localhost:4466`
+  endpoint: `https://us1.prisma.sh/biobid-team/production/prod`
 });
 exports.prisma = new exports.Prisma();

@@ -242,7 +242,6 @@ type Claim {
   email: String!
   name: String!
   company: Company!
-  message: String
   pending: Boolean!
   approved: Boolean!
 }
@@ -259,7 +258,6 @@ input ClaimCreateInput {
   email: String!
   name: String!
   company: CompanyCreateOneInput!
-  message: String
   pending: Boolean
   approved: Boolean
 }
@@ -278,8 +276,6 @@ enum ClaimOrderByInput {
   email_DESC
   name_ASC
   name_DESC
-  message_ASC
-  message_DESC
   pending_ASC
   pending_DESC
   approved_ASC
@@ -291,7 +287,6 @@ type ClaimPreviousValues {
   user: String!
   email: String!
   name: String!
-  message: String
   pending: Boolean!
   approved: Boolean!
 }
@@ -319,7 +314,6 @@ input ClaimUpdateInput {
   email: String
   name: String
   company: CompanyUpdateOneRequiredInput
-  message: String
   pending: Boolean
   approved: Boolean
 }
@@ -328,7 +322,6 @@ input ClaimUpdateManyMutationInput {
   user: String
   email: String
   name: String
-  message: String
   pending: Boolean
   approved: Boolean
 }
@@ -391,20 +384,6 @@ input ClaimWhereInput {
   name_ends_with: String
   name_not_ends_with: String
   company: CompanyWhereInput
-  message: String
-  message_not: String
-  message_in: [String!]
-  message_not_in: [String!]
-  message_lt: String
-  message_lte: String
-  message_gt: String
-  message_gte: String
-  message_contains: String
-  message_not_contains: String
-  message_starts_with: String
-  message_not_starts_with: String
-  message_ends_with: String
-  message_not_ends_with: String
   pending: Boolean
   pending_not: Boolean
   approved: Boolean

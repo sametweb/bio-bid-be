@@ -537,8 +537,6 @@ export type ClaimOrderByInput =
   | "email_DESC"
   | "name_ASC"
   | "name_DESC"
-  | "message_ASC"
-  | "message_DESC"
   | "pending_ASC"
   | "pending_DESC"
   | "approved_ASC"
@@ -1114,20 +1112,6 @@ export interface ClaimWhereInput {
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
   company?: Maybe<CompanyWhereInput>;
-  message?: Maybe<String>;
-  message_not?: Maybe<String>;
-  message_in?: Maybe<String[] | String>;
-  message_not_in?: Maybe<String[] | String>;
-  message_lt?: Maybe<String>;
-  message_lte?: Maybe<String>;
-  message_gt?: Maybe<String>;
-  message_gte?: Maybe<String>;
-  message_contains?: Maybe<String>;
-  message_not_contains?: Maybe<String>;
-  message_starts_with?: Maybe<String>;
-  message_not_starts_with?: Maybe<String>;
-  message_ends_with?: Maybe<String>;
-  message_not_ends_with?: Maybe<String>;
   pending?: Maybe<Boolean>;
   pending_not?: Maybe<Boolean>;
   approved?: Maybe<Boolean>;
@@ -2145,7 +2129,6 @@ export interface ClaimCreateInput {
   email: String;
   name: String;
   company: CompanyCreateOneInput;
-  message?: Maybe<String>;
   pending?: Maybe<Boolean>;
   approved?: Maybe<Boolean>;
 }
@@ -2179,7 +2162,6 @@ export interface ClaimUpdateInput {
   email?: Maybe<String>;
   name?: Maybe<String>;
   company?: Maybe<CompanyUpdateOneRequiredInput>;
-  message?: Maybe<String>;
   pending?: Maybe<Boolean>;
   approved?: Maybe<Boolean>;
 }
@@ -2218,7 +2200,6 @@ export interface ClaimUpdateManyMutationInput {
   user?: Maybe<String>;
   email?: Maybe<String>;
   name?: Maybe<String>;
-  message?: Maybe<String>;
   pending?: Maybe<Boolean>;
   approved?: Maybe<Boolean>;
 }
@@ -3410,7 +3391,6 @@ export interface Claim {
   user: String;
   email: String;
   name: String;
-  message?: String;
   pending: Boolean;
   approved: Boolean;
 }
@@ -3421,7 +3401,6 @@ export interface ClaimPromise extends Promise<Claim>, Fragmentable {
   email: () => Promise<String>;
   name: () => Promise<String>;
   company: <T = CompanyPromise>() => T;
-  message: () => Promise<String>;
   pending: () => Promise<Boolean>;
   approved: () => Promise<Boolean>;
 }
@@ -3434,7 +3413,6 @@ export interface ClaimSubscription
   email: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   company: <T = CompanySubscription>() => T;
-  message: () => Promise<AsyncIterator<String>>;
   pending: () => Promise<AsyncIterator<Boolean>>;
   approved: () => Promise<AsyncIterator<Boolean>>;
 }
@@ -3447,7 +3425,6 @@ export interface ClaimNullablePromise
   email: () => Promise<String>;
   name: () => Promise<String>;
   company: <T = CompanyPromise>() => T;
-  message: () => Promise<String>;
   pending: () => Promise<Boolean>;
   approved: () => Promise<Boolean>;
 }
@@ -4039,7 +4016,6 @@ export interface ClaimPreviousValues {
   user: String;
   email: String;
   name: String;
-  message?: String;
   pending: Boolean;
   approved: Boolean;
 }
@@ -4051,7 +4027,6 @@ export interface ClaimPreviousValuesPromise
   user: () => Promise<String>;
   email: () => Promise<String>;
   name: () => Promise<String>;
-  message: () => Promise<String>;
   pending: () => Promise<Boolean>;
   approved: () => Promise<Boolean>;
 }
@@ -4063,7 +4038,6 @@ export interface ClaimPreviousValuesSubscription
   user: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
-  message: () => Promise<AsyncIterator<String>>;
   pending: () => Promise<AsyncIterator<Boolean>>;
   approved: () => Promise<AsyncIterator<Boolean>>;
 }
