@@ -7,8 +7,24 @@ module.exports = {
     },
   },
   Mutation: {
-    claimCompany: (parent, args, { prisma }, info) => {
+    claimCompany: async (parent, args, { prisma }, info) => {
       const { user, email, name, company } = args;
+
+      const maintainerExists = await prisma
+        .company({ id: company })
+        .maintainer();
+
+      if (maintainerExists) {
+        throw new Error(
+          "This company is managed by another user. Please reach out to the administrator"
+        );
+      }
+
+      if (!user || !email || !name || !company) {
+        throw new Error(
+          "Please provide all the fields: user, email, name, company"
+        );
+      }
 
       return prisma.createClaim({
         user,
@@ -40,9 +56,10 @@ module.exports = {
             },
           }
         );
-        console.log({ updatedUser });
       } catch (error) {
-        console.log({ error });
+        throw new Error(
+          "There was an error updating user's profile on Okta. Please make sure you provided a valid user id (sub field from Okta profile)"
+        );
       }
 
       // Change claim.approved: true, pending: false
