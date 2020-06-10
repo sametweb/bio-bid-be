@@ -49,28 +49,30 @@ module.exports = {
       }
 
       // Add specialties to SpecialtyItem table if they don't already exist
-      args.services.forEach((service) => {
-        service.specialties &&
-          service.specialties.forEach(async (specialty) => {
-            const data = {
-              create: { name: specialty.name },
-              update: { name: specialty.name },
-              where: { name: specialty.name },
-            };
-
-            specialty.sub_specialties.forEach(async (sub) => {
+      args.services &&
+        args.services.forEach((service) => {
+          service.specialties &&
+            service.specialties.forEach(async (specialty) => {
               const data = {
-                create: { name: sub.name },
-                update: { name: sub.name },
-                where: { name: sub.name },
+                create: { name: specialty.name },
+                update: { name: specialty.name },
+                where: { name: specialty.name },
               };
-              // sub_specialties
+
+              specialty.sub_specialties &&
+                specialty.sub_specialties.forEach(async (sub) => {
+                  const data = {
+                    create: { name: sub.name },
+                    update: { name: sub.name },
+                    where: { name: sub.name },
+                  };
+                  // sub_specialties
+                  await prisma.upsertSpecialtyItem(data);
+                });
+              // specialties
               await prisma.upsertSpecialtyItem(data);
             });
-            // specialties
-            await prisma.upsertSpecialtyItem(data);
-          });
-      });
+        });
 
       // Create "services" object with all nested specialty/sub-specialty relations
       const services = {

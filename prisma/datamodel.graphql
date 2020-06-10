@@ -1,5 +1,6 @@
 type Company {
   id: ID! @id
+  maintainer: String
   name: String! @unique
   email: String
   phases: [Phase]! @scalarList(strategy: RELATION)
@@ -14,6 +15,16 @@ type Company {
   therapeutics: [Therapeutic]!
   studies: [Study!]
   bids: [Bid!]
+}
+
+type Claim {
+  id: ID! @id
+  user: String!
+  email: String!
+  name: String!
+  company: Company! @relation(link: INLINE)
+  pending: Boolean! @default(value: true)
+  approved: Boolean! @default(value: false)
 }
 
 type ServiceItem {

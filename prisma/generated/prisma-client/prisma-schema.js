@@ -7,6 +7,10 @@ module.exports = {
   count: Int!
 }
 
+type AggregateClaim {
+  count: Int!
+}
+
 type AggregateCompany {
   count: Int!
 }
@@ -232,8 +236,191 @@ input BidWhereUniqueInput {
   id: ID
 }
 
+type Claim {
+  id: ID!
+  user: String!
+  email: String!
+  name: String!
+  company: Company!
+  message: String
+  pending: Boolean!
+  approved: Boolean!
+}
+
+type ClaimConnection {
+  pageInfo: PageInfo!
+  edges: [ClaimEdge]!
+  aggregate: AggregateClaim!
+}
+
+input ClaimCreateInput {
+  id: ID
+  user: String!
+  email: String!
+  name: String!
+  company: CompanyCreateOneInput!
+  message: String
+  pending: Boolean
+  approved: Boolean
+}
+
+type ClaimEdge {
+  node: Claim!
+  cursor: String!
+}
+
+enum ClaimOrderByInput {
+  id_ASC
+  id_DESC
+  user_ASC
+  user_DESC
+  email_ASC
+  email_DESC
+  name_ASC
+  name_DESC
+  message_ASC
+  message_DESC
+  pending_ASC
+  pending_DESC
+  approved_ASC
+  approved_DESC
+}
+
+type ClaimPreviousValues {
+  id: ID!
+  user: String!
+  email: String!
+  name: String!
+  message: String
+  pending: Boolean!
+  approved: Boolean!
+}
+
+type ClaimSubscriptionPayload {
+  mutation: MutationType!
+  node: Claim
+  updatedFields: [String!]
+  previousValues: ClaimPreviousValues
+}
+
+input ClaimSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ClaimWhereInput
+  AND: [ClaimSubscriptionWhereInput!]
+  OR: [ClaimSubscriptionWhereInput!]
+  NOT: [ClaimSubscriptionWhereInput!]
+}
+
+input ClaimUpdateInput {
+  user: String
+  email: String
+  name: String
+  company: CompanyUpdateOneRequiredInput
+  message: String
+  pending: Boolean
+  approved: Boolean
+}
+
+input ClaimUpdateManyMutationInput {
+  user: String
+  email: String
+  name: String
+  message: String
+  pending: Boolean
+  approved: Boolean
+}
+
+input ClaimWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  user: String
+  user_not: String
+  user_in: [String!]
+  user_not_in: [String!]
+  user_lt: String
+  user_lte: String
+  user_gt: String
+  user_gte: String
+  user_contains: String
+  user_not_contains: String
+  user_starts_with: String
+  user_not_starts_with: String
+  user_ends_with: String
+  user_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  company: CompanyWhereInput
+  message: String
+  message_not: String
+  message_in: [String!]
+  message_not_in: [String!]
+  message_lt: String
+  message_lte: String
+  message_gt: String
+  message_gte: String
+  message_contains: String
+  message_not_contains: String
+  message_starts_with: String
+  message_not_starts_with: String
+  message_ends_with: String
+  message_not_ends_with: String
+  pending: Boolean
+  pending_not: Boolean
+  approved: Boolean
+  approved_not: Boolean
+  AND: [ClaimWhereInput!]
+  OR: [ClaimWhereInput!]
+  NOT: [ClaimWhereInput!]
+}
+
+input ClaimWhereUniqueInput {
+  id: ID
+}
+
 type Company {
   id: ID!
+  maintainer: String
   name: String!
   email: String
   phases: [Phase!]!
@@ -258,6 +445,7 @@ type CompanyConnection {
 
 input CompanyCreateInput {
   id: ID
+  maintainer: String
   name: String!
   email: String
   phases: CompanyCreatephasesInput
@@ -284,6 +472,11 @@ input CompanyCreateManyWithoutTherapeuticsInput {
   connect: [CompanyWhereUniqueInput!]
 }
 
+input CompanyCreateOneInput {
+  create: CompanyCreateInput
+  connect: CompanyWhereUniqueInput
+}
+
 input CompanyCreateOneWithoutBidsInput {
   create: CompanyCreateWithoutBidsInput
   connect: CompanyWhereUniqueInput
@@ -305,6 +498,7 @@ input CompanyCreatephasesInput {
 
 input CompanyCreateWithoutBidsInput {
   id: ID
+  maintainer: String
   name: String!
   email: String
   phases: CompanyCreatephasesInput
@@ -322,6 +516,7 @@ input CompanyCreateWithoutBidsInput {
 
 input CompanyCreateWithoutRegionsInput {
   id: ID
+  maintainer: String
   name: String!
   email: String
   phases: CompanyCreatephasesInput
@@ -339,6 +534,7 @@ input CompanyCreateWithoutRegionsInput {
 
 input CompanyCreateWithoutServicesInput {
   id: ID
+  maintainer: String
   name: String!
   email: String
   phases: CompanyCreatephasesInput
@@ -356,6 +552,7 @@ input CompanyCreateWithoutServicesInput {
 
 input CompanyCreateWithoutStudiesInput {
   id: ID
+  maintainer: String
   name: String!
   email: String
   phases: CompanyCreatephasesInput
@@ -373,6 +570,7 @@ input CompanyCreateWithoutStudiesInput {
 
 input CompanyCreateWithoutTherapeuticsInput {
   id: ID
+  maintainer: String
   name: String!
   email: String
   phases: CompanyCreatephasesInput
@@ -396,6 +594,8 @@ type CompanyEdge {
 enum CompanyOrderByInput {
   id_ASC
   id_DESC
+  maintainer_ASC
+  maintainer_DESC
   name_ASC
   name_DESC
   email_ASC
@@ -416,6 +616,7 @@ enum CompanyOrderByInput {
 
 type CompanyPreviousValues {
   id: ID!
+  maintainer: String
   name: String!
   email: String
   phases: [Phase!]!
@@ -442,6 +643,20 @@ input CompanyScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  maintainer: String
+  maintainer_not: String
+  maintainer_in: [String!]
+  maintainer_not_in: [String!]
+  maintainer_lt: String
+  maintainer_lte: String
+  maintainer_gt: String
+  maintainer_gte: String
+  maintainer_contains: String
+  maintainer_not_contains: String
+  maintainer_starts_with: String
+  maintainer_not_starts_with: String
+  maintainer_ends_with: String
+  maintainer_not_ends_with: String
   name: String
   name_not: String
   name_in: [String!]
@@ -579,7 +794,26 @@ input CompanySubscriptionWhereInput {
   NOT: [CompanySubscriptionWhereInput!]
 }
 
+input CompanyUpdateDataInput {
+  maintainer: String
+  name: String
+  email: String
+  phases: CompanyUpdatephasesInput
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceUpdateManyWithoutCompanyInput
+  regions: RegionUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
+  studies: StudyUpdateManyWithoutCompanyInput
+  bids: BidUpdateManyWithoutCompanyInput
+}
+
 input CompanyUpdateInput {
+  maintainer: String
   name: String
   email: String
   phases: CompanyUpdatephasesInput
@@ -597,6 +831,7 @@ input CompanyUpdateInput {
 }
 
 input CompanyUpdateManyDataInput {
+  maintainer: String
   name: String
   email: String
   phases: CompanyUpdatephasesInput
@@ -609,6 +844,7 @@ input CompanyUpdateManyDataInput {
 }
 
 input CompanyUpdateManyMutationInput {
+  maintainer: String
   name: String
   email: String
   phases: CompanyUpdatephasesInput
@@ -649,6 +885,13 @@ input CompanyUpdateManyWithWhereNestedInput {
   data: CompanyUpdateManyDataInput!
 }
 
+input CompanyUpdateOneRequiredInput {
+  create: CompanyCreateInput
+  update: CompanyUpdateDataInput
+  upsert: CompanyUpsertNestedInput
+  connect: CompanyWhereUniqueInput
+}
+
 input CompanyUpdateOneRequiredWithoutBidsInput {
   create: CompanyCreateWithoutBidsInput
   update: CompanyUpdateWithoutBidsDataInput
@@ -675,6 +918,7 @@ input CompanyUpdatephasesInput {
 }
 
 input CompanyUpdateWithoutBidsDataInput {
+  maintainer: String
   name: String
   email: String
   phases: CompanyUpdatephasesInput
@@ -691,6 +935,7 @@ input CompanyUpdateWithoutBidsDataInput {
 }
 
 input CompanyUpdateWithoutRegionsDataInput {
+  maintainer: String
   name: String
   email: String
   phases: CompanyUpdatephasesInput
@@ -707,6 +952,7 @@ input CompanyUpdateWithoutRegionsDataInput {
 }
 
 input CompanyUpdateWithoutServicesDataInput {
+  maintainer: String
   name: String
   email: String
   phases: CompanyUpdatephasesInput
@@ -723,6 +969,7 @@ input CompanyUpdateWithoutServicesDataInput {
 }
 
 input CompanyUpdateWithoutStudiesDataInput {
+  maintainer: String
   name: String
   email: String
   phases: CompanyUpdatephasesInput
@@ -739,6 +986,7 @@ input CompanyUpdateWithoutStudiesDataInput {
 }
 
 input CompanyUpdateWithoutTherapeuticsDataInput {
+  maintainer: String
   name: String
   email: String
   phases: CompanyUpdatephasesInput
@@ -762,6 +1010,11 @@ input CompanyUpdateWithWhereUniqueWithoutRegionsInput {
 input CompanyUpdateWithWhereUniqueWithoutTherapeuticsInput {
   where: CompanyWhereUniqueInput!
   data: CompanyUpdateWithoutTherapeuticsDataInput!
+}
+
+input CompanyUpsertNestedInput {
+  update: CompanyUpdateDataInput!
+  create: CompanyCreateInput!
 }
 
 input CompanyUpsertWithoutBidsInput {
@@ -806,6 +1059,20 @@ input CompanyWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  maintainer: String
+  maintainer_not: String
+  maintainer_in: [String!]
+  maintainer_not_in: [String!]
+  maintainer_lt: String
+  maintainer_lte: String
+  maintainer_gt: String
+  maintainer_gte: String
+  maintainer_contains: String
+  maintainer_not_contains: String
+  maintainer_starts_with: String
+  maintainer_not_starts_with: String
+  maintainer_ends_with: String
+  maintainer_not_ends_with: String
   name: String
   name_not: String
   name_in: [String!]
@@ -944,6 +1211,12 @@ type Mutation {
   upsertBid(where: BidWhereUniqueInput!, create: BidCreateInput!, update: BidUpdateInput!): Bid!
   deleteBid(where: BidWhereUniqueInput!): Bid
   deleteManyBids(where: BidWhereInput): BatchPayload!
+  createClaim(data: ClaimCreateInput!): Claim!
+  updateClaim(data: ClaimUpdateInput!, where: ClaimWhereUniqueInput!): Claim
+  updateManyClaims(data: ClaimUpdateManyMutationInput!, where: ClaimWhereInput): BatchPayload!
+  upsertClaim(where: ClaimWhereUniqueInput!, create: ClaimCreateInput!, update: ClaimUpdateInput!): Claim!
+  deleteClaim(where: ClaimWhereUniqueInput!): Claim
+  deleteManyClaims(where: ClaimWhereInput): BatchPayload!
   createCompany(data: CompanyCreateInput!): Company!
   updateCompany(data: CompanyUpdateInput!, where: CompanyWhereUniqueInput!): Company
   updateManyCompanies(data: CompanyUpdateManyMutationInput!, where: CompanyWhereInput): BatchPayload!
@@ -1020,6 +1293,9 @@ type Query {
   bid(where: BidWhereUniqueInput!): Bid
   bids(where: BidWhereInput, orderBy: BidOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bid]!
   bidsConnection(where: BidWhereInput, orderBy: BidOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BidConnection!
+  claim(where: ClaimWhereUniqueInput!): Claim
+  claims(where: ClaimWhereInput, orderBy: ClaimOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Claim]!
+  claimsConnection(where: ClaimWhereInput, orderBy: ClaimOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ClaimConnection!
   company(where: CompanyWhereUniqueInput!): Company
   companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company]!
   companiesConnection(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyConnection!
@@ -2265,6 +2541,7 @@ input StudyWhereUniqueInput {
 
 type Subscription {
   bid(where: BidSubscriptionWhereInput): BidSubscriptionPayload
+  claim(where: ClaimSubscriptionWhereInput): ClaimSubscriptionPayload
   company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
   region(where: RegionSubscriptionWhereInput): RegionSubscriptionPayload
   service(where: ServiceSubscriptionWhereInput): ServiceSubscriptionPayload

@@ -2,6 +2,7 @@ const { ApolloServer } = require("apollo-server");
 const { prisma } = require("./prisma/generated/prisma-client");
 const typeDefs = require("./typeDefs");
 const resolvers = require("./resolvers");
+require("dotenv").config();
 
 const server = new ApolloServer({
   typeDefs,
