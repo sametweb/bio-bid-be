@@ -35,7 +35,7 @@ module.exports = {
           },
           {
             headers: {
-              Authorization: `SSWS XXXXXX`,
+              Authorization: `SSWS ${process.env.OKTA_KEY}`,
             },
           }
         );
