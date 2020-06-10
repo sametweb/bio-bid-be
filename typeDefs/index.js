@@ -9,6 +9,7 @@ const regionTypeDef = require("./region");
 const therapeuticTypeDef = require("./therapeutic");
 const specialtyTypeDef = require("./specialty");
 const specialtyItemTypeDef = require("./specialtyItem");
+const claimTypeDef = require("./claim");
 
 const typeDefs = gql`
   type Query {
@@ -30,4 +31,5 @@ module.exports = [
   therapeuticTypeDef,
   specialtyTypeDef,
   specialtyItemTypeDef,
+  claimTypeDef,
 ];

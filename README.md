@@ -33,25 +33,25 @@ We chose Apollo GraphQL because:
 
 #### Queries
 
-| Query Name           | Access Control | Description                                                                  |
-| -------------------- | -------------- | ---------------------------------------------------------------------------- |
-| companies            | all users      | Returns an array of companies                                                |
-| company              | all users      | Returns a a company that matches the `id` requested                          |
-| searchCompanies      | all users      | Returns an array of companies that match the `search` string requested       |
-| serviceItems         | all users      | Returns an array of services                                                 |
-| serviceItem          | all users      | Returns a service matching the `name` string requested                       |
-| searchServiceItems   | all users      | Returns an array of services that match the `search` string requested        |
-| specialtyItems       | all users      | Returns an array of specialties                                              |
-| specialtyItem        | all users      | Returns a specialty matching the `name` string requested                     |
-| searchSpecialtyItems | all users      | Returns an array of specialties that match the `search` string requested     |
-| regions              | all users      | Returns an array of regions                                                  |
-| region               | all users      | Returns a region that matches the `name` requested                           |
-| searchRegions        | all users      | Returns an array of regions that cointain or match the `name` requested      |
-| therapeutics         | all users      | Returns an array of therapeutics                                             |
-| therapeutic          | all users      | Returns a therapeutic that matches the `name` requested                      |
-| searchTherapeutics   | all users      | Returns an array of therapeutics that cointain or match the `name` requested |
-| bids                 | all users      | Returns an array of bids                                                     |
-| studies              | all users      | Returns a an array of studies                                                |
+| Query Name           | Access Control | Description                                                                                     |
+| -------------------- | -------------- | ----------------------------------------------------------------------------------------------- |
+| companies            | all users      | Returns an array of companies                                                                   |
+| company              | all users      | Returns a a company that matches the `id` requested                                             |
+| searchCompanies      | all users      | Returns an array of companies that match the `search` string requested (min 3 characters)       |
+| serviceItems         | all users      | Returns an array of services                                                                    |
+| serviceItem          | all users      | Returns a service matching the `name` string requested                                          |
+| searchServiceItems   | all users      | Returns an array of services that match the `search` string requested (min 3 characters)        |
+| specialtyItems       | all users      | Returns an array of specialties                                                                 |
+| specialtyItem        | all users      | Returns a specialty matching the `name` string requested                                        |
+| searchSpecialtyItems | all users      | Returns an array of specialties that match the `search` string requested (min 3 characters)     |
+| regions              | all users      | Returns an array of regions                                                                     |
+| region               | all users      | Returns a region that matches the `name` requested                                              |
+| searchRegions        | all users      | Returns an array of regions that cointain or match the `name` requested (min 3 characters)      |
+| therapeutics         | all users      | Returns an array of therapeutics                                                                |
+| therapeutic          | all users      | Returns a therapeutic that matches the `name` requested                                         |
+| searchTherapeutics   | all users      | Returns an array of therapeutics that cointain or match the `name` requested (min 3 characters) |
+| bids                 | all users      | Returns an array of bids                                                                        |
+| studies              | all users      | Returns a an array of studies                                                                   |
 
 #### Mutations
 

@@ -44,6 +44,7 @@ module.exports = gql`
 
   type Company {
     id: ID
+    maintainer: String
     name: String!
     email: String
     phases: [Phase]

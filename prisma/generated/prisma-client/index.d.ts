@@ -17,6 +17,7 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   bid: (where?: BidWhereInput) => Promise<boolean>;
+  claim: (where?: ClaimWhereInput) => Promise<boolean>;
   company: (where?: CompanyWhereInput) => Promise<boolean>;
   region: (where?: RegionWhereInput) => Promise<boolean>;
   service: (where?: ServiceWhereInput) => Promise<boolean>;
@@ -65,6 +66,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => BidConnectionPromise;
+  claim: (where: ClaimWhereUniqueInput) => ClaimNullablePromise;
+  claims: (args?: {
+    where?: ClaimWhereInput;
+    orderBy?: ClaimOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Claim>;
+  claimsConnection: (args?: {
+    where?: ClaimWhereInput;
+    orderBy?: ClaimOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => ClaimConnectionPromise;
   company: (where: CompanyWhereUniqueInput) => CompanyNullablePromise;
   companies: (args?: {
     where?: CompanyWhereInput;
@@ -245,6 +265,22 @@ export interface Prisma {
   }) => BidPromise;
   deleteBid: (where: BidWhereUniqueInput) => BidPromise;
   deleteManyBids: (where?: BidWhereInput) => BatchPayloadPromise;
+  createClaim: (data: ClaimCreateInput) => ClaimPromise;
+  updateClaim: (args: {
+    data: ClaimUpdateInput;
+    where: ClaimWhereUniqueInput;
+  }) => ClaimPromise;
+  updateManyClaims: (args: {
+    data: ClaimUpdateManyMutationInput;
+    where?: ClaimWhereInput;
+  }) => BatchPayloadPromise;
+  upsertClaim: (args: {
+    where: ClaimWhereUniqueInput;
+    create: ClaimCreateInput;
+    update: ClaimUpdateInput;
+  }) => ClaimPromise;
+  deleteClaim: (where: ClaimWhereUniqueInput) => ClaimPromise;
+  deleteManyClaims: (where?: ClaimWhereInput) => BatchPayloadPromise;
   createCompany: (data: CompanyCreateInput) => CompanyPromise;
   updateCompany: (args: {
     data: CompanyUpdateInput;
@@ -385,6 +421,9 @@ export interface Subscription {
   bid: (
     where?: BidSubscriptionWhereInput
   ) => BidSubscriptionPayloadSubscription;
+  claim: (
+    where?: ClaimSubscriptionWhereInput
+  ) => ClaimSubscriptionPayloadSubscription;
   company: (
     where?: CompanySubscriptionWhereInput
   ) => CompanySubscriptionPayloadSubscription;
@@ -436,6 +475,8 @@ export type RegionOrderByInput =
 export type CompanyOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "maintainer_ASC"
+  | "maintainer_DESC"
   | "name_ASC"
   | "name_DESC"
   | "email_ASC"
@@ -486,6 +527,22 @@ export type BidOrderByInput =
   | "bid_amount_DESC"
   | "is_approved_ASC"
   | "is_approved_DESC";
+
+export type ClaimOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "user_ASC"
+  | "user_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "message_ASC"
+  | "message_DESC"
+  | "pending_ASC"
+  | "pending_DESC"
+  | "approved_ASC"
+  | "approved_DESC";
 
 export type ServiceItemOrderByInput =
   | "id_ASC"
@@ -579,6 +636,20 @@ export interface CompanyWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  maintainer?: Maybe<String>;
+  maintainer_not?: Maybe<String>;
+  maintainer_in?: Maybe<String[] | String>;
+  maintainer_not_in?: Maybe<String[] | String>;
+  maintainer_lt?: Maybe<String>;
+  maintainer_lte?: Maybe<String>;
+  maintainer_gt?: Maybe<String>;
+  maintainer_gte?: Maybe<String>;
+  maintainer_contains?: Maybe<String>;
+  maintainer_not_contains?: Maybe<String>;
+  maintainer_starts_with?: Maybe<String>;
+  maintainer_not_starts_with?: Maybe<String>;
+  maintainer_ends_with?: Maybe<String>;
+  maintainer_not_ends_with?: Maybe<String>;
   name?: Maybe<String>;
   name_not?: Maybe<String>;
   name_in?: Maybe<String[] | String>;
@@ -981,6 +1052,91 @@ export interface SpecialtyItemWhereInput {
   NOT?: Maybe<SpecialtyItemWhereInput[] | SpecialtyItemWhereInput>;
 }
 
+export type ClaimWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ClaimWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  user?: Maybe<String>;
+  user_not?: Maybe<String>;
+  user_in?: Maybe<String[] | String>;
+  user_not_in?: Maybe<String[] | String>;
+  user_lt?: Maybe<String>;
+  user_lte?: Maybe<String>;
+  user_gt?: Maybe<String>;
+  user_gte?: Maybe<String>;
+  user_contains?: Maybe<String>;
+  user_not_contains?: Maybe<String>;
+  user_starts_with?: Maybe<String>;
+  user_not_starts_with?: Maybe<String>;
+  user_ends_with?: Maybe<String>;
+  user_not_ends_with?: Maybe<String>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  company?: Maybe<CompanyWhereInput>;
+  message?: Maybe<String>;
+  message_not?: Maybe<String>;
+  message_in?: Maybe<String[] | String>;
+  message_not_in?: Maybe<String[] | String>;
+  message_lt?: Maybe<String>;
+  message_lte?: Maybe<String>;
+  message_gt?: Maybe<String>;
+  message_gte?: Maybe<String>;
+  message_contains?: Maybe<String>;
+  message_not_contains?: Maybe<String>;
+  message_starts_with?: Maybe<String>;
+  message_not_starts_with?: Maybe<String>;
+  message_ends_with?: Maybe<String>;
+  message_not_ends_with?: Maybe<String>;
+  pending?: Maybe<Boolean>;
+  pending_not?: Maybe<Boolean>;
+  approved?: Maybe<Boolean>;
+  approved_not?: Maybe<Boolean>;
+  AND?: Maybe<ClaimWhereInput[] | ClaimWhereInput>;
+  OR?: Maybe<ClaimWhereInput[] | ClaimWhereInput>;
+  NOT?: Maybe<ClaimWhereInput[] | ClaimWhereInput>;
+}
+
 export type CompanyWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   name?: Maybe<String>;
@@ -1034,6 +1190,7 @@ export interface CompanyCreateOneWithoutBidsInput {
 
 export interface CompanyCreateWithoutBidsInput {
   id?: Maybe<ID_Input>;
+  maintainer?: Maybe<String>;
   name: String;
   email?: Maybe<String>;
   phases?: Maybe<CompanyCreatephasesInput>;
@@ -1129,6 +1286,7 @@ export interface CompanyCreateOneWithoutServicesInput {
 
 export interface CompanyCreateWithoutServicesInput {
   id?: Maybe<ID_Input>;
+  maintainer?: Maybe<String>;
   name: String;
   email?: Maybe<String>;
   phases?: Maybe<CompanyCreatephasesInput>;
@@ -1225,6 +1383,7 @@ export interface CompanyCreateOneWithoutStudiesInput {
 
 export interface CompanyCreateWithoutStudiesInput {
   id?: Maybe<ID_Input>;
+  maintainer?: Maybe<String>;
   name: String;
   email?: Maybe<String>;
   phases?: Maybe<CompanyCreatephasesInput>;
@@ -1255,6 +1414,7 @@ export interface CompanyUpdateOneRequiredWithoutBidsInput {
 }
 
 export interface CompanyUpdateWithoutBidsDataInput {
+  maintainer?: Maybe<String>;
   name?: Maybe<String>;
   email?: Maybe<String>;
   phases?: Maybe<CompanyUpdatephasesInput>;
@@ -1414,6 +1574,7 @@ export interface CompanyUpdateOneRequiredWithoutServicesInput {
 }
 
 export interface CompanyUpdateWithoutServicesDataInput {
+  maintainer?: Maybe<String>;
   name?: Maybe<String>;
   email?: Maybe<String>;
   phases?: Maybe<CompanyUpdatephasesInput>;
@@ -1828,6 +1989,7 @@ export interface CompanyUpdateOneRequiredWithoutStudiesInput {
 }
 
 export interface CompanyUpdateWithoutStudiesDataInput {
+  maintainer?: Maybe<String>;
   name?: Maybe<String>;
   email?: Maybe<String>;
   phases?: Maybe<CompanyUpdatephasesInput>;
@@ -1977,8 +2139,25 @@ export interface BidUpdateManyMutationInput {
   is_approved?: Maybe<Boolean>;
 }
 
+export interface ClaimCreateInput {
+  id?: Maybe<ID_Input>;
+  user: String;
+  email: String;
+  name: String;
+  company: CompanyCreateOneInput;
+  message?: Maybe<String>;
+  pending?: Maybe<Boolean>;
+  approved?: Maybe<Boolean>;
+}
+
+export interface CompanyCreateOneInput {
+  create?: Maybe<CompanyCreateInput>;
+  connect?: Maybe<CompanyWhereUniqueInput>;
+}
+
 export interface CompanyCreateInput {
   id?: Maybe<ID_Input>;
+  maintainer?: Maybe<String>;
   name: String;
   email?: Maybe<String>;
   phases?: Maybe<CompanyCreatephasesInput>;
@@ -1995,7 +2174,57 @@ export interface CompanyCreateInput {
   bids?: Maybe<BidCreateManyWithoutCompanyInput>;
 }
 
+export interface ClaimUpdateInput {
+  user?: Maybe<String>;
+  email?: Maybe<String>;
+  name?: Maybe<String>;
+  company?: Maybe<CompanyUpdateOneRequiredInput>;
+  message?: Maybe<String>;
+  pending?: Maybe<Boolean>;
+  approved?: Maybe<Boolean>;
+}
+
+export interface CompanyUpdateOneRequiredInput {
+  create?: Maybe<CompanyCreateInput>;
+  update?: Maybe<CompanyUpdateDataInput>;
+  upsert?: Maybe<CompanyUpsertNestedInput>;
+  connect?: Maybe<CompanyWhereUniqueInput>;
+}
+
+export interface CompanyUpdateDataInput {
+  maintainer?: Maybe<String>;
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  phases?: Maybe<CompanyUpdatephasesInput>;
+  logoURL?: Maybe<String>;
+  website?: Maybe<String>;
+  linkedin?: Maybe<String>;
+  overview?: Maybe<String>;
+  headquarters?: Maybe<String>;
+  companySize?: Maybe<CompanySize>;
+  services?: Maybe<ServiceUpdateManyWithoutCompanyInput>;
+  regions?: Maybe<RegionUpdateManyWithoutCompaniesInput>;
+  therapeutics?: Maybe<TherapeuticUpdateManyWithoutCompaniesInput>;
+  studies?: Maybe<StudyUpdateManyWithoutCompanyInput>;
+  bids?: Maybe<BidUpdateManyWithoutCompanyInput>;
+}
+
+export interface CompanyUpsertNestedInput {
+  update: CompanyUpdateDataInput;
+  create: CompanyCreateInput;
+}
+
+export interface ClaimUpdateManyMutationInput {
+  user?: Maybe<String>;
+  email?: Maybe<String>;
+  name?: Maybe<String>;
+  message?: Maybe<String>;
+  pending?: Maybe<Boolean>;
+  approved?: Maybe<Boolean>;
+}
+
 export interface CompanyUpdateInput {
+  maintainer?: Maybe<String>;
   name?: Maybe<String>;
   email?: Maybe<String>;
   phases?: Maybe<CompanyUpdatephasesInput>;
@@ -2013,6 +2242,7 @@ export interface CompanyUpdateInput {
 }
 
 export interface CompanyUpdateManyMutationInput {
+  maintainer?: Maybe<String>;
   name?: Maybe<String>;
   email?: Maybe<String>;
   phases?: Maybe<CompanyUpdatephasesInput>;
@@ -2039,6 +2269,7 @@ export interface CompanyCreateManyWithoutRegionsInput {
 
 export interface CompanyCreateWithoutRegionsInput {
   id?: Maybe<ID_Input>;
+  maintainer?: Maybe<String>;
   name: String;
   email?: Maybe<String>;
   phases?: Maybe<CompanyCreatephasesInput>;
@@ -2088,6 +2319,7 @@ export interface CompanyUpdateWithWhereUniqueWithoutRegionsInput {
 }
 
 export interface CompanyUpdateWithoutRegionsDataInput {
+  maintainer?: Maybe<String>;
   name?: Maybe<String>;
   email?: Maybe<String>;
   phases?: Maybe<CompanyUpdatephasesInput>;
@@ -2124,6 +2356,20 @@ export interface CompanyScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  maintainer?: Maybe<String>;
+  maintainer_not?: Maybe<String>;
+  maintainer_in?: Maybe<String[] | String>;
+  maintainer_not_in?: Maybe<String[] | String>;
+  maintainer_lt?: Maybe<String>;
+  maintainer_lte?: Maybe<String>;
+  maintainer_gt?: Maybe<String>;
+  maintainer_gte?: Maybe<String>;
+  maintainer_contains?: Maybe<String>;
+  maintainer_not_contains?: Maybe<String>;
+  maintainer_starts_with?: Maybe<String>;
+  maintainer_not_starts_with?: Maybe<String>;
+  maintainer_ends_with?: Maybe<String>;
+  maintainer_not_ends_with?: Maybe<String>;
   name?: Maybe<String>;
   name_not?: Maybe<String>;
   name_in?: Maybe<String[] | String>;
@@ -2237,6 +2483,7 @@ export interface CompanyUpdateManyWithWhereNestedInput {
 }
 
 export interface CompanyUpdateManyDataInput {
+  maintainer?: Maybe<String>;
   name?: Maybe<String>;
   email?: Maybe<String>;
   phases?: Maybe<CompanyUpdatephasesInput>;
@@ -2326,6 +2573,7 @@ export interface CompanyCreateManyWithoutTherapeuticsInput {
 
 export interface CompanyCreateWithoutTherapeuticsInput {
   id?: Maybe<ID_Input>;
+  maintainer?: Maybe<String>;
   name: String;
   email?: Maybe<String>;
   phases?: Maybe<CompanyCreatephasesInput>;
@@ -2376,6 +2624,7 @@ export interface CompanyUpdateWithWhereUniqueWithoutTherapeuticsInput {
 }
 
 export interface CompanyUpdateWithoutTherapeuticsDataInput {
+  maintainer?: Maybe<String>;
   name?: Maybe<String>;
   email?: Maybe<String>;
   phases?: Maybe<CompanyUpdatephasesInput>;
@@ -2410,6 +2659,17 @@ export interface BidSubscriptionWhereInput {
   AND?: Maybe<BidSubscriptionWhereInput[] | BidSubscriptionWhereInput>;
   OR?: Maybe<BidSubscriptionWhereInput[] | BidSubscriptionWhereInput>;
   NOT?: Maybe<BidSubscriptionWhereInput[] | BidSubscriptionWhereInput>;
+}
+
+export interface ClaimSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ClaimWhereInput>;
+  AND?: Maybe<ClaimSubscriptionWhereInput[] | ClaimSubscriptionWhereInput>;
+  OR?: Maybe<ClaimSubscriptionWhereInput[] | ClaimSubscriptionWhereInput>;
+  NOT?: Maybe<ClaimSubscriptionWhereInput[] | ClaimSubscriptionWhereInput>;
 }
 
 export interface CompanySubscriptionWhereInput {
@@ -2562,6 +2822,7 @@ export interface BidNullablePromise extends Promise<Bid | null>, Fragmentable {
 
 export interface Company {
   id: ID_Output;
+  maintainer?: String;
   name: String;
   email?: String;
   phases: Phase[];
@@ -2575,6 +2836,7 @@ export interface Company {
 
 export interface CompanyPromise extends Promise<Company>, Fragmentable {
   id: () => Promise<ID_Output>;
+  maintainer: () => Promise<String>;
   name: () => Promise<String>;
   email: () => Promise<String>;
   phases: () => Promise<Phase[]>;
@@ -2635,6 +2897,7 @@ export interface CompanySubscription
   extends Promise<AsyncIterator<Company>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  maintainer: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   phases: () => Promise<AsyncIterator<Phase[]>>;
@@ -2695,6 +2958,7 @@ export interface CompanyNullablePromise
   extends Promise<Company | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  maintainer: () => Promise<String>;
   name: () => Promise<String>;
   email: () => Promise<String>;
   phases: () => Promise<Phase[]>;
@@ -3137,6 +3401,107 @@ export interface AggregateBidPromise
 
 export interface AggregateBidSubscription
   extends Promise<AsyncIterator<AggregateBid>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Claim {
+  id: ID_Output;
+  user: String;
+  email: String;
+  name: String;
+  message?: String;
+  pending: Boolean;
+  approved: Boolean;
+}
+
+export interface ClaimPromise extends Promise<Claim>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  user: () => Promise<String>;
+  email: () => Promise<String>;
+  name: () => Promise<String>;
+  company: <T = CompanyPromise>() => T;
+  message: () => Promise<String>;
+  pending: () => Promise<Boolean>;
+  approved: () => Promise<Boolean>;
+}
+
+export interface ClaimSubscription
+  extends Promise<AsyncIterator<Claim>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  user: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  company: <T = CompanySubscription>() => T;
+  message: () => Promise<AsyncIterator<String>>;
+  pending: () => Promise<AsyncIterator<Boolean>>;
+  approved: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface ClaimNullablePromise
+  extends Promise<Claim | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  user: () => Promise<String>;
+  email: () => Promise<String>;
+  name: () => Promise<String>;
+  company: <T = CompanyPromise>() => T;
+  message: () => Promise<String>;
+  pending: () => Promise<Boolean>;
+  approved: () => Promise<Boolean>;
+}
+
+export interface ClaimConnection {
+  pageInfo: PageInfo;
+  edges: ClaimEdge[];
+}
+
+export interface ClaimConnectionPromise
+  extends Promise<ClaimConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ClaimEdge>>() => T;
+  aggregate: <T = AggregateClaimPromise>() => T;
+}
+
+export interface ClaimConnectionSubscription
+  extends Promise<AsyncIterator<ClaimConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ClaimEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateClaimSubscription>() => T;
+}
+
+export interface ClaimEdge {
+  node: Claim;
+  cursor: String;
+}
+
+export interface ClaimEdgePromise extends Promise<ClaimEdge>, Fragmentable {
+  node: <T = ClaimPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ClaimEdgeSubscription
+  extends Promise<AsyncIterator<ClaimEdge>>,
+    Fragmentable {
+  node: <T = ClaimSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateClaim {
+  count: Int;
+}
+
+export interface AggregateClaimPromise
+  extends Promise<AggregateClaim>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateClaimSubscription
+  extends Promise<AsyncIterator<AggregateClaim>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -3644,6 +4009,65 @@ export interface BidPreviousValuesSubscription
   is_approved: () => Promise<AsyncIterator<Boolean>>;
 }
 
+export interface ClaimSubscriptionPayload {
+  mutation: MutationType;
+  node: Claim;
+  updatedFields: String[];
+  previousValues: ClaimPreviousValues;
+}
+
+export interface ClaimSubscriptionPayloadPromise
+  extends Promise<ClaimSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ClaimPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ClaimPreviousValuesPromise>() => T;
+}
+
+export interface ClaimSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ClaimSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ClaimSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ClaimPreviousValuesSubscription>() => T;
+}
+
+export interface ClaimPreviousValues {
+  id: ID_Output;
+  user: String;
+  email: String;
+  name: String;
+  message?: String;
+  pending: Boolean;
+  approved: Boolean;
+}
+
+export interface ClaimPreviousValuesPromise
+  extends Promise<ClaimPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  user: () => Promise<String>;
+  email: () => Promise<String>;
+  name: () => Promise<String>;
+  message: () => Promise<String>;
+  pending: () => Promise<Boolean>;
+  approved: () => Promise<Boolean>;
+}
+
+export interface ClaimPreviousValuesSubscription
+  extends Promise<AsyncIterator<ClaimPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  user: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  message: () => Promise<AsyncIterator<String>>;
+  pending: () => Promise<AsyncIterator<Boolean>>;
+  approved: () => Promise<AsyncIterator<Boolean>>;
+}
+
 export interface CompanySubscriptionPayload {
   mutation: MutationType;
   node: Company;
@@ -3671,6 +4095,7 @@ export interface CompanySubscriptionPayloadSubscription
 
 export interface CompanyPreviousValues {
   id: ID_Output;
+  maintainer?: String;
   name: String;
   email?: String;
   phases: Phase[];
@@ -3686,6 +4111,7 @@ export interface CompanyPreviousValuesPromise
   extends Promise<CompanyPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  maintainer: () => Promise<String>;
   name: () => Promise<String>;
   email: () => Promise<String>;
   phases: () => Promise<Phase[]>;
@@ -3701,6 +4127,7 @@ export interface CompanyPreviousValuesSubscription
   extends Promise<AsyncIterator<CompanyPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  maintainer: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   phases: () => Promise<AsyncIterator<Phase[]>>;
@@ -4080,6 +4507,10 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "Company",
+    embedded: false
+  },
+  {
+    name: "Claim",
     embedded: false
   },
   {
