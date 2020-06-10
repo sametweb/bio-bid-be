@@ -21,10 +21,12 @@ module.exports = {
       // Find the claim and company related
       const claim = await prisma.claim({ id });
       const company = await prisma.claim({ id }).company();
+
       // Get claim.user (sub) and claim.company.id
       const { user } = claim;
       const company_id = company.id;
       console.log({ user, company_id });
+
       // Save claim.company.id in user's profile
       try {
         const updatedUser = await axios.post(
@@ -57,7 +59,9 @@ module.exports = {
 
       return await prisma.claim({ id });
     },
-    denyClaim: (parent, args, { prisma }, info) => {},
+    denyClaim: (parent, { id }, { prisma }, info) => {
+      return prisma.updateClaim({ where: { id }, data: { pending: false } });
+    },
   },
   Claim: {
     company: ({ id }, args, { prisma }, info) => {
