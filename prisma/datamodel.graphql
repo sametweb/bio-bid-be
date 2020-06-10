@@ -23,7 +23,6 @@ type Claim {
   email: String!
   name: String!
   company: Company! @relation(link: INLINE)
-  message: String
   pending: Boolean! @default(value: true)
   approved: Boolean! @default(value: false)
 }

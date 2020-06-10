@@ -11,7 +11,6 @@ module.exports = gql`
       email: String!
       name: String!
       company: ID!
-      message: String
     ): Claim!
     approveClaim(id: ID!): Claim!
     denyClaim(id: ID!): Claim!
@@ -23,7 +22,6 @@ module.exports = gql`
     email: String!
     name: String!
     company: Company!
-    message: String
     pending: Boolean!
     approved: Boolean!
   }

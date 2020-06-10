@@ -8,14 +8,13 @@ module.exports = {
   },
   Mutation: {
     claimCompany: (parent, args, { prisma }, info) => {
-      const { user, email, name, company, message } = args;
+      const { user, email, name, company } = args;
 
       return prisma.createClaim({
         user,
         email,
         name,
         company: { connect: { id: company } },
-        message,
       });
     },
     approveClaim: async (parent, { id }, { prisma }, info) => {
