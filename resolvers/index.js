@@ -6,6 +6,7 @@ const serviceItemResolver = require("./serviceItemResolver");
 const regionResolver = require("./regionResolver");
 const therapeuticResolver = require("./therapeuticResolver");
 const specialtyResolver = require("./specialtyResolver");
+const specialtyItemResolver = require("./specialtyItemResolver");
 
 module.exports = [
   bidResolver,
@@ -16,4 +17,5 @@ module.exports = [
   regionResolver,
   therapeuticResolver,
   specialtyResolver,
+  specialtyItemResolver,
 ];

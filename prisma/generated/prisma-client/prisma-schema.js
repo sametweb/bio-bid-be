@@ -1542,7 +1542,12 @@ input SpecialtyCreateInput {
   id: ID
   info: SpecialtyItemCreateOneInput!
   service: ServiceCreateOneWithoutSpecialtiesInput
-  sub_specialties: SpecialtyCreateManyWithoutSub_specialtiesInput
+  sub_specialties: SpecialtyCreateManyInput
+}
+
+input SpecialtyCreateManyInput {
+  create: [SpecialtyCreateInput!]
+  connect: [SpecialtyWhereUniqueInput!]
 }
 
 input SpecialtyCreateManyWithoutServiceInput {
@@ -1550,21 +1555,10 @@ input SpecialtyCreateManyWithoutServiceInput {
   connect: [SpecialtyWhereUniqueInput!]
 }
 
-input SpecialtyCreateManyWithoutSub_specialtiesInput {
-  create: [SpecialtyCreateWithoutSub_specialtiesInput!]
-  connect: [SpecialtyWhereUniqueInput!]
-}
-
 input SpecialtyCreateWithoutServiceInput {
   id: ID
   info: SpecialtyItemCreateOneInput!
-  sub_specialties: SpecialtyCreateManyWithoutSub_specialtiesInput
-}
-
-input SpecialtyCreateWithoutSub_specialtiesInput {
-  id: ID
-  info: SpecialtyItemCreateOneInput!
-  service: ServiceCreateOneWithoutSpecialtiesInput
+  sub_specialties: SpecialtyCreateManyInput
 }
 
 type SpecialtyEdge {
@@ -1738,10 +1732,27 @@ input SpecialtySubscriptionWhereInput {
   NOT: [SpecialtySubscriptionWhereInput!]
 }
 
+input SpecialtyUpdateDataInput {
+  info: SpecialtyItemUpdateOneRequiredInput
+  service: ServiceUpdateOneWithoutSpecialtiesInput
+  sub_specialties: SpecialtyUpdateManyInput
+}
+
 input SpecialtyUpdateInput {
   info: SpecialtyItemUpdateOneRequiredInput
   service: ServiceUpdateOneWithoutSpecialtiesInput
-  sub_specialties: SpecialtyUpdateManyWithoutSub_specialtiesInput
+  sub_specialties: SpecialtyUpdateManyInput
+}
+
+input SpecialtyUpdateManyInput {
+  create: [SpecialtyCreateInput!]
+  update: [SpecialtyUpdateWithWhereUniqueNestedInput!]
+  upsert: [SpecialtyUpsertWithWhereUniqueNestedInput!]
+  delete: [SpecialtyWhereUniqueInput!]
+  connect: [SpecialtyWhereUniqueInput!]
+  set: [SpecialtyWhereUniqueInput!]
+  disconnect: [SpecialtyWhereUniqueInput!]
+  deleteMany: [SpecialtyScalarWhereInput!]
 }
 
 input SpecialtyUpdateManyWithoutServiceInput {
@@ -1755,25 +1766,14 @@ input SpecialtyUpdateManyWithoutServiceInput {
   deleteMany: [SpecialtyScalarWhereInput!]
 }
 
-input SpecialtyUpdateManyWithoutSub_specialtiesInput {
-  create: [SpecialtyCreateWithoutSub_specialtiesInput!]
-  delete: [SpecialtyWhereUniqueInput!]
-  connect: [SpecialtyWhereUniqueInput!]
-  set: [SpecialtyWhereUniqueInput!]
-  disconnect: [SpecialtyWhereUniqueInput!]
-  update: [SpecialtyUpdateWithWhereUniqueWithoutSub_specialtiesInput!]
-  upsert: [SpecialtyUpsertWithWhereUniqueWithoutSub_specialtiesInput!]
-  deleteMany: [SpecialtyScalarWhereInput!]
-}
-
 input SpecialtyUpdateWithoutServiceDataInput {
   info: SpecialtyItemUpdateOneRequiredInput
-  sub_specialties: SpecialtyUpdateManyWithoutSub_specialtiesInput
+  sub_specialties: SpecialtyUpdateManyInput
 }
 
-input SpecialtyUpdateWithoutSub_specialtiesDataInput {
-  info: SpecialtyItemUpdateOneRequiredInput
-  service: ServiceUpdateOneWithoutSpecialtiesInput
+input SpecialtyUpdateWithWhereUniqueNestedInput {
+  where: SpecialtyWhereUniqueInput!
+  data: SpecialtyUpdateDataInput!
 }
 
 input SpecialtyUpdateWithWhereUniqueWithoutServiceInput {
@@ -1781,21 +1781,16 @@ input SpecialtyUpdateWithWhereUniqueWithoutServiceInput {
   data: SpecialtyUpdateWithoutServiceDataInput!
 }
 
-input SpecialtyUpdateWithWhereUniqueWithoutSub_specialtiesInput {
+input SpecialtyUpsertWithWhereUniqueNestedInput {
   where: SpecialtyWhereUniqueInput!
-  data: SpecialtyUpdateWithoutSub_specialtiesDataInput!
+  update: SpecialtyUpdateDataInput!
+  create: SpecialtyCreateInput!
 }
 
 input SpecialtyUpsertWithWhereUniqueWithoutServiceInput {
   where: SpecialtyWhereUniqueInput!
   update: SpecialtyUpdateWithoutServiceDataInput!
   create: SpecialtyCreateWithoutServiceInput!
-}
-
-input SpecialtyUpsertWithWhereUniqueWithoutSub_specialtiesInput {
-  where: SpecialtyWhereUniqueInput!
-  update: SpecialtyUpdateWithoutSub_specialtiesDataInput!
-  create: SpecialtyCreateWithoutSub_specialtiesInput!
 }
 
 input SpecialtyWhereInput {

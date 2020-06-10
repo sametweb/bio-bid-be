@@ -11,7 +11,11 @@ module.exports = {
 
       return prisma.company({ id });
     },
-    searchCompany: (parent, { search }, { prisma }, info) => {
+    searchCompanies: (parent, { search }, { prisma }, info) => {
+      if (search.length < 3) {
+        throw new Error("Please enter a search term at least 3 characters");
+      }
+
       return prisma.companies({
         where: { name_contains: search },
       });
@@ -45,26 +49,28 @@ module.exports = {
       }
 
       // Add specialties to SpecialtyItem table if they don't already exist
-      args.services &&
-        args.services.forEach((service) => {
-          service.specialties &&
-            service.specialties.forEach(async (specialty) => {
-              await prisma.upsertSpecialtyItem({
-                where: { name: specialty.name },
-                create: { name: specialty.name },
-                update: { name: specialty.name },
-              });
+      args.services.forEach((service) => {
+        service.specialties &&
+          service.specialties.forEach(async (specialty) => {
+            const data = {
+              create: { name: specialty.name },
+              update: { name: specialty.name },
+              where: { name: specialty.name },
+            };
 
-              specialty.sub_specialties &&
-                specialty.sub_specialties.forEach(async (sub) => {
-                  await prisma.upsertSpecialtyItem({
-                    where: { name: sub.name },
-                    create: { name: sub.name },
-                    update: { name: sub.name },
-                  });
-                });
+            specialty.sub_specialties.forEach(async (sub) => {
+              const data = {
+                create: { name: sub.name },
+                update: { name: sub.name },
+                where: { name: sub.name },
+              };
+              // sub_specialties
+              await prisma.upsertSpecialtyItem(data);
             });
-        });
+            // specialties
+            await prisma.upsertSpecialtyItem(data);
+          });
+      });
 
       // Create "services" object with all nested specialty/sub-specialty relations
       const services = {
@@ -93,7 +99,7 @@ module.exports = {
           }),
       };
 
-      return prisma.createCompany({
+      return await prisma.createCompany({
         name,
         email,
         phases: { set: phases },

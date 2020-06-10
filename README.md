@@ -33,50 +33,51 @@ We chose Apollo GraphQL because:
 
 #### Queries
 
-| Query Name | Access Control | Description                   |
-| ---------- | -------------- | ----------------------------- |
-| companies  | all users      | Returns an array of companies |
-| company  | all users      | Returns a a company that matches the name or id requested |
-| services   | all users      | Returns an array of services  |
-| service    | all users      | Returns a service matching the name requested |
-| searchService | all users   | Returns an array of services that cointain or match the name requested |
-| regions | all users | Returns an array of regions |
-| region | all users | Returns a region that matches the name requested |
-| searchRegion | all users | Returns an array of regions that cointain or match the name requested |
-| therapeutics | all users | Returns an array of therapeutics |
-| therapeutic | all users | Returns a therapeutic that matches the name requested |
-| searchTherapeutic | all users | Returns an array of therapeutics that cointain or match the name requested |
-| specialties | all users | Returns an array of specialties |
-| specialty | all users | Returns a specialty that matches the name requested |
-| searchSpecialty | all users | Returns an array of specialties that cointain or match the name requested |
-| bids       | all users      | Returns an array of bids      |
-| studies    | all users      | Returns a an array of studies |
+| Query Name           | Access Control | Description                                                                  |
+| -------------------- | -------------- | ---------------------------------------------------------------------------- |
+| companies            | all users      | Returns an array of companies                                                |
+| company              | all users      | Returns a a company that matches the `id` requested                          |
+| searchCompanies      | all users      | Returns an array of companies that match the `search` string requested       |
+| serviceItems         | all users      | Returns an array of services                                                 |
+| serviceItem          | all users      | Returns a service matching the `name` string requested                       |
+| searchServiceItems   | all users      | Returns an array of services that match the `search` string requested        |
+| specialtyItems       | all users      | Returns an array of specialties                                              |
+| specialtyItem        | all users      | Returns a specialty matching the `name` string requested                     |
+| searchSpecialtyItems | all users      | Returns an array of specialties that match the `search` string requested     |
+| regions              | all users      | Returns an array of regions                                                  |
+| region               | all users      | Returns a region that matches the `name` requested                           |
+| searchRegions        | all users      | Returns an array of regions that cointain or match the `name` requested      |
+| therapeutics         | all users      | Returns an array of therapeutics                                             |
+| therapeutic          | all users      | Returns a therapeutic that matches the `name` requested                      |
+| searchTherapeutics   | all users      | Returns an array of therapeutics that cointain or match the `name` requested |
+| bids                 | all users      | Returns an array of bids                                                     |
+| studies              | all users      | Returns a an array of studies                                                |
 
 #### Mutations
 
-| Mutation Name | Access Control | Description                                                       |
-| ------------- | -------------- | ----------------------------------------------------------------- |
-| createCompany | all users      | Creates a new company                                             |
-| updateCompany | all users      | Updates the company details. Requires the company id              |
-| deleteCompany | all users      | Deletes a company from the database. Requires the company name    |
-| createService | all users      | Creates a new service                                             |
-| updateService | all users      | Updates the service details. Requires the service name            |
-| deleteService | all users      | Deletes a service from the database. Requires the service name    |
-| createRegion  | all users      | Creates a new region                                              |
-| updateRegion  | all users      | Updates the region details. Requires the region name              |
-| deleteRegion  | all users      | Deletes a region from the database. Requires the region name      |
-| createTherapeutic  | all users      | Creates a new therapeutic                                              |
-| updateTherapeutic  | all users      | Updates the therapeutic details. Requires the therapeutic name              |
-| deleteTherapeutic  | all users      | Deletes a therapeutic from the database. Requires the therapeutic name      |
-| createSpecialty  | all users      | Creates a new specialty                                            |
-| updateSpecialty  | all users      | Updates the specialty details. Requires the specialty name              |
-| deleteSpecialty  | all users      | Deletes a specialty from the database. Requires the specialty name      |
-| createBid     | all users      | Creates a new bid                                                 |
-| updateBid     | all users      | Updates the bid details                                           |
-| deleteBid     | all users      | Deletes a bid from the database. Requires the ID of the bid       |
-| createStudy   | all users      | Creates a new study                                               |
-| updateStudy   | all users      | Updates study details                                             |
-| deleteStudy   | all users      | Deletes a study from the database. Requires the name of the study |
+| Mutation Name       | Access Control | Description                                                              |
+| ------------------- | -------------- | ------------------------------------------------------------------------ |
+| createCompany       | all users      | Creates a new company                                                    |
+| updateCompany       | all users      | Updates the company details. Requires the company `id`                   |
+| deleteCompany       | all users      | Deletes a company from the database. Requires the company `id`           |
+| createServiceItem   | all users      | Creates a new service                                                    |
+| updateServiceItem   | all users      | Updates the service details. Requires the service `name`                 |
+| deleteServiceItem   | all users      | Deletes a service from the database. Requires the service `name`         |
+| createRegion        | all users      | Creates a new region                                                     |
+| updateRegion        | all users      | Updates the region details. Requires the region `name`                   |
+| deleteRegion        | all users      | Deletes a region from the database. Requires the region `name`           |
+| createTherapeutic   | all users      | Creates a new therapeutic                                                |
+| updateTherapeutic   | all users      | Updates the therapeutic details. Requires the therapeutic `name`         |
+| deleteTherapeutic   | all users      | Deletes a therapeutic from the database. Requires the therapeutic `name` |
+| createSpecialtyItem | all users      | Creates a new specialty                                                  |
+| updateSpecialtyItem | all users      | Updates the specialty details. Requires the specialty `name`             |
+| deleteSpecialtyItem | all users      | Deletes a specialty from the database. Requires the specialty `name`     |
+| createBid           | all users      | Creates a new bid                                                        |
+| updateBid           | all users      | Updates the bid details                                                  |
+| deleteBid           | all users      | Deletes a bid from the database. Requires the ID of the bid              |
+| createStudy         | all users      | Creates a new study                                                      |
+| updateStudy         | all users      | Updates study details                                                    |
+| deleteStudy         | all users      | Deletes a study from the database. Requires the name of the study        |
 
 ## Data Model
 
@@ -88,42 +89,98 @@ We chose Apollo GraphQL because:
 
 ```
 type Company {
-  id: ID! @id
-  name: String! @unique
+  id: ID
+  name: String!
+  email: String
+  phases: [Phase]
   logoURL: String
   website: String
   linkedin: String
   overview: String
   headquarters: String
   companySize: CompanySize
-  services: [Service]! @relation
-  specialties: [Specialty]! @relation
-  regions: [Region]! @relation
-  therapeutics: [Therapeutic]! @relation
+  services: [Service!]
+  regions: [Region!]
+  therapeutics: [Therapeutic!]
   studies: [Study!]
   bids: [Bid!]
 }
 ```
+
+#### Company Mutations
+
+---
+
+```
+createCompany(
+  name: String!
+  email: String
+  phases: [Phase]
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: [ServiceInput]
+  regions: [RegionInput]
+  therapeutics: [TherapeuticInput]
+): Company!
+
+updateCompany(
+  id: ID!
+  updated_name: String
+  updated_email: String
+  updated_phases: [Phase]
+  updated_logoURL: String
+  updated_website: String
+  updated_linkedin: String
+  updated_overview: String
+  updated_headquarters: String
+  updated_companySize: CompanySize
+  updated_services: [ServiceInput]
+  updated_regions: [RegionInput]
+  updated_therapeutics: [TherapeuticInput]
+): Company!
+
+input ServiceInput {
+  name: String!
+  specialties: [SpecialtyInput]
+}
+
+input SpecialtyInput {
+  name: String!
+  sub_specialties: [SpecialtyInput]
+}
+
+input RegionInput {
+  name: String!
+}
+
+input TherapeuticInput {
+  name: String!
+}
+```
+
 #### Service
 
 ---
 
 ```
-type Service {
-  id: ID! @id
-  name: String! @unique
-  companies: [Company]! @relation
+type ServiceItem {
+  id: ID!
+  name: String!
 }
 ```
+
 #### Specialty
 
 ---
 
 ```
-type Specialty {
-  id: ID! @id
-  name: String! @unique
-  companies: [Company]! @relation
+type SpecialtyItem {
+  id: ID!
+  name: String!
 }
 ```
 
@@ -133,22 +190,24 @@ type Specialty {
 
 ```
 type Region {
-  id: ID! @id
-  name: String! @unique
-  companies: [Company]! @relation
+  id: ID
+  name: String!
+  companies: [Company]!
 }
 ```
+
 #### Therapeutic
 
 ---
 
 ```
 type Therapeutic {
-  id: ID! @id
-  name: String! @unique
-  companies: [Company]! @relation
+  id: ID
+  name: String!
+  companies: [Company]!
 }
 ```
+
 #### CompanySize
 
 ---
@@ -167,6 +226,18 @@ enum CompanySize { # https://developer.linkedin.com/docs/reference/company-size-
 }
 ```
 
+#### Phase
+
+---
+
+```
+enum Phase {
+  I
+  II
+  III
+  IV
+}
+```
 
 #### Bid
 

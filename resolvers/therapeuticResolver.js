@@ -6,19 +6,42 @@ module.exports = {
     therapeutic: (parent, { name }, { prisma }, info) => {
       return prisma.therapeutic({ name });
     },
-    searchTherapeutic: (parent, { name }, { prisma }, info) => {
+    searchTherapeutics: (parent, { name }, { prisma }, info) => {
+      if (search.length < 3) {
+        throw new Error("Please enter a search term at least 3 characters");
+      }
+
       return prisma.therapeutics({
         where: { name_contains: name },
       });
     },
   },
   Mutation: {
-    createTherapeutic: (parent, { name }, { prisma }, info) => {
-      return prisma.createTherapeutic({ name });
+    createTherapeutic: async (parent, { name }, { prisma }, info) => {
+      const found = await prisma.$exists.therapeutic({ name });
+
+      if (found) {
+        throw new Error(
+          `There is a therapeutic area named '${name}' already, please enter a different name.`
+        );
+      }
+
+      return await prisma.createTherapeutic({ name });
     },
-    updateTherapeutic: (parent, args, { prisma }, info) => {
+    updateTherapeutic: async (parent, args, { prisma }, info) => {
       const { name, updated_name } = args;
-      return prisma.updateTherapeutic({
+
+      if (name !== updated_name) {
+        const found = await prisma.$exists.therapeutic({ name: updated_name });
+
+        if (found) {
+          throw new Error(
+            `There is a therapeutic area named '${updated_name}' already, please enter a different name.`
+          );
+        }
+      }
+
+      return await prisma.updateTherapeutic({
         data: { name: updated_name },
         where: { name },
       });

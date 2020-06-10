@@ -37,8 +37,7 @@ type Specialty {
   id: ID! @id
   info: SpecialtyItem! @relation(link: INLINE)
   service: Service @relation(link: INLINE)
-  sub_specialties: [Specialty]
-    @relation(name: "SubSpecialties", onDelete: CASCADE)
+  sub_specialties: [Specialty] @relation(onDelete: CASCADE)
 }
 
 type Region {

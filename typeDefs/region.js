@@ -4,7 +4,7 @@ module.exports = gql`
   extend type Query {
     regions: [Region!]
     region(name: String!): Region!
-    searchRegion(search: String!): [Region]!
+    searchRegions(search: String!): [Region]!
   }
 
   extend type Mutation {

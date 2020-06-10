@@ -4,7 +4,7 @@ module.exports = gql`
   extend type Query {
     therapeutics: [Therapeutic!]
     therapeutic(name: String!): Therapeutic!
-    searchTherapeutic(search: String!): [Therapeutic]!
+    searchTherapeutics(search: String!): [Therapeutic]!
   }
 
   extend type Mutation {

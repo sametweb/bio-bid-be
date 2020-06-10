@@ -1086,7 +1086,7 @@ export interface SpecialtyCreateManyWithoutServiceInput {
 export interface SpecialtyCreateWithoutServiceInput {
   id?: Maybe<ID_Input>;
   info: SpecialtyItemCreateOneInput;
-  sub_specialties?: Maybe<SpecialtyCreateManyWithoutSub_specialtiesInput>;
+  sub_specialties?: Maybe<SpecialtyCreateManyInput>;
 }
 
 export interface SpecialtyItemCreateOneInput {
@@ -1099,18 +1099,16 @@ export interface SpecialtyItemCreateInput {
   name: String;
 }
 
-export interface SpecialtyCreateManyWithoutSub_specialtiesInput {
-  create?: Maybe<
-    | SpecialtyCreateWithoutSub_specialtiesInput[]
-    | SpecialtyCreateWithoutSub_specialtiesInput
-  >;
+export interface SpecialtyCreateManyInput {
+  create?: Maybe<SpecialtyCreateInput[] | SpecialtyCreateInput>;
   connect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
 }
 
-export interface SpecialtyCreateWithoutSub_specialtiesInput {
+export interface SpecialtyCreateInput {
   id?: Maybe<ID_Input>;
   info: SpecialtyItemCreateOneInput;
   service?: Maybe<ServiceCreateOneWithoutSpecialtiesInput>;
+  sub_specialties?: Maybe<SpecialtyCreateManyInput>;
 }
 
 export interface ServiceCreateOneWithoutSpecialtiesInput {
@@ -1347,7 +1345,7 @@ export interface SpecialtyUpdateWithWhereUniqueWithoutServiceInput {
 
 export interface SpecialtyUpdateWithoutServiceDataInput {
   info?: Maybe<SpecialtyItemUpdateOneRequiredInput>;
-  sub_specialties?: Maybe<SpecialtyUpdateManyWithoutSub_specialtiesInput>;
+  sub_specialties?: Maybe<SpecialtyUpdateManyInput>;
 }
 
 export interface SpecialtyItemUpdateOneRequiredInput {
@@ -1366,34 +1364,32 @@ export interface SpecialtyItemUpsertNestedInput {
   create: SpecialtyItemCreateInput;
 }
 
-export interface SpecialtyUpdateManyWithoutSub_specialtiesInput {
-  create?: Maybe<
-    | SpecialtyCreateWithoutSub_specialtiesInput[]
-    | SpecialtyCreateWithoutSub_specialtiesInput
+export interface SpecialtyUpdateManyInput {
+  create?: Maybe<SpecialtyCreateInput[] | SpecialtyCreateInput>;
+  update?: Maybe<
+    | SpecialtyUpdateWithWhereUniqueNestedInput[]
+    | SpecialtyUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | SpecialtyUpsertWithWhereUniqueNestedInput[]
+    | SpecialtyUpsertWithWhereUniqueNestedInput
   >;
   delete?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
   connect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
   set?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
   disconnect?: Maybe<SpecialtyWhereUniqueInput[] | SpecialtyWhereUniqueInput>;
-  update?: Maybe<
-    | SpecialtyUpdateWithWhereUniqueWithoutSub_specialtiesInput[]
-    | SpecialtyUpdateWithWhereUniqueWithoutSub_specialtiesInput
-  >;
-  upsert?: Maybe<
-    | SpecialtyUpsertWithWhereUniqueWithoutSub_specialtiesInput[]
-    | SpecialtyUpsertWithWhereUniqueWithoutSub_specialtiesInput
-  >;
   deleteMany?: Maybe<SpecialtyScalarWhereInput[] | SpecialtyScalarWhereInput>;
 }
 
-export interface SpecialtyUpdateWithWhereUniqueWithoutSub_specialtiesInput {
+export interface SpecialtyUpdateWithWhereUniqueNestedInput {
   where: SpecialtyWhereUniqueInput;
-  data: SpecialtyUpdateWithoutSub_specialtiesDataInput;
+  data: SpecialtyUpdateDataInput;
 }
 
-export interface SpecialtyUpdateWithoutSub_specialtiesDataInput {
+export interface SpecialtyUpdateDataInput {
   info?: Maybe<SpecialtyItemUpdateOneRequiredInput>;
   service?: Maybe<ServiceUpdateOneWithoutSpecialtiesInput>;
+  sub_specialties?: Maybe<SpecialtyUpdateManyInput>;
 }
 
 export interface ServiceUpdateOneWithoutSpecialtiesInput {
@@ -1913,10 +1909,10 @@ export interface ServiceUpsertWithoutSpecialtiesInput {
   create: ServiceCreateWithoutSpecialtiesInput;
 }
 
-export interface SpecialtyUpsertWithWhereUniqueWithoutSub_specialtiesInput {
+export interface SpecialtyUpsertWithWhereUniqueNestedInput {
   where: SpecialtyWhereUniqueInput;
-  update: SpecialtyUpdateWithoutSub_specialtiesDataInput;
-  create: SpecialtyCreateWithoutSub_specialtiesInput;
+  update: SpecialtyUpdateDataInput;
+  create: SpecialtyCreateInput;
 }
 
 export interface SpecialtyScalarWhereInput {
@@ -2277,17 +2273,10 @@ export interface ServiceItemUpdateManyMutationInput {
   name?: Maybe<String>;
 }
 
-export interface SpecialtyCreateInput {
-  id?: Maybe<ID_Input>;
-  info: SpecialtyItemCreateOneInput;
-  service?: Maybe<ServiceCreateOneWithoutSpecialtiesInput>;
-  sub_specialties?: Maybe<SpecialtyCreateManyWithoutSub_specialtiesInput>;
-}
-
 export interface SpecialtyUpdateInput {
   info?: Maybe<SpecialtyItemUpdateOneRequiredInput>;
   service?: Maybe<ServiceUpdateOneWithoutSpecialtiesInput>;
-  sub_specialties?: Maybe<SpecialtyUpdateManyWithoutSub_specialtiesInput>;
+  sub_specialties?: Maybe<SpecialtyUpdateManyInput>;
 }
 
 export interface SpecialtyItemUpdateInput {
