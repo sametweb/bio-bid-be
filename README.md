@@ -38,6 +38,7 @@ We chose Apollo GraphQL because:
 | companies            | all users      | Returns an array of companies                                                                   |
 | company              | all users      | Returns a a company that matches the `id` requested                                             |
 | searchCompanies      | all users      | Returns an array of companies that match the `search` string requested (min 3 characters)       |
+| pendingClaims        | all users      | Returns an array of claims `pending: true`                                                      |
 | serviceItems         | all users      | Returns an array of services                                                                    |
 | serviceItem          | all users      | Returns a service matching the `name` string requested                                          |
 | searchServiceItems   | all users      | Returns an array of services that match the `search` string requested (min 3 characters)        |
@@ -55,29 +56,32 @@ We chose Apollo GraphQL because:
 
 #### Mutations
 
-| Mutation Name       | Access Control | Description                                                              |
-| ------------------- | -------------- | ------------------------------------------------------------------------ |
-| createCompany       | all users      | Creates a new company                                                    |
-| updateCompany       | all users      | Updates the company details. Requires the company `id`                   |
-| deleteCompany       | all users      | Deletes a company from the database. Requires the company `id`           |
-| createServiceItem   | all users      | Creates a new service                                                    |
-| updateServiceItem   | all users      | Updates the service details. Requires the service `name`                 |
-| deleteServiceItem   | all users      | Deletes a service from the database. Requires the service `name`         |
-| createRegion        | all users      | Creates a new region                                                     |
-| updateRegion        | all users      | Updates the region details. Requires the region `name`                   |
-| deleteRegion        | all users      | Deletes a region from the database. Requires the region `name`           |
-| createTherapeutic   | all users      | Creates a new therapeutic                                                |
-| updateTherapeutic   | all users      | Updates the therapeutic details. Requires the therapeutic `name`         |
-| deleteTherapeutic   | all users      | Deletes a therapeutic from the database. Requires the therapeutic `name` |
-| createSpecialtyItem | all users      | Creates a new specialty                                                  |
-| updateSpecialtyItem | all users      | Updates the specialty details. Requires the specialty `name`             |
-| deleteSpecialtyItem | all users      | Deletes a specialty from the database. Requires the specialty `name`     |
-| createBid           | all users      | Creates a new bid                                                        |
-| updateBid           | all users      | Updates the bid details                                                  |
-| deleteBid           | all users      | Deletes a bid from the database. Requires the ID of the bid              |
-| createStudy         | all users      | Creates a new study                                                      |
-| updateStudy         | all users      | Updates study details                                                    |
-| deleteStudy         | all users      | Deletes a study from the database. Requires the name of the study        |
+| Mutation Name       | Access Control | Description                                                                                                                             |
+| ------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| createCompany       | all users      | Creates a new company                                                                                                                   |
+| updateCompany       | all users      | Updates the company details. Requires the company `id`                                                                                  |
+| deleteCompany       | all users      | Deletes a company from the database. Requires the company `id`                                                                          |
+| claimCompany        | all users      | Creates a new claim. Reequires `user` (sub field from Okta profile), `email`, `name`, and `company` (Company ID)                        |
+| approveClaim        | all users      | Updates user's Okta profile and marks claim as `approved: true, pending: false`. Requires `id` (Claim ID)                               |
+| denyClaim           | all users      | Updates claim as `pending: false`, since pending claim is already `approved: false`, it only stays in the database for future reference |
+| createServiceItem   | all users      | Creates a new service                                                                                                                   |
+| updateServiceItem   | all users      | Updates the service details. Requires the service `name`                                                                                |
+| deleteServiceItem   | all users      | Deletes a service from the database. Requires the service `name`                                                                        |
+| createRegion        | all users      | Creates a new region                                                                                                                    |
+| updateRegion        | all users      | Updates the region details. Requires the region `name`                                                                                  |
+| deleteRegion        | all users      | Deletes a region from the database. Requires the region `name`                                                                          |
+| createTherapeutic   | all users      | Creates a new therapeutic                                                                                                               |
+| updateTherapeutic   | all users      | Updates the therapeutic details. Requires the therapeutic `name`                                                                        |
+| deleteTherapeutic   | all users      | Deletes a therapeutic from the database. Requires the therapeutic `name`                                                                |
+| createSpecialtyItem | all users      | Creates a new specialty                                                                                                                 |
+| updateSpecialtyItem | all users      | Updates the specialty details. Requires the specialty `name`                                                                            |
+| deleteSpecialtyItem | all users      | Deletes a specialty from the database. Requires the specialty `name`                                                                    |
+| createBid           | all users      | Creates a new bid                                                                                                                       |
+| updateBid           | all users      | Updates the bid details                                                                                                                 |
+| deleteBid           | all users      | Deletes a bid from the database. Requires the ID of the bid                                                                             |
+| createStudy         | all users      | Creates a new study                                                                                                                     |
+| updateStudy         | all users      | Updates study details                                                                                                                   |
+| deleteStudy         | all users      | Deletes a study from the database. Requires the name of the study                                                                       |
 
 ## Data Model
 
@@ -159,6 +163,34 @@ input RegionInput {
 
 input TherapeuticInput {
   name: String!
+}
+```
+
+#### Claim
+
+---
+
+```
+type Claim {
+  id: ID!
+  user: String!
+  email: String!
+  name: String!
+  company: Company!
+  pending: Boolean!
+  approved: Boolean!
+}
+```
+
+#### Claim Mutations
+
+---
+
+```
+type Mutation {
+  claimCompany(user: String! email: String! name: String! company: ID!): Claim!
+  approveClaim(id: ID!): Claim!
+  denyClaim(id: ID!): Claim!
 }
 ```
 
