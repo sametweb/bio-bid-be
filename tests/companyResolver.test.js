@@ -150,7 +150,7 @@ describe("Company queries and mutations", () => {
       expect(prisma.updateCompany).not.toHaveBeenCalled();
     });
 
-    it("deletes old service/specialty tree before update", async () => {
+    it("deletes old service/specialty tree then calls updateCompany", async () => {
       const params = [{}, { updated_name: "Company", id: 1 }, { prisma }, {}];
       jest.spyOn(prisma, "company").mockImplementation(() => ({
         services: jest.fn(() => [{ id: 1 }, { id: 2 }]),
@@ -158,6 +158,7 @@ describe("Company queries and mutations", () => {
       await updateCompany(...params);
 
       expect(prisma.deleteManyServices).toHaveBeenCalledTimes(1);
+      expect(prisma.updateCompany).toHaveBeenCalledTimes(1);
     });
   });
 });
