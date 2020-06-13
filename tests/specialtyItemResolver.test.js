@@ -69,6 +69,15 @@ describe("Query", () => {
       );
       expect(prisma.specialtyItems).not.toHaveBeenCalled();
     });
+
+    it("calls prisma.specialtyItems with search term", () => {
+      const params = [{}, { search: "asd" }, { prisma }, {}];
+      searchSpecialtyItems(...params);
+
+      expect(prisma.specialtyItems).toHaveBeenCalledWith(
+        expect.objectContaining({ where: { name_contains: "asd" } })
+      );
+    });
   });
 });
 

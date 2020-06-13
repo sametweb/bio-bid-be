@@ -159,32 +159,30 @@ module.exports = {
 
       // Re-connecting the services, specialties, and sub_specialties to the company
       const services = {
-        create:
-          args.updated_services &&
-          args.updated_services.map((service) => {
-            return {
-              info: { connect: { name: service.name } },
-              specialties: {
-                create:
-                  service.specialties &&
-                  service.specialties.map((specialty) => {
-                    return {
-                      info: { connect: { name: specialty.name } },
-                      sub_specialties: {
-                        create:
-                          specialty.sub_specialties &&
-                          specialty.sub_specialties.map((sub) => {
-                            return {
-                              info: { connect: { name: sub.name } },
-                            };
-                          }),
-                      },
-                    };
-                  }),
-              },
-            };
-          }),
+        create: args.updated_services && args.updated_services.map(servMapper),
       };
+
+      function servMapper(service) {
+        return {
+          info: { connect: { name: service.name } },
+          specialties: {
+            create: service.specialties && service.specialties.map(specMapper),
+          },
+        };
+      }
+
+      function specMapper(spec) {
+        return {
+          info: { connect: { name: spec.name } },
+          sub_specialties: {
+            create: spec.sub_specialties && spec.sub_specialties.map(subMapper),
+          },
+        };
+      }
+
+      function subMapper(sub) {
+        return { info: { connect: { name: sub.name } } };
+      }
 
       return await prisma.updateCompany({
         data: {

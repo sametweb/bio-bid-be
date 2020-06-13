@@ -64,6 +64,15 @@ describe("Query", () => {
       );
       expect(prisma.therapeutics).not.toHaveBeenCalled();
     });
+
+    it("calls prisma.therapeutics with search term", () => {
+      const params = [{}, { search: "asd" }, { prisma }, {}];
+      searchTherapeutics(...params);
+
+      expect(prisma.therapeutics).toHaveBeenCalledWith(
+        expect.objectContaining({ where: { name_contains: "asd" } })
+      );
+    });
   });
 });
 
@@ -115,6 +124,9 @@ describe("Mutation", () => {
       await expect(updateTherapeutic(...params)).rejects.toThrow(
         "There is a therapeutic area named 'b' already, please enter a different name."
       );
+      expect(prisma.$exists.therapeutic).toHaveBeenCalledWith(
+        expect.objectContaining({ name: "b" })
+      );
       expect(prisma.updateTherapeutic).not.toHaveBeenCalled();
     });
 
@@ -124,6 +136,9 @@ describe("Mutation", () => {
 
       await updateTherapeutic(...params);
 
+      expect(prisma.$exists.therapeutic).toHaveBeenCalledWith(
+        expect.objectContaining({ name: "b" })
+      );
       expect(prisma.updateTherapeutic).toHaveBeenCalledWith(
         expect.objectContaining({ data: { name: "b" }, where: { name: "a" } })
       );
