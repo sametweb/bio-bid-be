@@ -15,11 +15,11 @@ const dummyTherapeutics = {
 const prisma = {
   $exists: { therapeutic: jest.fn() },
   therapeutics: jest.fn(() => dummyTherapeutics),
-  therapeutic: jest.fn(() => dummyTherapeutic),
+  therapeutic: jest.fn(() => ({ companies: jest.fn() })),
   searchTherapeutics: jest.fn(() => dummyTherapeutics),
   createTherapeutic: jest.fn(() => dummyTherapeutic),
   updateTherapeutic: jest.fn(() => dummyTherapeutic),
-  deletetherapeutic: jest.fn(() => dummyTherapeutic),
+  deleteTherapeutic: jest.fn(() => dummyTherapeutic),
 };
 
 describe("Query", () => {
@@ -79,6 +79,10 @@ describe("Mutation", () => {
     therapeuticResolver.Mutation,
     "updateTherapeutic"
   );
+  const deleteTherapeutic = jest.spyOn(
+    therapeuticResolver.Mutation,
+    "deleteTherapeutic"
+  );
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -90,9 +94,7 @@ describe("Mutation", () => {
       prisma.$exists.therapeutic.mockImplementation(() => true);
 
       await expect(createTherapeutic(...params)).rejects.toThrow(
-        `There is a therapeutic area named '${
-          params[1].name
-        }' already, please enter a different name.`
+        `There is a therapeutic area named '${params[1].name}' already, please enter a different name.`
       );
       expect(prisma.createTherapeutic).not.toHaveBeenCalled();
     });
@@ -105,5 +107,48 @@ describe("Mutation", () => {
 
       expect(prisma.createTherapeutic).toHaveBeenCalledTimes(1);
     });
+  });
+  describe("updateTherapeutic()", () => {
+    it("throws an error if there is another therapeutic with updated_name", async () => {
+      const params = [{}, { name: "a", updated_name: "b" }, { prisma }, {}];
+      prisma.$exists.therapeutic.mockImplementation(() => true);
+
+      await expect(updateTherapeutic(...params)).rejects.toThrow(
+        "There is a therapeutic area named 'b' already, please enter a different name."
+      );
+      expect(prisma.updateTherapeutic).not.toHaveBeenCalled();
+    });
+
+    it("calls prisma.updateTherapeutic()", async () => {
+      const params = [{}, { name: "Company" }, { prisma }, {}];
+      prisma.$exists.therapeutic.mockImplementation(() => false);
+
+      await updateTherapeutic(...params);
+
+      expect(prisma.updateTherapeutic).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe("deleteTherapeutic()", () => {
+    it("calls prisma.deleteTherapeutic() with name", () => {
+      const params = [{}, { name: "Company" }, { prisma }, {}];
+      deleteTherapeutic(...params);
+
+      expect(prisma.deleteTherapeutic).toHaveBeenCalledWith(
+        expect.objectContaining({ name: "Company" })
+      );
+    });
+  });
+});
+
+describe("Therapeutic", () => {
+  const companies = jest.spyOn(therapeuticResolver.Therapeutic, "companies");
+  it("calls prisma.therapeutic with parent.name", () => {
+    const params = [{ name: "Parent" }, {}, { prisma }, {}];
+    companies(...params);
+
+    expect(prisma.therapeutic).toHaveBeenCalledWith(
+      expect.objectContaining({ name: "Parent" })
+    );
   });
 });

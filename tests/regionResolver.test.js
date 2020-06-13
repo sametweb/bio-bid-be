@@ -3,14 +3,17 @@ const regionResolver = require("../resolvers/regionResolver");
 const dummyRegion = { data: { region: { id: 1, name: "Region" } } };
 const dummyRegions = {
   data: {
-    regions: [{ id: 1, name: "Region 1" }, { id: 2, name: "Region 2 " }],
+    regions: [
+      { id: 1, name: "Region 1" },
+      { id: 2, name: "Region 2 " },
+    ],
   },
 };
 
 const prisma = {
   $exists: { region: jest.fn() },
   regions: jest.fn(() => dummyRegions),
-  region: jest.fn(() => dummyRegion),
+  region: jest.fn(() => ({ companies: jest.fn() })),
   createRegion: jest.fn(() => dummyRegion),
   updateRegion: jest.fn(() => dummyRegion),
   deleteRegion: jest.fn(() => dummyRegion),
@@ -64,6 +67,7 @@ describe("Query", () => {
 describe("Mutation", () => {
   const createRegion = jest.spyOn(regionResolver.Mutation, "createRegion");
   const updateRegion = jest.spyOn(regionResolver.Mutation, "updateRegion");
+  const deleteRegion = jest.spyOn(regionResolver.Mutation, "deleteRegion");
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -75,9 +79,7 @@ describe("Mutation", () => {
       prisma.$exists.region.mockImplementation(() => true);
 
       await expect(createRegion(...params)).rejects.toThrow(
-        `There is a service named '${
-          params[1].name
-        }' already, please enter a different name.`
+        `There is a service named '${params[1].name}' already, please enter a different name.`
       );
       expect(prisma.createRegion).not.toHaveBeenCalled();
     });
@@ -90,5 +92,49 @@ describe("Mutation", () => {
 
       expect(prisma.createRegion).toHaveBeenCalledTimes(1);
     });
+  });
+
+  describe("updateRegion()", () => {
+    it("throws an error if there is another region with updated_name", async () => {
+      const params = [{}, { name: "a", updated_name: "b" }, { prisma }, {}];
+      prisma.$exists.region.mockImplementation(() => true);
+
+      await expect(updateRegion(...params)).rejects.toThrow(
+        "There is a region named 'b' already, please enter a different name."
+      );
+      expect(prisma.updateRegion).not.toHaveBeenCalled();
+    });
+
+    it("calls prisma.updateRegion()", async () => {
+      const params = [{}, { name: "Company" }, { prisma }, {}];
+      prisma.$exists.region.mockImplementation(() => false);
+
+      await updateRegion(...params);
+
+      expect(prisma.updateRegion).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe("deleteRegion()", () => {
+    it("calls prisma.deleteRegion() with name", () => {
+      const params = [{}, { name: "Company" }, { prisma }, {}];
+      deleteRegion(...params);
+
+      expect(prisma.deleteRegion).toHaveBeenCalledWith(
+        expect.objectContaining({ name: "Company" })
+      );
+    });
+  });
+});
+
+describe("Region", () => {
+  const companies = jest.spyOn(regionResolver.Region, "companies");
+  it("calls prisma.region with parent.name", () => {
+    const params = [{ name: "Parent" }, {}, { prisma }, {}];
+    companies(...params);
+
+    expect(prisma.region).toHaveBeenCalledWith(
+      expect.objectContaining({ name: "Parent" })
+    );
   });
 });
