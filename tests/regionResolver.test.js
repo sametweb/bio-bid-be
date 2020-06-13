@@ -33,7 +33,6 @@ describe("Query", () => {
     it("calls prisma.regions", () => {
       regions(...params);
 
-      expect(prisma.regions).toHaveBeenCalled();
       expect(prisma.regions).toHaveBeenCalledTimes(1);
     });
   });
@@ -43,8 +42,6 @@ describe("Query", () => {
       const params = [{}, { name: "Company" }, { prisma }, {}];
       region(...params);
 
-      expect(prisma.region).toHaveBeenCalled();
-      expect(prisma.region).toHaveBeenCalledTimes(1);
       expect(prisma.region).toHaveBeenCalledWith(
         expect.objectContaining({ name: "Company" })
       );
@@ -90,7 +87,9 @@ describe("Mutation", () => {
 
       await createRegion(...params);
 
-      expect(prisma.createRegion).toHaveBeenCalledTimes(1);
+      expect(prisma.createRegion).toHaveBeenCalledWith(
+        expect.objectContaining({ name: "Company" })
+      );
     });
   });
 
@@ -106,12 +105,14 @@ describe("Mutation", () => {
     });
 
     it("calls prisma.updateRegion()", async () => {
-      const params = [{}, { name: "Company" }, { prisma }, {}];
+      const params = [{}, { name: "a", updated_name: "b" }, { prisma }, {}];
       prisma.$exists.region.mockImplementation(() => false);
 
       await updateRegion(...params);
 
-      expect(prisma.updateRegion).toHaveBeenCalledTimes(1);
+      expect(prisma.updateRegion).toHaveBeenCalledWith(
+        expect.objectContaining({ data: { name: "b" }, where: { name: "a" } })
+      );
     });
   });
 

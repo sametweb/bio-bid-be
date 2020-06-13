@@ -40,7 +40,6 @@ describe("Query", () => {
     it("calls prisma.therapeutics", () => {
       therapeutics(...params);
 
-      expect(prisma.therapeutics).toHaveBeenCalled();
       expect(prisma.therapeutics).toHaveBeenCalledTimes(1);
     });
   });
@@ -50,8 +49,6 @@ describe("Query", () => {
       const params = [{}, { name: "Company" }, { prisma }, {}];
       therapeutic(...params);
 
-      expect(prisma.therapeutic).toHaveBeenCalled();
-      expect(prisma.therapeutic).toHaveBeenCalledTimes(1);
       expect(prisma.therapeutic).toHaveBeenCalledWith(
         expect.objectContaining({ name: "Company" })
       );
@@ -105,7 +102,9 @@ describe("Mutation", () => {
 
       await createTherapeutic(...params);
 
-      expect(prisma.createTherapeutic).toHaveBeenCalledTimes(1);
+      expect(prisma.createTherapeutic).toHaveBeenCalledWith(
+        expect.objectContaining({ name: "Company" })
+      );
     });
   });
   describe("updateTherapeutic()", () => {
@@ -120,12 +119,14 @@ describe("Mutation", () => {
     });
 
     it("calls prisma.updateTherapeutic()", async () => {
-      const params = [{}, { name: "Company" }, { prisma }, {}];
+      const params = [{}, { name: "a", updated_name: "b" }, { prisma }, {}];
       prisma.$exists.therapeutic.mockImplementation(() => false);
 
       await updateTherapeutic(...params);
 
-      expect(prisma.updateTherapeutic).toHaveBeenCalledTimes(1);
+      expect(prisma.updateTherapeutic).toHaveBeenCalledWith(
+        expect.objectContaining({ data: { name: "b" }, where: { name: "a" } })
+      );
     });
   });
 

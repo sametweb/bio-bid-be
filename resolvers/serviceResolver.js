@@ -13,8 +13,8 @@ module.exports = {
       const { name } = await prisma.service({ id }).info();
       return await name;
     },
-    specialties: (parent, args, { prisma }, info) => {
-      return prisma.service({ id: parent.id }).specialties();
+    specialties: ({ id }, args, { prisma }, info) => {
+      return prisma.service({ id }).specialties();
     },
   },
 };
