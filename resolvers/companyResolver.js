@@ -145,9 +145,7 @@ module.exports = {
       const found = await prisma.company({ name: updated_name });
       if (found.name && found.id !== id) {
         throw new Error(
-          `There is a company named '${
-            found.name
-          }' already, please enter a different name.`
+          `There is a company named '${found.name}' already, please enter a different name.`
         );
       }
 
@@ -211,11 +209,11 @@ module.exports = {
     },
   },
   Company: {
-    studies: ({ id }, args, { prisma }, info) => {
-      return prisma.company({ id }).studies();
-    },
-    services: (parent, args, { prisma }, info) => {
-      return prisma.company({ id: parent.id }).services();
+    // studies: ({ id }, args, { prisma }, info) => {
+    //   return prisma.company({ id }).studies();
+    // },
+    services: ({ id }, args, { prisma }, info) => {
+      return prisma.company({ id }).services();
     },
     regions: ({ id }, args, { prisma }, info) => {
       return prisma.company({ id }).regions();

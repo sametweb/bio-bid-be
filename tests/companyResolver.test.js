@@ -16,6 +16,7 @@ const prisma = {
   company: jest.fn(() => dummyCompany),
   createCompany: jest.fn(),
   updateCompany: jest.fn(),
+  deleteCompany: jest.fn(),
   deleteManyServices: jest.fn(),
   upsertSpecialtyItem: jest.fn(),
 };
@@ -66,6 +67,33 @@ describe("Company queries and mutations", () => {
       const companiesData = await companies(...params);
 
       expect(companiesData).toHaveProperty("data");
+      expect(prisma.companies).toHaveBeenCalled();
+    });
+  });
+
+  describe("searchCompanies() query", () => {
+    const searchCompanies = jest.spyOn(
+      companyResolver.Query,
+      "searchCompanies"
+    );
+
+    it("throws error if search.length is less than 3", async () => {
+      const params = [{}, { search: "as" }, { prisma }, {}];
+      const searchRequest = async () => await searchCompanies(...params);
+
+      await expect(() => searchRequest()).rejects.toThrow(
+        "Please enter a search term at least 3 characters"
+      );
+      expect(prisma.companies).not.toHaveBeenCalled();
+    });
+
+    it("calls prisma.companies with search term", () => {
+      const params = [{}, { search: "asd" }, { prisma }, {}];
+      searchCompanies(...params);
+
+      expect(prisma.companies).toHaveBeenCalledWith(
+        expect.objectContaining({ where: { name_contains: "asd" } })
+      );
     });
   });
 
@@ -138,6 +166,14 @@ describe("Company queries and mutations", () => {
       expect(prisma.updateCompany).not.toHaveBeenCalled();
     });
 
+    it("throws an error if updated_name is not provided", async () => {
+      const params = [{}, { id: 1 }, { prisma }, {}];
+
+      await expect(updateCompany(...params)).rejects.toThrow(
+        "You must enter a company name"
+      );
+    });
+
     it("throws an error if a company with updated_name with different id exists", async () => {
       const params = [{}, { updated_name: "Company", id: 2 }, { prisma }, {}];
       jest
@@ -159,6 +195,70 @@ describe("Company queries and mutations", () => {
 
       expect(prisma.deleteManyServices).toHaveBeenCalledTimes(1);
       expect(prisma.updateCompany).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe("deleteCompany() mutation", () => {
+    const deleteCompany = jest.spyOn(companyResolver.Mutation, "deleteCompany");
+
+    it("calls prisma.deleteCompany with id", () => {
+      const params = [{}, { id: 1 }, { prisma }, {}];
+      deleteCompany(...params);
+
+      expect(prisma.deleteCompany).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 1 })
+      );
+    });
+  });
+
+  describe("Company.services()", () => {
+    const services = jest.spyOn(companyResolver.Company, "services");
+    const params = [{ id: 1 }, {}, { prisma }, {}];
+
+    it("calls prisma.company with id", () => {
+      prisma.company.mockImplementation(() => ({
+        services: jest.fn(() => [{}]),
+      }));
+      const returned = services(...params);
+
+      expect(prisma.company).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 1 })
+      );
+      expect(returned).toStrictEqual(expect.arrayContaining([{}]));
+    });
+  });
+
+  describe("Company.regions()", () => {
+    const regions = jest.spyOn(companyResolver.Company, "regions");
+    const params = [{ id: 1 }, {}, { prisma }, {}];
+
+    it("calls prisma.company with id", () => {
+      prisma.company.mockImplementation(() => ({
+        regions: jest.fn(() => [{}]),
+      }));
+      const returned = regions(...params);
+
+      expect(prisma.company).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 1 })
+      );
+      expect(returned).toStrictEqual(expect.arrayContaining([{}]));
+    });
+  });
+
+  describe("Company.therapeutics()", () => {
+    const therapeutics = jest.spyOn(companyResolver.Company, "therapeutics");
+    const params = [{ id: 1 }, {}, { prisma }, {}];
+
+    it("calls prisma.company with id", () => {
+      prisma.company.mockImplementation(() => ({
+        therapeutics: jest.fn(() => [{}]),
+      }));
+      const returned = therapeutics(...params);
+
+      expect(prisma.company).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 1 })
+      );
+      expect(returned).toStrictEqual(expect.arrayContaining([{}]));
     });
   });
 });
