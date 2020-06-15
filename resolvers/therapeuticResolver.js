@@ -6,13 +6,13 @@ module.exports = {
     therapeutic: (parent, { name }, { prisma }, info) => {
       return prisma.therapeutic({ name });
     },
-    searchTherapeutics: (parent, { name }, { prisma }, info) => {
+    searchTherapeutics: (parent, { search }, { prisma }, info) => {
       if (search.length < 3) {
         throw new Error("Please enter a search term at least 3 characters");
       }
 
       return prisma.therapeutics({
-        where: { name_contains: name },
+        where: { name_contains: search },
       });
     },
   },
