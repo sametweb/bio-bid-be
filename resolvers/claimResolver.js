@@ -1,5 +1,3 @@
-const axios = require("axios");
-
 module.exports = {
   Query: {
     pendingClaims: (parent, args, { prisma }, info) => {
@@ -33,29 +31,19 @@ module.exports = {
         company: { connect: { id: company } },
       });
     },
-    approveClaim: async (parent, { id }, { prisma }, info) => {
+    approveClaim: async (parent, { id }, { prisma, oktaApi }, info) => {
       // Find the claim and company related
       const claim = await prisma.claim({ id });
       const company = await prisma.claim({ id }).company();
-      console.log({ claim });
+
       // Get claim.user (sub) and claim.company.id
       const { user } = claim;
       const company_id = company.id;
-      console.log({ user, company_id });
 
       // Save claim.company.id in user's profile
       try {
-        const updatedUser = await axios.post(
-          `https://dev-648803.okta.com/api/v1/users/${user}`,
-          {
-            profile: { profileUrl: company_id },
-          },
-          {
-            headers: {
-              Authorization: `SSWS ${process.env.OKTA_KEY}`,
-            },
-          }
-        );
+        const body = { profile: { profileUrl: company_id } };
+        const updatedUser = await oktaApi().post(`/users/${user}`, body);
       } catch (error) {
         throw new Error(
           "There was an error updating user's profile on Okta. Please make sure you provided a valid user id (sub field from Okta profile)"
