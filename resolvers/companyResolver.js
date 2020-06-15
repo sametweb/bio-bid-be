@@ -1,6 +1,7 @@
 module.exports = {
   Query: {
-    companies: (parent, args, { prisma }, info) => {
+    companies: (parent, args, { prisma, user }, info) => {
+      console.log({ user_sub: user.sub });
       return prisma.companies();
     },
     company: async (parent, { id }, { prisma }, info) => {
@@ -145,7 +146,9 @@ module.exports = {
       const found = await prisma.company({ name: updated_name });
       if (found.name && found.id !== id) {
         throw new Error(
-          `There is a company named '${found.name}' already, please enter a different name.`
+          `There is a company named '${
+            found.name
+          }' already, please enter a different name.`
         );
       }
 
