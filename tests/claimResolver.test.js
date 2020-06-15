@@ -96,4 +96,8 @@ describe("Mutation", () => {
       );
     });
   });
+
+  describe("approveClaim()", () => {
+    const approveClaim = jest.spyOn(claimResolver.Mutation, "approveClaim");
+  });
 });

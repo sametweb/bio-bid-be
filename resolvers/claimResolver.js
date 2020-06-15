@@ -37,7 +37,7 @@ module.exports = {
       // Find the claim and company related
       const claim = await prisma.claim({ id });
       const company = await prisma.claim({ id }).company();
-
+      console.log({ claim });
       // Get claim.user (sub) and claim.company.id
       const { user } = claim;
       const company_id = company.id;
