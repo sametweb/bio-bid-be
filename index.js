@@ -4,7 +4,7 @@ const typeDefs = require("./typeDefs");
 const resolvers = require("./resolvers");
 const { oktaApi } = require("./helpers/oktaApi");
 const { validate } = require("./helpers/validate");
-
+const { servMapper } = require("./helpers/mappers");
 require("dotenv").config();
 
 const server = new ApolloServer({
@@ -14,7 +14,7 @@ const server = new ApolloServer({
     const token = req.headers.authorization;
     const aud = process.env.OKTA_LINKEDIN_CLIENT_ID || "0oadk3f256MfKqlA74x6";
     const user = await validate(token, aud);
-    return { prisma, oktaApi, user };
+    return { prisma, oktaApi, user, servMapper };
   },
 });
 

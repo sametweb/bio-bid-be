@@ -99,7 +99,9 @@ describe("Mutation", () => {
       prisma.$exists.serviceItem.mockImplementation(() => true);
 
       await expect(createServiceItem(...params)).rejects.toThrow(
-        `There is a service named '${params[1].name}' already, please enter a different name.`
+        `There is a service named '${
+          params[1].name
+        }' already, please enter a different name.`
       );
       expect(prisma.createServiceItem).not.toHaveBeenCalled();
     });
@@ -136,6 +138,16 @@ describe("Mutation", () => {
       expect(prisma.updateServiceItem).toHaveBeenCalledWith(
         expect.objectContaining({ data: { name: "b" }, where: { name: "a" } })
       );
+    });
+
+    it("calls prisma.updateServiceItem() when name === updated_name", async () => {
+      const params = [{}, { name: "a", updated_name: "a" }, { prisma }, {}];
+      await updateServiceItem(...params);
+
+      expect(prisma.updateServiceItem).toHaveBeenCalledWith(
+        expect.objectContaining({ data: { name: "a" }, where: { name: "a" } })
+      );
+      expect(prisma.$exists.serviceItem).not.toHaveBeenCalled();
     });
   });
 
