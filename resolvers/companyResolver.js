@@ -1,6 +1,6 @@
 module.exports = {
   Query: {
-    companies: (parent, args, { prisma }, info) => {
+    companies: (parent, args, { prisma, user }, info) => {
       return prisma.companies();
     },
     company: async (parent, { id }, { prisma }, info) => {
@@ -22,7 +22,7 @@ module.exports = {
     },
   },
   Mutation: {
-    createCompany: async (parent, args, { prisma }, info) => {
+    createCompany: async (parent, args, { prisma, servMapper }, info) => {
       const {
         name,
         email,
@@ -76,29 +76,7 @@ module.exports = {
 
       // Create "services" object with all nested specialty/sub-specialty relations
       const services = {
-        create:
-          args.services &&
-          args.services.map((service) => {
-            return {
-              info: { connect: { name: service.name } },
-              specialties: {
-                create:
-                  service.specialties &&
-                  service.specialties.map((specialty) => {
-                    return {
-                      info: { connect: { name: specialty.name } },
-                      sub_specialties: {
-                        create:
-                          specialty.sub_specialties &&
-                          specialty.sub_specialties.map((sub) => {
-                            return { info: { connect: { name: sub.name } } };
-                          }),
-                      },
-                    };
-                  }),
-              },
-            };
-          }),
+        create: Array.isArray(args.services) && args.services.map(servMapper),
       };
 
       return await prisma.createCompany({
@@ -116,7 +94,7 @@ module.exports = {
         therapeutics: { connect: therapeutics },
       });
     },
-    updateCompany: async (parent, args, { prisma }, info) => {
+    updateCompany: async (parent, args, { prisma, servMapper }, info) => {
       const {
         updated_name,
         updated_email,
@@ -143,9 +121,11 @@ module.exports = {
 
       // Make sure there is no other company with "updated_name"
       const found = await prisma.company({ name: updated_name });
-      if (found.name && found.id !== id) {
+      if (found && found.id !== id) {
         throw new Error(
-          `There is a company named '${found.name}' already, please enter a different name.`
+          `There is a company named '${
+            found.name
+          }' already, please enter a different name.`
         );
       }
 
@@ -159,30 +139,10 @@ module.exports = {
 
       // Re-connecting the services, specialties, and sub_specialties to the company
       const services = {
-        create: args.updated_services && args.updated_services.map(servMapper),
+        create:
+          Array.isArray(args.updated_services) &&
+          args.updated_services.map(servMapper),
       };
-
-      function servMapper(service) {
-        return {
-          info: { connect: { name: service.name } },
-          specialties: {
-            create: service.specialties && service.specialties.map(specMapper),
-          },
-        };
-      }
-
-      function specMapper(spec) {
-        return {
-          info: { connect: { name: spec.name } },
-          sub_specialties: {
-            create: spec.sub_specialties && spec.sub_specialties.map(subMapper),
-          },
-        };
-      }
-
-      function subMapper(sub) {
-        return { info: { connect: { name: sub.name } } };
-      }
 
       return await prisma.updateCompany({
         data: {

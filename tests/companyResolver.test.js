@@ -21,6 +21,8 @@ const prisma = {
   upsertSpecialtyItem: jest.fn(),
 };
 
+const mappers = require("../helpers/mappers");
+
 describe("Company queries and mutations", () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -120,6 +122,7 @@ describe("Company queries and mutations", () => {
 
     it("calls upsertSpecialtyItem on each specialty", async () => {
       jest.spyOn(prisma.$exists, "company").mockImplementation(() => false);
+      const servMapper = jest.spyOn(mappers, "servMapper");
       const params = [
         {},
         {
@@ -133,12 +136,13 @@ describe("Company queries and mutations", () => {
             },
           ],
         },
-        { prisma },
+        { prisma, servMapper },
         {},
       ];
       await createCompany(...params);
 
       expect(prisma.upsertSpecialtyItem).toHaveBeenCalledTimes(3);
+      expect(servMapper).toHaveBeenCalled();
     });
 
     // TESTING SUCCESSES
@@ -156,6 +160,7 @@ describe("Company queries and mutations", () => {
 
   describe("updateCompany() mutation", () => {
     const updateCompany = jest.spyOn(companyResolver.Mutation, "updateCompany");
+    const servMapper = jest.spyOn(mappers, "servMapper");
 
     it("throws an error if id is not provided", async () => {
       const params = [{}, { updated_name: "Company" }, { prisma }, {}];
@@ -187,14 +192,45 @@ describe("Company queries and mutations", () => {
     });
 
     it("deletes old service/specialty tree then calls updateCompany", async () => {
-      const params = [{}, { updated_name: "Company", id: 1 }, { prisma }, {}];
+      const params = [
+        {},
+        {
+          updated_name: "Company",
+          updated_services: [{ name: "Serv 1" }],
+          id: 1,
+        },
+        { prisma, servMapper },
+        {},
+      ];
       jest.spyOn(prisma, "company").mockImplementation(() => ({
+        name: "Company",
+        id: 1,
         services: jest.fn(() => [{ id: 1 }, { id: 2 }]),
       }));
       await updateCompany(...params);
 
       expect(prisma.deleteManyServices).toHaveBeenCalledTimes(1);
+      expect(servMapper).toHaveBeenCalled();
       expect(prisma.updateCompany).toHaveBeenCalledTimes(1);
+    });
+
+    it("doesn't call prisma.deleteManyServices if there is no previous services", async () => {
+      jest.spyOn(prisma, "company").mockImplementation(() => ({
+        name: "Company",
+        id: 1,
+        services: jest.fn(() => undefined),
+      }));
+      const isArray = jest.spyOn(Array, "isArray");
+      const params = [
+        {},
+        { updated_name: "Company", id: 1 },
+        { prisma, servMapper },
+        {},
+      ];
+      await updateCompany(...params);
+
+      expect(isArray).toHaveBeenCalled();
+      expect(prisma.deleteManyServices).not.toHaveBeenCalled();
     });
   });
 

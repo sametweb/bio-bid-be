@@ -105,7 +105,9 @@ describe("Mutation", () => {
       prisma.$exists.specialtyItem.mockImplementation(() => true);
 
       await expect(createSpecialtyItem(...params)).rejects.toThrow(
-        `There is a specialty named '${params[1].name}' already, please enter a different name.`
+        `There is a specialty named '${
+          params[1].name
+        }' already, please enter a different name.`
       );
       expect(prisma.createSpecialtyItem).not.toHaveBeenCalled();
     });
@@ -142,6 +144,16 @@ describe("Mutation", () => {
       expect(prisma.updateSpecialtyItem).toHaveBeenCalledWith(
         expect.objectContaining({ data: { name: "b" }, where: { name: "a" } })
       );
+    });
+
+    it("calls prisma.updateSpecialtyItem() when name === updated_name", async () => {
+      const params = [{}, { name: "a", updated_name: "a" }, { prisma }, {}];
+      await updateSpecialtyItem(...params);
+
+      expect(prisma.updateSpecialtyItem).toHaveBeenCalledWith(
+        expect.objectContaining({ data: { name: "a" }, where: { name: "a" } })
+      );
+      expect(prisma.$exists.specialtyItem).not.toHaveBeenCalled();
     });
   });
 
