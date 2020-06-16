@@ -5,8 +5,8 @@ module.exports = {
     // },
   },
   Specialty: {
-    name: async (parent, args, { prisma }, info) => {
-      const { name } = await prisma.specialty({ id: parent.id }).info();
+    name: async ({ id }, args, { prisma }, info) => {
+      const { name } = await prisma.specialty({ id }).info();
 
       return await name;
     },
