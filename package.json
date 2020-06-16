@@ -29,8 +29,7 @@
   },
   "homepage": "https://github.com/Lambda-School-Labs/bio-bid-be#readme",
   "dependencies": {
-    "@okta/jwt-verifier": "^1.0.0",
-    "apollo-server": "^2.11.0",
+    "apollo-server": "^2.14.2",
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "graphql": "^15.0.0",
