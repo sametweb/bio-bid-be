@@ -22,7 +22,7 @@ type Claim {
   user: String!
   email: String!
   name: String!
-  company: Company! @relation(link: INLINE)
+  company: Company! @relation(link: INLINE, onDelete: SET_NULL)
   pending: Boolean! @default(value: true)
   approved: Boolean! @default(value: false)
 }
