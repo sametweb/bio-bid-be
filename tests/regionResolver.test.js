@@ -3,10 +3,7 @@ const regionResolver = require("../resolvers/regionResolver");
 const dummyRegion = { data: { region: { id: 1, name: "Region" } } };
 const dummyRegions = {
   data: {
-    regions: [
-      { id: 1, name: "Region 1" },
-      { id: 2, name: "Region 2 " },
-    ],
+    regions: [{ id: 1, name: "Region 1" }, { id: 2, name: "Region 2 " }],
   },
 };
 
@@ -85,7 +82,9 @@ describe("Mutation", () => {
       prisma.$exists.region.mockImplementation(() => true);
 
       await expect(createRegion(...params)).rejects.toThrow(
-        `There is a service named '${params[1].name}' already, please enter a different name.`
+        `There is a service named '${
+          params[1].name
+        }' already, please enter a different name.`
       );
       expect(prisma.createRegion).not.toHaveBeenCalled();
     });
@@ -122,6 +121,16 @@ describe("Mutation", () => {
       expect(prisma.updateRegion).toHaveBeenCalledWith(
         expect.objectContaining({ data: { name: "b" }, where: { name: "a" } })
       );
+    });
+
+    it("calls prisma.updateRegion() when name === updated_name", async () => {
+      const params = [{}, { name: "a", updated_name: "a" }, { prisma }, {}];
+      await updateRegion(...params);
+
+      expect(prisma.updateRegion).toHaveBeenCalledWith(
+        expect.objectContaining({ data: { name: "a" }, where: { name: "a" } })
+      );
+      expect(prisma.$exists.region).not.toHaveBeenCalled();
     });
   });
 

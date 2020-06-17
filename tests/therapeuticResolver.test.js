@@ -100,7 +100,9 @@ describe("Mutation", () => {
       prisma.$exists.therapeutic.mockImplementation(() => true);
 
       await expect(createTherapeutic(...params)).rejects.toThrow(
-        `There is a therapeutic area named '${params[1].name}' already, please enter a different name.`
+        `There is a therapeutic area named '${
+          params[1].name
+        }' already, please enter a different name.`
       );
       expect(prisma.createTherapeutic).not.toHaveBeenCalled();
     });
@@ -142,6 +144,16 @@ describe("Mutation", () => {
       expect(prisma.updateTherapeutic).toHaveBeenCalledWith(
         expect.objectContaining({ data: { name: "b" }, where: { name: "a" } })
       );
+    });
+
+    it("calls prisma.updateTherapeutic() when name === updated_name", async () => {
+      const params = [{}, { name: "a", updated_name: "a" }, { prisma }, {}];
+      await updateTherapeutic(...params);
+
+      expect(prisma.updateTherapeutic).toHaveBeenCalledWith(
+        expect.objectContaining({ data: { name: "a" }, where: { name: "a" } })
+      );
+      expect(prisma.$exists.therapeutic).not.toHaveBeenCalled();
     });
   });
 
