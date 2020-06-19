@@ -51,27 +51,29 @@ module.exports = {
       // Add specialties to SpecialtyItem table if they don't already exist
       args.services &&
         args.services.forEach((service) => {
-          service.specialties &&
-            service.specialties.forEach(async (specialty) => {
-              const data = {
-                create: { name: specialty.name },
-                update: { name: specialty.name },
-                where: { name: specialty.name },
-              };
+          !service.specialties
+            ? []
+            : service.specialties.forEach(async (specialty) => {
+                const data = {
+                  create: { name: specialty.name },
+                  update: { name: specialty.name },
+                  where: { name: specialty.name },
+                };
 
-              specialty.sub_specialties &&
-                specialty.sub_specialties.forEach(async (sub) => {
-                  const data = {
-                    create: { name: sub.name },
-                    update: { name: sub.name },
-                    where: { name: sub.name },
-                  };
-                  // sub_specialties
-                  await prisma.upsertSpecialtyItem(data);
-                });
-              // specialties
-              await prisma.upsertSpecialtyItem(data);
-            });
+                !specialty.sub_specialties
+                  ? []
+                  : specialty.sub_specialties.forEach(async (sub) => {
+                      const data = {
+                        create: { name: sub.name },
+                        update: { name: sub.name },
+                        where: { name: sub.name },
+                      };
+                      // sub_specialties
+                      await prisma.upsertSpecialtyItem(data);
+                    });
+                // specialties
+                await prisma.upsertSpecialtyItem(data);
+              });
         });
 
       // Create "services" object with all nested specialty/sub-specialty relations
@@ -136,6 +138,33 @@ module.exports = {
           id_in: servicesToBeDeleted.map(({ id }) => id),
         });
       }
+
+      args.updated_services &&
+        args.updated_services.forEach((service) => {
+          !service.specialties
+            ? []
+            : service.specialties.forEach(async (specialty) => {
+                const data = {
+                  create: { name: specialty.name },
+                  update: { name: specialty.name },
+                  where: { name: specialty.name },
+                };
+
+                !specialty.sub_specialties
+                  ? []
+                  : specialty.sub_specialties.forEach(async (sub) => {
+                      const data = {
+                        create: { name: sub.name },
+                        update: { name: sub.name },
+                        where: { name: sub.name },
+                      };
+                      // sub_specialties
+                      await prisma.upsertSpecialtyItem(data);
+                    });
+                // specialties
+                await prisma.upsertSpecialtyItem(data);
+              });
+        });
 
       // Re-connecting the services, specialties, and sub_specialties to the company
       const services = {
