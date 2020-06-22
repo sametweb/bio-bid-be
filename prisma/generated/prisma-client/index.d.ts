@@ -614,6 +614,9 @@ export interface ServiceItemWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  services_every?: Maybe<ServiceWhereInput>;
+  services_some?: Maybe<ServiceWhereInput>;
+  services_none?: Maybe<ServiceWhereInput>;
   AND?: Maybe<ServiceItemWhereInput[] | ServiceItemWhereInput>;
   OR?: Maybe<ServiceItemWhereInput[] | ServiceItemWhereInput>;
   NOT?: Maybe<ServiceItemWhereInput[] | ServiceItemWhereInput>;
@@ -1207,16 +1210,16 @@ export interface ServiceCreateManyWithoutCompanyInput {
 
 export interface ServiceCreateWithoutCompanyInput {
   id?: Maybe<ID_Input>;
-  info: ServiceItemCreateOneInput;
+  info: ServiceItemCreateOneWithoutServicesInput;
   specialties?: Maybe<SpecialtyCreateManyWithoutServiceInput>;
 }
 
-export interface ServiceItemCreateOneInput {
-  create?: Maybe<ServiceItemCreateInput>;
+export interface ServiceItemCreateOneWithoutServicesInput {
+  create?: Maybe<ServiceItemCreateWithoutServicesInput>;
   connect?: Maybe<ServiceItemWhereUniqueInput>;
 }
 
-export interface ServiceItemCreateInput {
+export interface ServiceItemCreateWithoutServicesInput {
   id?: Maybe<ID_Input>;
   name: String;
 }
@@ -1263,7 +1266,7 @@ export interface ServiceCreateOneWithoutSpecialtiesInput {
 
 export interface ServiceCreateWithoutSpecialtiesInput {
   id?: Maybe<ID_Input>;
-  info: ServiceItemCreateOneInput;
+  info: ServiceItemCreateOneWithoutServicesInput;
   company: CompanyCreateOneWithoutServicesInput;
 }
 
@@ -1466,24 +1469,24 @@ export interface ServiceUpdateWithWhereUniqueWithoutCompanyInput {
 }
 
 export interface ServiceUpdateWithoutCompanyDataInput {
-  info?: Maybe<ServiceItemUpdateOneRequiredInput>;
+  info?: Maybe<ServiceItemUpdateOneRequiredWithoutServicesInput>;
   specialties?: Maybe<SpecialtyUpdateManyWithoutServiceInput>;
 }
 
-export interface ServiceItemUpdateOneRequiredInput {
-  create?: Maybe<ServiceItemCreateInput>;
-  update?: Maybe<ServiceItemUpdateDataInput>;
-  upsert?: Maybe<ServiceItemUpsertNestedInput>;
+export interface ServiceItemUpdateOneRequiredWithoutServicesInput {
+  create?: Maybe<ServiceItemCreateWithoutServicesInput>;
+  update?: Maybe<ServiceItemUpdateWithoutServicesDataInput>;
+  upsert?: Maybe<ServiceItemUpsertWithoutServicesInput>;
   connect?: Maybe<ServiceItemWhereUniqueInput>;
 }
 
-export interface ServiceItemUpdateDataInput {
+export interface ServiceItemUpdateWithoutServicesDataInput {
   name?: Maybe<String>;
 }
 
-export interface ServiceItemUpsertNestedInput {
-  update: ServiceItemUpdateDataInput;
-  create: ServiceItemCreateInput;
+export interface ServiceItemUpsertWithoutServicesInput {
+  update: ServiceItemUpdateWithoutServicesDataInput;
+  create: ServiceItemCreateWithoutServicesInput;
 }
 
 export interface SpecialtyUpdateManyWithoutServiceInput {
@@ -1569,7 +1572,7 @@ export interface ServiceUpdateOneWithoutSpecialtiesInput {
 }
 
 export interface ServiceUpdateWithoutSpecialtiesDataInput {
-  info?: Maybe<ServiceItemUpdateOneRequiredInput>;
+  info?: Maybe<ServiceItemUpdateOneRequiredWithoutServicesInput>;
   company?: Maybe<CompanyUpdateOneRequiredWithoutServicesInput>;
 }
 
@@ -2650,19 +2653,74 @@ export interface RegionUpdateManyMutationInput {
 
 export interface ServiceCreateInput {
   id?: Maybe<ID_Input>;
-  info: ServiceItemCreateOneInput;
+  info: ServiceItemCreateOneWithoutServicesInput;
   company: CompanyCreateOneWithoutServicesInput;
   specialties?: Maybe<SpecialtyCreateManyWithoutServiceInput>;
 }
 
 export interface ServiceUpdateInput {
-  info?: Maybe<ServiceItemUpdateOneRequiredInput>;
+  info?: Maybe<ServiceItemUpdateOneRequiredWithoutServicesInput>;
   company?: Maybe<CompanyUpdateOneRequiredWithoutServicesInput>;
   specialties?: Maybe<SpecialtyUpdateManyWithoutServiceInput>;
 }
 
+export interface ServiceItemCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  services?: Maybe<ServiceCreateManyWithoutInfoInput>;
+}
+
+export interface ServiceCreateManyWithoutInfoInput {
+  create?: Maybe<
+    ServiceCreateWithoutInfoInput[] | ServiceCreateWithoutInfoInput
+  >;
+  connect?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
+}
+
+export interface ServiceCreateWithoutInfoInput {
+  id?: Maybe<ID_Input>;
+  company: CompanyCreateOneWithoutServicesInput;
+  specialties?: Maybe<SpecialtyCreateManyWithoutServiceInput>;
+}
+
 export interface ServiceItemUpdateInput {
   name?: Maybe<String>;
+  services?: Maybe<ServiceUpdateManyWithoutInfoInput>;
+}
+
+export interface ServiceUpdateManyWithoutInfoInput {
+  create?: Maybe<
+    ServiceCreateWithoutInfoInput[] | ServiceCreateWithoutInfoInput
+  >;
+  delete?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
+  connect?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
+  set?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
+  disconnect?: Maybe<ServiceWhereUniqueInput[] | ServiceWhereUniqueInput>;
+  update?: Maybe<
+    | ServiceUpdateWithWhereUniqueWithoutInfoInput[]
+    | ServiceUpdateWithWhereUniqueWithoutInfoInput
+  >;
+  upsert?: Maybe<
+    | ServiceUpsertWithWhereUniqueWithoutInfoInput[]
+    | ServiceUpsertWithWhereUniqueWithoutInfoInput
+  >;
+  deleteMany?: Maybe<ServiceScalarWhereInput[] | ServiceScalarWhereInput>;
+}
+
+export interface ServiceUpdateWithWhereUniqueWithoutInfoInput {
+  where: ServiceWhereUniqueInput;
+  data: ServiceUpdateWithoutInfoDataInput;
+}
+
+export interface ServiceUpdateWithoutInfoDataInput {
+  company?: Maybe<CompanyUpdateOneRequiredWithoutServicesInput>;
+  specialties?: Maybe<SpecialtyUpdateManyWithoutServiceInput>;
+}
+
+export interface ServiceUpsertWithWhereUniqueWithoutInfoInput {
+  where: ServiceWhereUniqueInput;
+  update: ServiceUpdateWithoutInfoDataInput;
+  create: ServiceCreateWithoutInfoInput;
 }
 
 export interface ServiceItemUpdateManyMutationInput {
@@ -3254,6 +3312,15 @@ export interface ServiceItem {
 export interface ServiceItemPromise extends Promise<ServiceItem>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  services: <T = FragmentableArray<Service>>(args?: {
+    where?: ServiceWhereInput;
+    orderBy?: ServiceOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface ServiceItemSubscription
@@ -3261,6 +3328,15 @@ export interface ServiceItemSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  services: <T = Promise<AsyncIterator<ServiceSubscription>>>(args?: {
+    where?: ServiceWhereInput;
+    orderBy?: ServiceOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface ServiceItemNullablePromise
@@ -3268,6 +3344,15 @@ export interface ServiceItemNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  services: <T = FragmentableArray<Service>>(args?: {
+    where?: ServiceWhereInput;
+    orderBy?: ServiceOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface Specialty {

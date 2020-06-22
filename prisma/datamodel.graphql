@@ -31,6 +31,7 @@ type Claim {
 type ServiceItem {
   id: ID! @id
   name: String! @unique
+  services: [Service!]! @relation(onDelete: CASCADE)
 }
 
 type Service {

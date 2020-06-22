@@ -1660,13 +1660,18 @@ type ServiceConnection {
 
 input ServiceCreateInput {
   id: ID
-  info: ServiceItemCreateOneInput!
+  info: ServiceItemCreateOneWithoutServicesInput!
   company: CompanyCreateOneWithoutServicesInput!
   specialties: SpecialtyCreateManyWithoutServiceInput
 }
 
 input ServiceCreateManyWithoutCompanyInput {
   create: [ServiceCreateWithoutCompanyInput!]
+  connect: [ServiceWhereUniqueInput!]
+}
+
+input ServiceCreateManyWithoutInfoInput {
+  create: [ServiceCreateWithoutInfoInput!]
   connect: [ServiceWhereUniqueInput!]
 }
 
@@ -1677,13 +1682,19 @@ input ServiceCreateOneWithoutSpecialtiesInput {
 
 input ServiceCreateWithoutCompanyInput {
   id: ID
-  info: ServiceItemCreateOneInput!
+  info: ServiceItemCreateOneWithoutServicesInput!
+  specialties: SpecialtyCreateManyWithoutServiceInput
+}
+
+input ServiceCreateWithoutInfoInput {
+  id: ID
+  company: CompanyCreateOneWithoutServicesInput!
   specialties: SpecialtyCreateManyWithoutServiceInput
 }
 
 input ServiceCreateWithoutSpecialtiesInput {
   id: ID
-  info: ServiceItemCreateOneInput!
+  info: ServiceItemCreateOneWithoutServicesInput!
   company: CompanyCreateOneWithoutServicesInput!
 }
 
@@ -1695,6 +1706,7 @@ type ServiceEdge {
 type ServiceItem {
   id: ID!
   name: String!
+  services(where: ServiceWhereInput, orderBy: ServiceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Service!]
 }
 
 type ServiceItemConnection {
@@ -1706,11 +1718,17 @@ type ServiceItemConnection {
 input ServiceItemCreateInput {
   id: ID
   name: String!
+  services: ServiceCreateManyWithoutInfoInput
 }
 
-input ServiceItemCreateOneInput {
-  create: ServiceItemCreateInput
+input ServiceItemCreateOneWithoutServicesInput {
+  create: ServiceItemCreateWithoutServicesInput
   connect: ServiceItemWhereUniqueInput
+}
+
+input ServiceItemCreateWithoutServicesInput {
+  id: ID
+  name: String!
 }
 
 type ServiceItemEdge {
@@ -1748,28 +1766,29 @@ input ServiceItemSubscriptionWhereInput {
   NOT: [ServiceItemSubscriptionWhereInput!]
 }
 
-input ServiceItemUpdateDataInput {
-  name: String
-}
-
 input ServiceItemUpdateInput {
   name: String
+  services: ServiceUpdateManyWithoutInfoInput
 }
 
 input ServiceItemUpdateManyMutationInput {
   name: String
 }
 
-input ServiceItemUpdateOneRequiredInput {
-  create: ServiceItemCreateInput
-  update: ServiceItemUpdateDataInput
-  upsert: ServiceItemUpsertNestedInput
+input ServiceItemUpdateOneRequiredWithoutServicesInput {
+  create: ServiceItemCreateWithoutServicesInput
+  update: ServiceItemUpdateWithoutServicesDataInput
+  upsert: ServiceItemUpsertWithoutServicesInput
   connect: ServiceItemWhereUniqueInput
 }
 
-input ServiceItemUpsertNestedInput {
-  update: ServiceItemUpdateDataInput!
-  create: ServiceItemCreateInput!
+input ServiceItemUpdateWithoutServicesDataInput {
+  name: String
+}
+
+input ServiceItemUpsertWithoutServicesInput {
+  update: ServiceItemUpdateWithoutServicesDataInput!
+  create: ServiceItemCreateWithoutServicesInput!
 }
 
 input ServiceItemWhereInput {
@@ -1801,6 +1820,9 @@ input ServiceItemWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  services_every: ServiceWhereInput
+  services_some: ServiceWhereInput
+  services_none: ServiceWhereInput
   AND: [ServiceItemWhereInput!]
   OR: [ServiceItemWhereInput!]
   NOT: [ServiceItemWhereInput!]
@@ -1859,7 +1881,7 @@ input ServiceSubscriptionWhereInput {
 }
 
 input ServiceUpdateInput {
-  info: ServiceItemUpdateOneRequiredInput
+  info: ServiceItemUpdateOneRequiredWithoutServicesInput
   company: CompanyUpdateOneRequiredWithoutServicesInput
   specialties: SpecialtyUpdateManyWithoutServiceInput
 }
@@ -1875,6 +1897,17 @@ input ServiceUpdateManyWithoutCompanyInput {
   deleteMany: [ServiceScalarWhereInput!]
 }
 
+input ServiceUpdateManyWithoutInfoInput {
+  create: [ServiceCreateWithoutInfoInput!]
+  delete: [ServiceWhereUniqueInput!]
+  connect: [ServiceWhereUniqueInput!]
+  set: [ServiceWhereUniqueInput!]
+  disconnect: [ServiceWhereUniqueInput!]
+  update: [ServiceUpdateWithWhereUniqueWithoutInfoInput!]
+  upsert: [ServiceUpsertWithWhereUniqueWithoutInfoInput!]
+  deleteMany: [ServiceScalarWhereInput!]
+}
+
 input ServiceUpdateOneWithoutSpecialtiesInput {
   create: ServiceCreateWithoutSpecialtiesInput
   update: ServiceUpdateWithoutSpecialtiesDataInput
@@ -1885,18 +1918,28 @@ input ServiceUpdateOneWithoutSpecialtiesInput {
 }
 
 input ServiceUpdateWithoutCompanyDataInput {
-  info: ServiceItemUpdateOneRequiredInput
+  info: ServiceItemUpdateOneRequiredWithoutServicesInput
+  specialties: SpecialtyUpdateManyWithoutServiceInput
+}
+
+input ServiceUpdateWithoutInfoDataInput {
+  company: CompanyUpdateOneRequiredWithoutServicesInput
   specialties: SpecialtyUpdateManyWithoutServiceInput
 }
 
 input ServiceUpdateWithoutSpecialtiesDataInput {
-  info: ServiceItemUpdateOneRequiredInput
+  info: ServiceItemUpdateOneRequiredWithoutServicesInput
   company: CompanyUpdateOneRequiredWithoutServicesInput
 }
 
 input ServiceUpdateWithWhereUniqueWithoutCompanyInput {
   where: ServiceWhereUniqueInput!
   data: ServiceUpdateWithoutCompanyDataInput!
+}
+
+input ServiceUpdateWithWhereUniqueWithoutInfoInput {
+  where: ServiceWhereUniqueInput!
+  data: ServiceUpdateWithoutInfoDataInput!
 }
 
 input ServiceUpsertWithoutSpecialtiesInput {
@@ -1908,6 +1951,12 @@ input ServiceUpsertWithWhereUniqueWithoutCompanyInput {
   where: ServiceWhereUniqueInput!
   update: ServiceUpdateWithoutCompanyDataInput!
   create: ServiceCreateWithoutCompanyInput!
+}
+
+input ServiceUpsertWithWhereUniqueWithoutInfoInput {
+  where: ServiceWhereUniqueInput!
+  update: ServiceUpdateWithoutInfoDataInput!
+  create: ServiceCreateWithoutInfoInput!
 }
 
 input ServiceWhereInput {
