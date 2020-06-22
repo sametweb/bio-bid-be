@@ -15,6 +15,7 @@ type Company {
   therapeutics: [Therapeutic]!
   studies: [Study!]
   bids: [Bid!]
+  claims: [Claim!]! @relation(onDelete: CASCADE)
 }
 
 type Claim {
@@ -22,7 +23,7 @@ type Claim {
   user: String!
   email: String!
   name: String!
-  company: Company! @relation(link: INLINE, onDelete: SET_NULL)
+  company: Company! @relation(link: INLINE)
   pending: Boolean! @default(value: true)
   approved: Boolean! @default(value: false)
 }

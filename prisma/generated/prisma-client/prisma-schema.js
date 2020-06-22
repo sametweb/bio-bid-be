@@ -257,7 +257,21 @@ input ClaimCreateInput {
   user: String!
   email: String!
   name: String!
-  company: CompanyCreateOneInput!
+  company: CompanyCreateOneWithoutClaimsInput!
+  pending: Boolean
+  approved: Boolean
+}
+
+input ClaimCreateManyWithoutCompanyInput {
+  create: [ClaimCreateWithoutCompanyInput!]
+  connect: [ClaimWhereUniqueInput!]
+}
+
+input ClaimCreateWithoutCompanyInput {
+  id: ID
+  user: String!
+  email: String!
+  name: String!
   pending: Boolean
   approved: Boolean
 }
@@ -291,6 +305,72 @@ type ClaimPreviousValues {
   approved: Boolean!
 }
 
+input ClaimScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  user: String
+  user_not: String
+  user_in: [String!]
+  user_not_in: [String!]
+  user_lt: String
+  user_lte: String
+  user_gt: String
+  user_gte: String
+  user_contains: String
+  user_not_contains: String
+  user_starts_with: String
+  user_not_starts_with: String
+  user_ends_with: String
+  user_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  pending: Boolean
+  pending_not: Boolean
+  approved: Boolean
+  approved_not: Boolean
+  AND: [ClaimScalarWhereInput!]
+  OR: [ClaimScalarWhereInput!]
+  NOT: [ClaimScalarWhereInput!]
+}
+
 type ClaimSubscriptionPayload {
   mutation: MutationType!
   node: Claim
@@ -313,7 +393,15 @@ input ClaimUpdateInput {
   user: String
   email: String
   name: String
-  company: CompanyUpdateOneRequiredInput
+  company: CompanyUpdateOneRequiredWithoutClaimsInput
+  pending: Boolean
+  approved: Boolean
+}
+
+input ClaimUpdateManyDataInput {
+  user: String
+  email: String
+  name: String
   pending: Boolean
   approved: Boolean
 }
@@ -324,6 +412,42 @@ input ClaimUpdateManyMutationInput {
   name: String
   pending: Boolean
   approved: Boolean
+}
+
+input ClaimUpdateManyWithoutCompanyInput {
+  create: [ClaimCreateWithoutCompanyInput!]
+  delete: [ClaimWhereUniqueInput!]
+  connect: [ClaimWhereUniqueInput!]
+  set: [ClaimWhereUniqueInput!]
+  disconnect: [ClaimWhereUniqueInput!]
+  update: [ClaimUpdateWithWhereUniqueWithoutCompanyInput!]
+  upsert: [ClaimUpsertWithWhereUniqueWithoutCompanyInput!]
+  deleteMany: [ClaimScalarWhereInput!]
+  updateMany: [ClaimUpdateManyWithWhereNestedInput!]
+}
+
+input ClaimUpdateManyWithWhereNestedInput {
+  where: ClaimScalarWhereInput!
+  data: ClaimUpdateManyDataInput!
+}
+
+input ClaimUpdateWithoutCompanyDataInput {
+  user: String
+  email: String
+  name: String
+  pending: Boolean
+  approved: Boolean
+}
+
+input ClaimUpdateWithWhereUniqueWithoutCompanyInput {
+  where: ClaimWhereUniqueInput!
+  data: ClaimUpdateWithoutCompanyDataInput!
+}
+
+input ClaimUpsertWithWhereUniqueWithoutCompanyInput {
+  where: ClaimWhereUniqueInput!
+  update: ClaimUpdateWithoutCompanyDataInput!
+  create: ClaimCreateWithoutCompanyInput!
 }
 
 input ClaimWhereInput {
@@ -414,6 +538,7 @@ type Company {
   therapeutics(where: TherapeuticWhereInput, orderBy: TherapeuticOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Therapeutic!]
   studies(where: StudyWhereInput, orderBy: StudyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Study!]
   bids(where: BidWhereInput, orderBy: BidOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bid!]
+  claims(where: ClaimWhereInput, orderBy: ClaimOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Claim!]
 }
 
 type CompanyConnection {
@@ -439,6 +564,7 @@ input CompanyCreateInput {
   therapeutics: TherapeuticCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
   bids: BidCreateManyWithoutCompanyInput
+  claims: ClaimCreateManyWithoutCompanyInput
 }
 
 input CompanyCreateManyWithoutRegionsInput {
@@ -451,13 +577,13 @@ input CompanyCreateManyWithoutTherapeuticsInput {
   connect: [CompanyWhereUniqueInput!]
 }
 
-input CompanyCreateOneInput {
-  create: CompanyCreateInput
+input CompanyCreateOneWithoutBidsInput {
+  create: CompanyCreateWithoutBidsInput
   connect: CompanyWhereUniqueInput
 }
 
-input CompanyCreateOneWithoutBidsInput {
-  create: CompanyCreateWithoutBidsInput
+input CompanyCreateOneWithoutClaimsInput {
+  create: CompanyCreateWithoutClaimsInput
   connect: CompanyWhereUniqueInput
 }
 
@@ -491,6 +617,26 @@ input CompanyCreateWithoutBidsInput {
   regions: RegionCreateManyWithoutCompaniesInput
   therapeutics: TherapeuticCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
+  claims: ClaimCreateManyWithoutCompanyInput
+}
+
+input CompanyCreateWithoutClaimsInput {
+  id: ID
+  maintainer: String
+  name: String!
+  email: String
+  phases: CompanyCreatephasesInput
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceCreateManyWithoutCompanyInput
+  regions: RegionCreateManyWithoutCompaniesInput
+  therapeutics: TherapeuticCreateManyWithoutCompaniesInput
+  studies: StudyCreateManyWithoutCompanyInput
+  bids: BidCreateManyWithoutCompanyInput
 }
 
 input CompanyCreateWithoutRegionsInput {
@@ -509,6 +655,7 @@ input CompanyCreateWithoutRegionsInput {
   therapeutics: TherapeuticCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
   bids: BidCreateManyWithoutCompanyInput
+  claims: ClaimCreateManyWithoutCompanyInput
 }
 
 input CompanyCreateWithoutServicesInput {
@@ -527,6 +674,7 @@ input CompanyCreateWithoutServicesInput {
   therapeutics: TherapeuticCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
   bids: BidCreateManyWithoutCompanyInput
+  claims: ClaimCreateManyWithoutCompanyInput
 }
 
 input CompanyCreateWithoutStudiesInput {
@@ -545,6 +693,7 @@ input CompanyCreateWithoutStudiesInput {
   regions: RegionCreateManyWithoutCompaniesInput
   therapeutics: TherapeuticCreateManyWithoutCompaniesInput
   bids: BidCreateManyWithoutCompanyInput
+  claims: ClaimCreateManyWithoutCompanyInput
 }
 
 input CompanyCreateWithoutTherapeuticsInput {
@@ -563,6 +712,7 @@ input CompanyCreateWithoutTherapeuticsInput {
   regions: RegionCreateManyWithoutCompaniesInput
   studies: StudyCreateManyWithoutCompanyInput
   bids: BidCreateManyWithoutCompanyInput
+  claims: ClaimCreateManyWithoutCompanyInput
 }
 
 type CompanyEdge {
@@ -773,24 +923,6 @@ input CompanySubscriptionWhereInput {
   NOT: [CompanySubscriptionWhereInput!]
 }
 
-input CompanyUpdateDataInput {
-  maintainer: String
-  name: String
-  email: String
-  phases: CompanyUpdatephasesInput
-  logoURL: String
-  website: String
-  linkedin: String
-  overview: String
-  headquarters: String
-  companySize: CompanySize
-  services: ServiceUpdateManyWithoutCompanyInput
-  regions: RegionUpdateManyWithoutCompaniesInput
-  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
-  studies: StudyUpdateManyWithoutCompanyInput
-  bids: BidUpdateManyWithoutCompanyInput
-}
-
 input CompanyUpdateInput {
   maintainer: String
   name: String
@@ -807,6 +939,7 @@ input CompanyUpdateInput {
   therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
   bids: BidUpdateManyWithoutCompanyInput
+  claims: ClaimUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpdateManyDataInput {
@@ -864,17 +997,17 @@ input CompanyUpdateManyWithWhereNestedInput {
   data: CompanyUpdateManyDataInput!
 }
 
-input CompanyUpdateOneRequiredInput {
-  create: CompanyCreateInput
-  update: CompanyUpdateDataInput
-  upsert: CompanyUpsertNestedInput
-  connect: CompanyWhereUniqueInput
-}
-
 input CompanyUpdateOneRequiredWithoutBidsInput {
   create: CompanyCreateWithoutBidsInput
   update: CompanyUpdateWithoutBidsDataInput
   upsert: CompanyUpsertWithoutBidsInput
+  connect: CompanyWhereUniqueInput
+}
+
+input CompanyUpdateOneRequiredWithoutClaimsInput {
+  create: CompanyCreateWithoutClaimsInput
+  update: CompanyUpdateWithoutClaimsDataInput
+  upsert: CompanyUpsertWithoutClaimsInput
   connect: CompanyWhereUniqueInput
 }
 
@@ -911,6 +1044,25 @@ input CompanyUpdateWithoutBidsDataInput {
   regions: RegionUpdateManyWithoutCompaniesInput
   therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
+  claims: ClaimUpdateManyWithoutCompanyInput
+}
+
+input CompanyUpdateWithoutClaimsDataInput {
+  maintainer: String
+  name: String
+  email: String
+  phases: CompanyUpdatephasesInput
+  logoURL: String
+  website: String
+  linkedin: String
+  overview: String
+  headquarters: String
+  companySize: CompanySize
+  services: ServiceUpdateManyWithoutCompanyInput
+  regions: RegionUpdateManyWithoutCompaniesInput
+  therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
+  studies: StudyUpdateManyWithoutCompanyInput
+  bids: BidUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpdateWithoutRegionsDataInput {
@@ -928,6 +1080,7 @@ input CompanyUpdateWithoutRegionsDataInput {
   therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
   bids: BidUpdateManyWithoutCompanyInput
+  claims: ClaimUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpdateWithoutServicesDataInput {
@@ -945,6 +1098,7 @@ input CompanyUpdateWithoutServicesDataInput {
   therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
   bids: BidUpdateManyWithoutCompanyInput
+  claims: ClaimUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpdateWithoutStudiesDataInput {
@@ -962,6 +1116,7 @@ input CompanyUpdateWithoutStudiesDataInput {
   regions: RegionUpdateManyWithoutCompaniesInput
   therapeutics: TherapeuticUpdateManyWithoutCompaniesInput
   bids: BidUpdateManyWithoutCompanyInput
+  claims: ClaimUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpdateWithoutTherapeuticsDataInput {
@@ -979,6 +1134,7 @@ input CompanyUpdateWithoutTherapeuticsDataInput {
   regions: RegionUpdateManyWithoutCompaniesInput
   studies: StudyUpdateManyWithoutCompanyInput
   bids: BidUpdateManyWithoutCompanyInput
+  claims: ClaimUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpdateWithWhereUniqueWithoutRegionsInput {
@@ -991,14 +1147,14 @@ input CompanyUpdateWithWhereUniqueWithoutTherapeuticsInput {
   data: CompanyUpdateWithoutTherapeuticsDataInput!
 }
 
-input CompanyUpsertNestedInput {
-  update: CompanyUpdateDataInput!
-  create: CompanyCreateInput!
-}
-
 input CompanyUpsertWithoutBidsInput {
   update: CompanyUpdateWithoutBidsDataInput!
   create: CompanyCreateWithoutBidsInput!
+}
+
+input CompanyUpsertWithoutClaimsInput {
+  update: CompanyUpdateWithoutClaimsDataInput!
+  create: CompanyCreateWithoutClaimsInput!
 }
 
 input CompanyUpsertWithoutServicesInput {
@@ -1169,6 +1325,9 @@ input CompanyWhereInput {
   bids_every: BidWhereInput
   bids_some: BidWhereInput
   bids_none: BidWhereInput
+  claims_every: ClaimWhereInput
+  claims_some: ClaimWhereInput
+  claims_none: ClaimWhereInput
   AND: [CompanyWhereInput!]
   OR: [CompanyWhereInput!]
   NOT: [CompanyWhereInput!]
