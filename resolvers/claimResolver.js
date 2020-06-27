@@ -3,6 +3,12 @@ module.exports = {
     pendingClaims: (parent, args, { prisma }, info) => {
       return prisma.claims({ where: { pending: true } });
     },
+    count: (parent, args, { prisma }) => {
+      return prisma
+        .claimsConnection({ where: { pending: true } })
+        .aggregate()
+        .count();
+    },
   },
   Mutation: {
     claimCompany: async (parent, args, { prisma }, info) => {

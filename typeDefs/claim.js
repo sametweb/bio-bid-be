@@ -3,6 +3,7 @@ const { gql } = require("apollo-server");
 module.exports = gql`
   extend type Query {
     pendingClaims: [Claim!]
+    count: Int!
   }
 
   extend type Mutation {
@@ -24,5 +25,6 @@ module.exports = gql`
     company: Company!
     pending: Boolean!
     approved: Boolean!
+    createdAt: String!
   }
 `;

@@ -540,7 +540,9 @@ export type ClaimOrderByInput =
   | "pending_ASC"
   | "pending_DESC"
   | "approved_ASC"
-  | "approved_DESC";
+  | "approved_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
 
 export type ServiceItemOrderByInput =
   | "id_ASC"
@@ -1059,6 +1061,14 @@ export interface ClaimWhereInput {
   pending_not?: Maybe<Boolean>;
   approved?: Maybe<Boolean>;
   approved_not?: Maybe<Boolean>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<ClaimWhereInput[] | ClaimWhereInput>;
   OR?: Maybe<ClaimWhereInput[] | ClaimWhereInput>;
   NOT?: Maybe<ClaimWhereInput[] | ClaimWhereInput>;
@@ -2119,6 +2129,14 @@ export interface ClaimScalarWhereInput {
   pending_not?: Maybe<Boolean>;
   approved?: Maybe<Boolean>;
   approved_not?: Maybe<Boolean>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<ClaimScalarWhereInput[] | ClaimScalarWhereInput>;
   OR?: Maybe<ClaimScalarWhereInput[] | ClaimScalarWhereInput>;
   NOT?: Maybe<ClaimScalarWhereInput[] | ClaimScalarWhereInput>;
@@ -3598,6 +3616,7 @@ export interface Claim {
   name: String;
   pending: Boolean;
   approved: Boolean;
+  createdAt: DateTimeOutput;
 }
 
 export interface ClaimPromise extends Promise<Claim>, Fragmentable {
@@ -3608,6 +3627,7 @@ export interface ClaimPromise extends Promise<Claim>, Fragmentable {
   company: <T = CompanyPromise>() => T;
   pending: () => Promise<Boolean>;
   approved: () => Promise<Boolean>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface ClaimSubscription
@@ -3620,6 +3640,7 @@ export interface ClaimSubscription
   company: <T = CompanySubscription>() => T;
   pending: () => Promise<AsyncIterator<Boolean>>;
   approved: () => Promise<AsyncIterator<Boolean>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface ClaimNullablePromise
@@ -3632,6 +3653,7 @@ export interface ClaimNullablePromise
   company: <T = CompanyPromise>() => T;
   pending: () => Promise<Boolean>;
   approved: () => Promise<Boolean>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface BidConnection {
@@ -4300,6 +4322,7 @@ export interface ClaimPreviousValues {
   name: String;
   pending: Boolean;
   approved: Boolean;
+  createdAt: DateTimeOutput;
 }
 
 export interface ClaimPreviousValuesPromise
@@ -4311,6 +4334,7 @@ export interface ClaimPreviousValuesPromise
   name: () => Promise<String>;
   pending: () => Promise<Boolean>;
   approved: () => Promise<Boolean>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface ClaimPreviousValuesSubscription
@@ -4322,6 +4346,7 @@ export interface ClaimPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   pending: () => Promise<AsyncIterator<Boolean>>;
   approved: () => Promise<AsyncIterator<Boolean>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface CompanySubscriptionPayload {

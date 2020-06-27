@@ -26,6 +26,7 @@ type Claim {
   company: Company! @relation(link: INLINE)
   pending: Boolean! @default(value: true)
   approved: Boolean! @default(value: false)
+  createdAt: DateTime! @createdAt
 }
 
 type ServiceItem {

@@ -244,6 +244,7 @@ type Claim {
   company: Company!
   pending: Boolean!
   approved: Boolean!
+  createdAt: DateTime!
 }
 
 type ClaimConnection {
@@ -294,6 +295,8 @@ enum ClaimOrderByInput {
   pending_DESC
   approved_ASC
   approved_DESC
+  createdAt_ASC
+  createdAt_DESC
 }
 
 type ClaimPreviousValues {
@@ -303,6 +306,7 @@ type ClaimPreviousValues {
   name: String!
   pending: Boolean!
   approved: Boolean!
+  createdAt: DateTime!
 }
 
 input ClaimScalarWhereInput {
@@ -366,6 +370,14 @@ input ClaimScalarWhereInput {
   pending_not: Boolean
   approved: Boolean
   approved_not: Boolean
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   AND: [ClaimScalarWhereInput!]
   OR: [ClaimScalarWhereInput!]
   NOT: [ClaimScalarWhereInput!]
@@ -512,6 +524,14 @@ input ClaimWhereInput {
   pending_not: Boolean
   approved: Boolean
   approved_not: Boolean
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   AND: [ClaimWhereInput!]
   OR: [ClaimWhereInput!]
   NOT: [ClaimWhereInput!]
