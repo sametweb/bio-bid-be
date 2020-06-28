@@ -5,6 +5,8 @@ module.exports = gql`
     specialtyItems: [SpecialtyItem!]
     specialtyItem(name: String!): SpecialtyItem!
     searchSpecialtyItems(search: String!): [SpecialtyItem!]
+    onlySpecialties: [SpecialtyItem]
+    onlySubSpecialties: [SpecialtyItem]
   }
 
   extend type Mutation {

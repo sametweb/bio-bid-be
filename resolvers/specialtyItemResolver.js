@@ -13,6 +13,28 @@ module.exports = {
 
       return prisma.specialtyItems({ where: { name_contains: search } });
     },
+    onlySpecialties: async (parent, args, { prisma }) => {
+      let result = await prisma
+        .specialties({ where: { service: { info: { id_contains: "c" } } } })
+        .info();
+      result = result.map(({ info }) => ({
+        ...info,
+      }));
+      console.log({ result });
+      return result;
+    },
+    onlySubSpecialties: async (parent, args, { prisma }) => {
+      let result = await prisma
+        .specialties({
+          where: { sub_specialties_every: { id_not_contains: "c" } },
+        })
+        .info();
+      result = result.map(({ info }) => ({
+        ...info,
+      }));
+      console.log({ result });
+      return result;
+    },
   },
   Mutation: {
     createSpecialtyItem: async (parent, { name }, { prisma }, info) => {
