@@ -20,7 +20,6 @@ module.exports = {
       result = result.map(({ info }) => ({
         ...info,
       }));
-      console.log({ result });
       return result;
     },
     onlySubSpecialties: async (parent, args, { prisma }) => {
@@ -29,10 +28,10 @@ module.exports = {
           where: { sub_specialties_every: { id_not_contains: "c" } },
         })
         .info();
-      result = result.map(({ info }) => ({
-        ...info,
-      }));
-      console.log({ result });
+      result = result.map(({ info }) => info.name);
+      result = new Set(result);
+      result = Array.from(result);
+      result = result.map((name) => ({ name }));
       return result;
     },
   },
