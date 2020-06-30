@@ -23,6 +23,10 @@ module.exports = {
   },
   Mutation: {
     createCompany: async (parent, args, { prisma, servMapper }, info) => {
+      if (!args.regions) args.regions = [];
+      if (!args.therapeutics) args.therapeutics = [];
+      if (!args.services) args.services = [];
+
       const {
         name,
         email,
