@@ -2,7 +2,7 @@
 
 # API Documentation
 
-#### Backend deployed [here](https://biobid.heroku.com) on Heroku <br>
+#### Backend deployed [here](https://biobid.herokuapp.com) on Heroku <br>
 
 ## Getting started
 
