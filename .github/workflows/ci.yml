@@ -36,7 +36,7 @@ jobs:
       - uses: paambaati/codeclimate-action@v2.4.0
         env:
           # An environment variable, the value is a GitHub repo secret
-          CC_TEST_REPORTER_ID: c720c37e5eaed025135ea8bb829c0e684e3e486a209079b8a8a1edd52cb97fdf
+          CC_TEST_REPORTER_ID: a92619570d482b3159b573352321740e3b8f3b54cb5bad4a486520521fe597db
         with:
           # Run our `coverage` script in our `package.json`
           coverageCommand: npm run coverage
