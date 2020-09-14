@@ -1,4 +1,4 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/819afd4c021b7e39f08c/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/bio-bid-be/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/819afd4c021b7e39f08c/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/bio-bid-be/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/819afd4c021b7e39f08c/maintainability)](https://codeclimate.com/github/sametweb/bio-bid-be/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/819afd4c021b7e39f08c/test_coverage)](https://codeclimate.com/github/sametweb/bio-bid-be/test_coverage)
 
 # API Documentation
 
