@@ -2,7 +2,7 @@
 
 # API Documentation
 
-#### Backend deployed [here](ec2-34-195-186-223.compute-1.amazonaws.com) on AWS <br>
+#### Backend deployed [here](https://biobid.heroku.com) on Heroku <br>
 
 ## Getting started
 
