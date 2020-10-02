@@ -2,7 +2,7 @@
 
 # API Documentation
 
-#### Backend deployed [here](https://biobid.herokuapp.com) on Heroku <br>
+#### Backend deployed [here](https://biobid.herokuapp.com) on Heroku. For front-end repository, see [bio-bid-fe repository](https://github.com/sametweb/bio-bid-fe).
 
 ## Getting started
 
